@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scoop Report</title>
+<style>
+  :root {
+    --bg: #FFF8E7;
+    --surface: #FFFEFA;
+    --ink: #4B3621;
+    --ink-muted: #8A6F52;
+    --hairline: rgba(75, 54, 33, 0.16);
+    --pill-bg: #FFFEFA;
+    --korea: #C85476;
+    --korea-soft: #FADADD;
+    --us: #2F8571;
+    --us-soft: #A3E4D7;
+    --japan: #B87A1F;
+    --japan-soft: #F5DDB0;
+    --shadow: 0 14px 30px -20px rgba(75, 54, 33, 0.28);
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #3D2C1E; --surface: #4A3726; --ink: #FBF0DE; --ink-muted: #D2B896;
+      --hairline: rgba(251, 240, 222, 0.18); --pill-bg: #55402C;
+      --korea: #F5A9BE; --korea-soft: #66404B; --us: #8FE0CC; --us-soft: #2E5049; --japan: #F0C888; --japan-soft: #5A4530;
+      --shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #3D2C1E; --surface: #4A3726; --ink: #FBF0DE; --ink-muted: #D2B896;
+    --hairline: rgba(251, 240, 222, 0.18); --pill-bg: #55402C;
+    --korea: #F5A9BE; --korea-soft: #66404B; --us: #8FE0CC; --us-soft: #2E5049; --japan: #F0C888; --japan-soft: #5A4530;
+    --shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.45);
+  }
+  :root[data-theme="light"] {
+    --bg: #FFF8E7; --surface: #FFFEFA; --ink: #4B3621; --ink-muted: #8A6F52;
+    --hairline: rgba(75, 54, 33, 0.16); --pill-bg: #FFFEFA;
+    --korea: #C85476; --korea-soft: #FADADD; --us: #B87A1F; --us-soft: #F5DDB0; --japan: #2F8571; --japan-soft: #A3E4D7;
+    --shadow: 0 14px 30px -20px rgba(75, 54, 33, 0.28);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: var(--sans);
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    transition: background 0.5s ease;
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 26px 18px 90px; }
+
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--ink-muted); margin: 0 0 10px; }
+  .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 22px; }
+  .headline { font-size: clamp(28px, 7vw, 38px); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; margin: 0; max-width: 13ch; text-wrap: balance; }
+  .head-side { max-width: 30ch; }
+  .head-blurb { font-size: 13.5px; color: var(--ink-muted); line-height: 1.55; margin: 0 0 12px; }
+  .cta { display: inline-flex; align-items: center; gap: 7px; background: var(--ink); color: var(--bg); font-size: 13px; font-weight: 700; padding: 10px 16px; border-radius: 100px; border: none; cursor: pointer; font-family: inherit; text-decoration: none; }
+  .cta:hover { opacity: 0.85; }
+
+  .list-label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); margin: 26px 2px 14px; }
+
+  .hero-list { display: flex; flex-direction: column; gap: 34px; }
+  .hero-card { position: relative; }
+  .hero-art {
+    height: 190px; border-radius: 26px; position: relative; overflow: hidden;
+    background:
+      radial-gradient(120% 140% at 18% 20%, color-mix(in srgb, var(--card-color) 85%, white 15%) 0%, transparent 55%),
+      radial-gradient(90% 120% at 85% 75%, color-mix(in srgb, var(--card-color) 60%, var(--bg) 40%) 0%, transparent 60%),
+      linear-gradient(150deg, color-mix(in srgb, var(--card-color) 38%, var(--bg) 62%), color-mix(in srgb, var(--card-color) 14%, var(--bg) 86%));
+  }
+  .hero-art::after { content: ""; position: absolute; inset: 0; mix-blend-mode: overlay; opacity: 0.5; background: radial-gradient(60% 80% at 70% 30%, rgba(255,255,255,0.5), transparent 60%); }
+  .hero-card::before { content: ""; position: absolute; inset: 10px 10px auto 10px; height: 190px; border-radius: 30px; background: var(--card-color); filter: blur(26px); opacity: 0.35; z-index: -1; }
+  .hero-panel { background: var(--surface); border-radius: 20px; margin: -46px 14px 0; position: relative; z-index: 2; padding: 18px 20px 20px; box-shadow: var(--shadow); border: 1px solid var(--hairline); }
+  .hero-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; color: var(--card-color); margin-bottom: 10px; }
+  .hero-badge-icon { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: var(--card-soft); }
+  .hero-title { font-size: 19px; font-weight: 800; line-height: 1.3; margin: 0 0 8px; text-wrap: balance; }
+  .hero-summary { font-size: 13.5px; line-height: 1.6; color: var(--ink-muted); margin: 0 0 14px; max-width: 56ch; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .hero-tag { font-size: 11px; font-weight: 600; color: var(--card-color); background: var(--card-soft); padding: 4px 10px; border-radius: 100px; }
+  .hero-link { font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+  .hero-link:hover { color: var(--card-color); }
+
+  #landing.hidden { display: none; }
+  #detail { display: none; }
+  #detail.active { display: block; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink-muted); text-decoration: none; margin-bottom: 18px; }
+  .back-link:hover { color: var(--ink); }
+  .detail-header { background: var(--card-soft); border-radius: 20px; padding: 22px; margin-bottom: 22px; }
+  .detail-badge { font-size: 12px; font-weight: 700; color: var(--card-color); text-transform: uppercase; letter-spacing: 0.05em; }
+  .detail-title { font-size: 26px; font-weight: 800; margin: 6px 0 10px; text-wrap: balance; }
+  .detail-summary { font-size: 14.5px; line-height: 1.65; margin: 0; max-width: 60ch; color: var(--ink); }
+
+  .panel { border: 1px solid var(--hairline); border-radius: 16px; padding: 18px 18px 6px; margin-bottom: 6px; background: var(--surface); }
+  .bar-row { display: grid; grid-template-columns: 84px 1fr 32px; align-items: center; gap: 10px; padding: 7px 0; }
+  .bar-row + .bar-row { border-top: 1px solid var(--hairline); }
+  .bar-label { font-size: 12.5px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { position: relative; height: 6px; background: var(--hairline); border-radius: 100px; overflow: hidden; }
+  .bar-fill { position: absolute; inset: 0 auto 0 0; border-radius: 100px; background: var(--card-color); }
+  .bar-value { font-size: 11.5px; color: var(--ink-muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .chart-foot { font-size: 11px; color: var(--ink-muted); margin: 12px 0 16px; }
+
+  .list { border-top: 1px solid var(--hairline); }
+  .row { display: grid; grid-template-columns: 1fr 96px; gap: 16px; padding: 16px 2px; border-bottom: 1px solid var(--hairline); text-decoration: none; color: inherit; align-items: center; }
+  .row-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; background: var(--card-soft); color: var(--card-color); padding: 3px 9px; border-radius: 100px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .row-title { font-size: 15px; font-weight: 700; line-height: 1.35; margin: 0 0 5px; text-wrap: balance; }
+  .row-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.5; margin: 0 0 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .row-meta { font-size: 11.5px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .row-thumb { width: 96px; height: 96px; border-radius: 12px; overflow: hidden; flex: none; display: grid; place-items: center; font-size: 28px; background: var(--card-soft); }
+
+  .sources { border-top: 1px solid var(--hairline); }
+  .source-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 2px; font-size: 12.5px; border-bottom: 1px solid var(--hairline); }
+  .source-row a { color: var(--ink); text-decoration: none; }
+  .source-row a:hover { color: var(--ink-muted); }
+  .source-num { color: var(--ink-muted); font-variant-numeric: tabular-nums; flex: none; }
+
+  .theme-toggle { position: fixed; top: 14px; right: 14px; font-size: 11px; color: var(--ink-muted); background: var(--surface); border: 1px solid var(--hairline); border-radius: 100px; padding: 6px 10px; cursor: pointer; font-family: inherit; z-index: 5; }
+
+  @media (max-width: 480px) {
+    .hero-art { height: 160px; }
+    .hero-panel { margin-top: -40px; }
+    .row { grid-template-columns: 1fr 72px; }
+    .row-thumb { width: 72px; height: 72px; font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button">라이트/다크</button>
+
+<div class="wrap">
+  <div id="landing">
+    <p class="eyebrow">[Weekly Ice Cream Intelligence]</p>
+    <div class="head-row">
+      <h1 class="headline">이번 주 아이스크림 트렌드</h1>
+      <div class="head-side">
+        <p class="head-blurb">한국·미국·일본 3개 시장의 신제품, 바이럴 콘텐츠, 맛·패키징 통계를 매주 월요일 오전 8시에 정리합니다.</p>
+        <a class="cta" href="../reports/2026-08-02-ice-cream-trends.pdf">최신 PDF 받기 ↓</a>
+      </div>
+    </div>
+
+    <p class="list-label">이번 주 트렌드</p>
+    <div class="hero-list" id="heroList"></div>
+  </div>
+
+  <div id="detail">
+    <a class="back-link" href="#" id="backLink">&larr; 세 나라 보기로 돌아가기</a>
+    <div class="detail-header">
+      <div class="detail-badge" id="dBadge"></div>
+      <h2 class="detail-title" id="dTitle"></h2>
+      <p class="detail-summary" id="dSummary"></p>
+    </div>
+
+    <p class="list-label">맛 · 패키징 Top 5</p>
+    <div class="panel" id="dChart"></div>
+
+    <p class="list-label">이번 주 소식</p>
+    <div class="list" id="dList"></div>
+
+    <p class="list-label">참고자료</p>
+    <div class="sources" id="dSources"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var countries = {
+  "kr": {
+    "name": "한국",
+    "emoji": "🍦",
+    "color": "var(--korea)",
+    "flavor": "이주의 시그니처 · 우베(Ube)",
+    "headline": "역대급 폭염 속 편의점 콜라보 아이스크림 대전, 우베·수박아이스·신맛챌린지가 SNS 점령",
+    "summary": "폭염경보가 이어지며 GS25·세븐일레븐 등 편의점 아이스크림·얼음 매출이 전년 대비 두자릿수로 급증했고, GS25는 폭염 주말 이틀간 얼음컵 100만 개를 판매했다. TXT·현대차·태극당 등과의 이색 콜라보 신제품이 쏟아지는 가운데, 세븐일레븐 신맛 챌린지 '시다바'와 GS25 '수박아이스'가 SNS 인증템으로 확산되고, 롯데웰푸드는 보랏빛 이색 원료 '우베'를 앞세운 신제품을 대거 출시했다.",
+    "bars": [
+      [
+        "콜라보",
+        7
+      ],
+      [
+        "딸기",
+        6
+      ],
+      [
+        "우베",
+        5
+      ],
+      [
+        "망고",
+        4
+      ],
+      [
+        "말차",
+        3
+      ]
+    ]
+  },
+  "us": {
+    "name": "미국",
+    "emoji": "🍦",
+    "color": "var(--us)",
+    "flavor": "이주의 시그니처 · Fudge n' Vanilla French Fry Pop",
+    "headline": "폭염 속 이색 맛 전쟁 가열, 감자튀김 아이스크림부터 투표 독려 플레이버까지",
+    "summary": "6월 말부터 이어진 폭염으로 미국 전역 아이스크림 매출이 급증한 가운데, GoodPop의 감자튀김맛 아이스크림바와 Van Leeuwen의 월마트 전용 크래프트 마카로니 치즈맛이 이색 플레이버 경쟁을 이끌고 있다. Blue Bell·Jeni's·Graeter's 등 전통 브랜드들은 7월 내셔널 아이스크림 먼스를 맞아 초콜릿·딸기 중심 신제품을 잇달아 선보였고, Ben & Jerry's는 중간선거 투표 독려 캠페인과 연계한 '래즈 업!' 플레이버로 마케팅 화제성을 더했다.",
+    "bars": [
+      [
+        "Chocolate",
+        9
+      ],
+      [
+        "Limited Edition",
+        8
+      ],
+      [
+        "Strawberry",
+        6
+      ],
+      [
+        "Cookie Dough",
+        5
+      ],
+      [
+        "Pistachio",
+        4
+      ]
+    ]
+  },
+  "jp": {
+    "name": "일본",
+    "emoji": "🍧",
+    "color": "var(--japan)",
+    "flavor": "이주의 시그니처 · 초코민트(チョコミント)",
+    "headline": "폭염 속 일본 아이스 시장, 초코민트 신상 전국 출시와 편의점 '빙수형 컵아이스' 격전",
+    "summary": "관동 지방 장마가 끝난 뒤 40도를 넘나드는 폭염이 이어지면서 세븐일레븐·로손·패밀리마트가 빙수형 컵아이스와 여름 한정 신상을 잇달아 출시했고, 8월 4일 선행·8월 17일 전국 발매되는 초코민트 신규 라인이 업계 화제의 중심에 섰다. 한편 하겐다즈의 '두 가지 맛 한 컵' 신규 라인 Gelati, 배스킨라빈스의 팬 요청 부활 상품 '다이키리 아이스'가 SNS에서 화제를 모았으며, 극단적인 폭염이 오히려 외출·구매를 위축시키는 역설적 현상도 뉴스에서 지적됐다.",
+    "bars": [
+      [
+        "기간한정",
+        10
+      ],
+      [
+        "초코민트",
+        7
+      ],
+      [
+        "빙수",
+        6
+      ],
+      [
+        "망고",
+        4
+      ],
+      [
+        "바닐라",
+        4
+      ]
+    ]
+  }
+};
+  var items = {
+  "kr": [
+    {
+      "kind": "신제품",
+      "emoji": "🍋",
+      "title": "GS25, TXT 연준×요아정 협업 '사워레몬요거트' 아이스크림 출시",
+      "desc": "GS25가 투모로우바이투게더 멤버 연준과 요거트아이스크림 브랜드 요아정과 손잡고 사워레몬요거트 컵(7/16)과 바(7/21) 제품을 선보였다. 앞서 진행된 K팝 콜라보 아이스크림들이 판매 1위에 오르는 등 흥행 공식으로 자리잡았다.",
+      "meta": "기사 · 7월 중순",
+      "url": "https://www.news1.kr/industry/distribution/6225237"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🚗",
+      "title": "GS25, 현대차와 이색 협업 '현차는 빵빵' 아이스크림 출시",
+      "desc": "GS25가 현대자동차와 손잡고 카스텔라 사이에 크림치즈 아이스크림을 채운 샌드형 아이스크림 '현차는 빵빵'을 7월 1일 출시했다.",
+      "meta": "기사 · 7/1",
+      "url": "https://biz.heraldcorp.com/article/10790943"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍓",
+      "title": "CU, 캐릭터 '패트와 매트' 반반바 출시…반반 챌린지 유도",
+      "desc": "BGF리테일이 인기 캐릭터 패트와 매트를 활용한 딸기·망고 두 가지 맛 아이스크림 '반반바'를 7월 13일 출시하고, 반으로 나눠 먹는 '반반바 챌린지'를 마케팅에 활용했다.",
+      "meta": "기사 · 7/13",
+      "url": "https://www.etnews.com/20260713000036"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍮",
+      "title": "세븐일레븐, 일본 오하요유업 협업 '브륄레 밀크' 아이스크림",
+      "desc": "세븐일레븐이 일본 유제품 기업 오하요유업과 협업해 크림브륄레를 모티프로 한 프리미엄 아이스크림 '오하요 브륄레 밀크'를 7월 22일 선보였다.",
+      "meta": "기사 · 7/15",
+      "url": "https://www.newsis.com/view/NISX20260715_0003709662"
+    },
+    {
+      "kind": "Viral",
+      "emoji": "🍋",
+      "title": "\"역대급 신맛\" 세븐일레븐 '시다바' 챌린지 SNS 폭발적 반응",
+      "desc": "신맛 1~3단계로 나뉜 세븐일레븐 신상 아이스크림 '시다바'가 스레드·인스타그램·틱톡에서 신맛 챌린지 콘텐츠로 확산되며 화제를 모았다. 세븐일레븐 공식 X 계정도 직접 홍보에 나섰다.",
+      "meta": "SNS 다수 게시 · 7월말",
+      "url": "https://x.com/seveneleven_kr/status/2070371479712305250"
+    },
+    {
+      "kind": "SNS",
+      "emoji": "🍉",
+      "title": "GS25 '수박아이스', 일본 유행템이 한국 편의점 SNS 강타",
+      "desc": "100% 수박 과육을 통째로 얼린 GS25 디저트랩의 '수박아이스'가 인스타그램·스레드·틱톡에서 여름 인증템으로 확산 중이다. 한 개 18kcal, 가격 1,500원으로 다이어트 간식으로도 언급된다.",
+      "meta": "SNS 다수 게시 · 7월",
+      "url": "https://www.threads.com/@_tripgoing/post/DaT8jRAk3WH"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍨",
+      "title": "배스킨라빈스 8월 이달의 맛 '산딸기가 끌리는 연유' 출시",
+      "desc": "배스킨라빈스가 여름 별미 산딸기 빙수를 모티프로 산딸기 소르베와 연유 아이스크림을 결합한 8월 이달의 맛을 선보이고, 동일 콘셉트의 '산딸기 연유 블라스트' 음료도 함께 출시했다.",
+      "meta": "기사 · 8월 초",
+      "url": "https://www.newsinside.kr/news/articleView.html?idxno=4882120"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "💜",
+      "title": "롯데웰푸드, 보랏빛 '우베' 활용 아이스크림·과자 신제품 5종",
+      "desc": "롯데웰푸드가 필리핀산 보라색 참마 '우베'를 활용해 나뚜루 우베 밀크 파인트, 우베 초콜릿바 등 빙과 2종을 포함한 신제품 5종을 출시하며 이색 원료 트렌드에 합류했다.",
+      "meta": "기사 · 7월",
+      "url": "https://www.shinailbo.co.kr/news/articleView.html?idxno=5039524"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍵",
+      "title": "롯데웰푸드, 월드콘·설레임·티코 말차 3종 출시",
+      "desc": "롯데웰푸드가 제주산 녹차잎으로 만든 프리미엄 말차를 활용해 월드콘, 설레임, 티코의 말차 버전을 여름 신제품으로 선보였다.",
+      "meta": "기사 · 7월",
+      "url": "https://blog.lotte.co.kr/48726"
+    },
+    {
+      "kind": "뉴스",
+      "emoji": "🥵",
+      "title": "역대급 폭염에 편의점 아이스크림 매출 두자릿수 급증",
+      "desc": "7월 폭염경보가 이어지며 편의점 아이스크림·얼음 매출이 전년 대비 두자릿수로 늘었다. 폭염 주말이던 7월 11~12일 GS25는 이틀간 얼음컵 100만 개를 판매하며 역대 최고치를 기록했다.",
+      "meta": "기사 · 7/29, 7/13",
+      "url": "https://www.metroseoul.co.kr/article/20260729500391"
+    },
+    {
+      "kind": "광고",
+      "emoji": "📣",
+      "title": "롯데웰푸드 '설레임', 기안84 앞세운 '설레임런' 캠페인 강화",
+      "desc": "롯데웰푸드가 웹툰작가 겸 방송인 기안84를 아이스크림 브랜드 '설레임' 모델로 발탁, 체험형 러닝 이벤트 '설레임런'을 통해 여름 성수기 마케팅에 나섰다.",
+      "meta": "기사 · 7월",
+      "url": "https://www.foodtoday.or.kr/news/article.html?no=206710"
+    },
+    {
+      "kind": "광고",
+      "emoji": "🎬",
+      "title": "CU, 브랜드모델 '리센느'가 소개하는 반반바 숏폼 콘텐츠 공개",
+      "desc": "CU가 공식 유튜브 채널을 통해 브랜드모델 리센느(RESCENE)가 패트와 매트 반반바를 함께 먹는 숏폼 영상을 공개하며 챌린지 마케팅을 확산시켰다.",
+      "meta": "유튜브 쇼츠 · 7월",
+      "url": "https://www.youtube.com/shorts/f0iJG0SGHjs"
+    },
+    {
+      "kind": "SNS",
+      "emoji": "💬",
+      "title": "더쿠, GS25 태극당 파르페·빙수 후기 게시글 화제",
+      "desc": "온라인 커뮤니티 더쿠(theqoo)에 GS25에서 판매 중인 태극당 협업 파르페·빙수 제품 후기가 올라오며 맛 품평이 활발히 오갔다.",
+      "meta": "커뮤니티 게시글",
+      "url": "https://theqoo.net/muk/3757324492"
+    }
+  ],
+  "us": [
+    {
+      "kind": "신제품",
+      "emoji": "🍟",
+      "title": "GoodPop, 감자튀김 아이스크림 'Fudge n' Vanilla French Fry Pop' 재출시",
+      "desc": "2024년 출시 즉시 품절됐던 컬트 아이스크림바가 진짜 유제품 버전으로 돌아왔고, Peaches n' Cream·Berries n' Cream 신제품 2종도 함께 공개됐다.",
+      "meta": "기사 · 8월",
+      "url": "https://www.foodbusinessnews.net/articles/30677-nostalgic-flavors-drive-goodpops-latest-launch"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍫",
+      "title": "Blue Bell, '초콜릿 라바 케이크' 아이스크림 출시",
+      "desc": "내셔널 아이스크림 먼스를 기념해 바닐라 아이스크림에 초콜릿 케이크 조각과 다크 초콜릿 퍼지 스월을 더한 한정판을 파인트·하프갤런 용량으로 선보였다.",
+      "meta": "기사 · 7/10",
+      "url": "https://www.bluebell.com/news/blue-bell-announces-new-chocolate-lava-cake-ice-cream/"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🏕️",
+      "title": "Jeni's, 'Campfire S'mores' 등 서머 신상 3종 공개",
+      "desc": "마시멜로·토스티드 슈가 베이스에 퍼지와 그레이엄 크래커를 더한 캠프파이어 스모어가 '2026년 여름 최고의 스쿱'이라는 평가를 받았다.",
+      "meta": "출시 7/2 · 리뷰기사",
+      "url": "https://www.tastingtable.com/2209185/jenis-ice-cream-2026-summer-flavors-review/"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍓",
+      "title": "Graeter's, 유제품 없는 '스트로베리 소르베' 출시",
+      "desc": "태평양 북서부산 딸기를 슬로우 프로즌 방식으로 갈아 만든 데어리프리 소르베로, 여름 신상 5종 라인업 중 하나로 7월 말 선보였다.",
+      "meta": "기사 · 7월말",
+      "url": "https://parade.com/food/graeters-ice-cream-releases-five-new-flavors-for-the-summer-season"
+    },
+    {
+      "kind": "뉴스",
+      "emoji": "🧀",
+      "title": "Van Leeuwen x Walmart, 크래프트 마카로니 치즈·피자맛 아이스크림 전개",
+      "desc": "월마트 전용 한정판 라인업에 포함된 이색 맛으로, 과거 출시 당시 1시간 만에 초기 물량이 매진되며 사이트가 다운됐던 화제의 콜라보 제품이다.",
+      "meta": "기사 확인",
+      "url": "https://www.foxbusiness.com/lifestyle/pizza-ice-cream-van-leeuwen-walmart-exclusive"
+    },
+    {
+      "kind": "뉴스",
+      "emoji": "🍎",
+      "title": "Dairy Queen, 8월 블리자드 '캐러멜 애플 치즈케이크' 유출",
+      "desc": "공식 발표 전이지만 인스타그램 유출로 가을 느낌의 캐러멜·사과·치즈케이크 조합 블리자드가 알려지며 팬들 사이 기대감이 커지고 있다.",
+      "meta": "기사 · 7월말 (공식 미발표)",
+      "url": "https://www.tastingtable.com/2227957/dairy-queen-august-2026-blizzard-month-caramel-apple/"
+    },
+    {
+      "kind": "뉴스",
+      "emoji": "🍪",
+      "title": "Baskin-Robbins, 8월 플레이버 오브 더 먼스 'Cookie Monster'",
+      "desc": "쿠키 도우 리본과 초콜릿 샌드위치 쿠키가 들어간 블루 컬러 스위트크림 플레이버로 알려졌다. 8월엔 '선데이 온 선데이' 기부 프로모션도 함께 진행된다.",
+      "meta": "검색 결과 확인 · 8월 (공식 페이지 접속 제한)",
+      "url": "https://www.theimpulsivebuy.com/wordpress/baskin-robbins-flavor-of-the-month-list/"
+    },
+    {
+      "kind": "SNS",
+      "emoji": "🗳️",
+      "title": "Ben & Jerry's, 중간선거 투표 독려 캠페인 'Razz Up!' 출시",
+      "desc": "ACLU, Black Voters Matter 등과 손잡고 블랙라즈베리+크래클링 퍼지 청크 아이스크림 'Razz Up!'을 내놓으며 200여 개 스쿱숍에서 판매를 시작, 내셔널 아이스크림 데이에 맞춰 마케팅을 펼쳤다.",
+      "meta": "기사 · 7/16",
+      "url": "https://www.wcax.com/2026/07/16/ben-jerrys-launches-new-flavor-mobilize-voters-ahead-november-midterms/"
+    },
+    {
+      "kind": "Viral",
+      "emoji": "📺",
+      "title": "유튜브서 '2026 서머 아이스크림 테이스트 테스트' 영상 확산",
+      "desc": "다양한 브랜드 신제품을 비교 시식하는 리뷰 영상과 Van Leeuwen 신상 플레이버를 다루는 숏폼 콘텐츠가 검색 상위권에 노출되고 있다. 정확한 조회수는 공개 확인이 되지 않아 수치는 생략한다.",
+      "meta": "유튜브 · 조회수 미확인",
+      "url": "https://www.youtube.com/watch?v=R2mD4Ghl4e8"
+    },
+    {
+      "kind": "뉴스",
+      "emoji": "🌡️",
+      "title": "폭염이 끌어올린 아이스크림 수요, 검색 관심도도 동반 상승 추정",
+      "desc": "6월 말부터 이어진 폭염으로 미국 전역 아이스크림 매장 매출이 급증했고, Magnum 등 업계 실적에도 반영됐다. Google Trends API를 직접 조회하지 못해 뉴스 보도 기반의 정성적 추정치임을 밝힌다.",
+      "meta": "기사 · 6월말~7월",
+      "url": "https://www.wowt.com/2026/06/30/ice-cream-shops-see-surge-business-during-heat-wave/"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍋",
+      "title": "Trader Joe's, 레몬·쿠키도우 등 여름 신상 아이스크림 다수 공개",
+      "desc": "레몬 커드와 마스카포네를 층층이 쌓은 이탈리안 스타일 디저트, 쿠키도우로 감싼 바닐라 아이스크림 코인 등이 출시 직후 품절 화제를 모았다.",
+      "meta": "기사 확인",
+      "url": "https://www.yahoo.com/lifestyle/articles/trader-joes-wildberry-cheesecake-ice-191344951.html"
+    }
+  ],
+  "jp": [
+    {
+      "kind": "신제품",
+      "emoji": "🍮",
+      "title": "세븐일레븐, '티라미수고오리·푸딩고오리' 신메뉴 출시",
+      "desc": "커피 소스와 휘핑크림, 빙수를 겹친 티라미수 맛과 카라멜 소스를 넣은 2단 푸딩 빙수 아이스가 8월 4일 새로 발매된다.",
+      "meta": "기사 · 7/28 (발매 8/4)",
+      "url": "https://shingekifood.com/entry/2026/07/28/080344"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍉",
+      "title": "세븐프리미엄 '마루데 스이카' 6년 만에 부활",
+      "desc": "독자 제법으로 사각사각한 식감을 구현한 수박 모양 여름 한정 아이스가 6년 만에 재출시되어 7월 7일부터 순차 판매 중이다.",
+      "meta": "보도자료 · 7/7",
+      "url": "https://prtimes.jp/main/html/rd/p/000000966.000155396.html"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍫",
+      "title": "편의점 3사, 초코민트 신규 라인 8월 전국 발매",
+      "desc": "최근 2년간 138% 성장한 초코민트 카테고리를 겨냥해 진한 초콜릿과 상쾌한 민트를 조합한 신제품이 8월 4일 편의점 선행판매, 8월 17일 전국 발매된다.",
+      "meta": "기사 · 7월말 (발매 8/4·8/17)",
+      "url": "https://www.ssnp.co.jp/distribution/684489/"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍦",
+      "title": "세븐프리미엄 와플콘·블랙썬더 초코민트 아이스 2종",
+      "desc": "파리파리·고리고리 식감을 강조한 와플콘 초코민트와 블랙썬더 초코민트 아이스바가 순차 발매됐다.",
+      "meta": "보도자료",
+      "url": "https://prtimes.jp/main/html/rd/p/000000937.000155396.html"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍑",
+      "title": "로손, 여름 아이스 14종 라인업 순차 출시",
+      "desc": "야마나시산 백도, 못난이 바나나를 쓴 초코바나나, 규슈 명물 시로쿠마 등 개성 있는 여름 한정 아이스 14종이 5월 말부터 순차 발매되어 여름 내내 판매 중이다.",
+      "meta": "기사 · 5/26 (여름 시즌 지속판매)",
+      "url": "https://entabe.jp/60439/2026-jun-lawson-summer-ice-cream-news"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🥥",
+      "title": "하겐다즈, 한 컵에 두 맛 '젤라티(Gelati)' 신규 라인",
+      "desc": "트로피컬리치&코코넛, 솔티캐러멜&피스타치오 등 한 컵에서 두 가지 풍미를 즐기는 하겐다즈의 여름 신규 시리즈가 6월 30일 전국 기간 한정 발매됐다.",
+      "meta": "보도자료 · 6/30",
+      "url": "https://www.haagen-dazs.co.jp/company/newsrelease/2026/"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "☕",
+      "title": "메이지 엣셀 슈퍼컵 '카페오레&쿠키' 신맛 출시",
+      "desc": "카페오레가 아이스가 된 콘셉트의 신제품이 7월 6일 전국 발매됐다.",
+      "meta": "보도자료 · 7/6",
+      "url": "https://www.meiji.co.jp/corporate/pressrelease/2026/07_02/index.html"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍐",
+      "title": "가리가리군, '배(梨) 빙수 인' 아이스바 신제품",
+      "desc": "배 아이스 속에 사각사각한 배 빙수를 넣은 아카기유업의 가리가리군 신제품이 7월 28일 발매됐다.",
+      "meta": "브랜드 공식 · 7/28",
+      "url": "https://www.akagi.com/products/new.html"
+    },
+    {
+      "kind": "신제품",
+      "emoji": "🍨",
+      "title": "모리나가 PARM '트로피컬믹스&요거트' 젤라토",
+      "desc": "PARM 사상 최초의 요거트맛을 담은 젤라토 신제품이 7월 6일부터 전국 기간 한정 발매 중이다.",
+      "meta": "보도자료 · 7/6",
+      "url": "https://www.morinagamilk.co.jp/release/newsentry-4702.html"
+    },
+    {
+      "kind": "SNS",
+      "emoji": "🍓",
+      "title": "이무라야 '야와모찌아이스 딸기연유빙' 여름 재등장",
+      "desc": "딸기 소스·모찌·연유를 4단으로 쌓은 전문점급 빙수 아이스가 여름 한정으로 7월 6일 재출시돼 리뷰·SNS에서 호평을 받고 있다.",
+      "meta": "보도자료 · 7/6",
+      "url": "https://prtimes.jp/main/html/rd/p/000000314.000038645.html"
+    },
+    {
+      "kind": "SNS",
+      "emoji": "🍹",
+      "title": "배스킨라빈스 '다이키리 아이스' 팬 요청으로 부활",
+      "desc": "럼·라임 칵테일 맛을 낸 논알콜 아이스가 팬들의 풀뿌리 요청 끝에 기간 한정으로 부활, X(트위터)·Togetter 등에서 '기다렸다'는 반응과 함께 화제가 됐다.",
+      "meta": "SNS 화제 · 6/30~7/1",
+      "url": "https://togetter.com/li/2716249"
+    },
+    {
+      "kind": "Viral",
+      "emoji": "📺",
+      "title": "개그콤비 '가마이타치', 2026 여름 편의점 신상 아이스 시식 영상",
+      "desc": "하겐다즈 로얄밀크티 크런치, 글리코 자이언트콘 생카라멜 등 여름 편의점·슈퍼 신상 아이스를 먹어보는 영상으로 약 한 달 전 게시됐다(정확한 조회수는 확인 불가).",
+      "meta": "유튜브 · 게시 약 1개월 전",
+      "url": "https://www.youtube.com/watch?v=nQ2wc6hqJY4"
+    },
+    {
+      "kind": "News",
+      "emoji": "🌡️",
+      "title": "\"더우면 잘 팔린다\" 공식 흔들리는 일본 아이스 시장",
+      "desc": "식품신문 보도에 따르면 극단적 폭염이 오히려 외출을 줄이고 '녹을까 봐 안 산다'는 구매 기회손실을 낳으면서, 기존의 단순한 기온-매출 상관관계가 약화되고 있다.",
+      "meta": "기사 · Yahoo!뉴스",
+      "url": "https://news.yahoo.co.jp/articles/94a008a4ef20fa608aae54c1b9781f992e19d371"
+    },
+    {
+      "kind": "News",
+      "emoji": "🏆",
+      "title": "전문가 3인이 뽑은 '폭염 극복 부문별 아이스 랭킹'",
+      "desc": "전문가 3인이 부문별로 선정한 혹서기 추천 아이스 랭킹 기사가 7월 27일 게재되며 화제를 모았다.",
+      "meta": "기사 · 7/27",
+      "url": "https://news.livedoor.com/topics/detail/31923379/"
+    },
+    {
+      "kind": "News",
+      "emoji": "📈",
+      "title": "'아이스' 검색 관심도, 폭염과 함께 상승 추정 (근사치)",
+      "desc": "Google 트렌드 API를 직접 조회하지 못해 근사치이지만, 관련 보도와 판매 데이터를 종합하면 7월 말~8월 초 '아이스' 검색 관심은 폭염과 함께 상승세로 추정되며, 다만 40도를 넘는 극단적 폭염일에는 외출 자제로 정체되는 양상도 함께 보고된다.",
+      "meta": "추정치(기사 종합) · 8/1 기준",
+      "url": "https://trends.google.com/trends?geo=JP&hl=ja"
+    }
+  ]
+};
+  var sources = {
+  "kr": [
+    [
+      "1",
+      "GS25, TXT 연준∙요아정 협업 '사워레몬요거트' 아이스크림 출시 - 뉴스1",
+      "https://www.news1.kr/industry/distribution/6225237"
+    ],
+    [
+      "2",
+      "GS25 \"현대차와 협업·마케팅\"…첫 제품은 아이스크림 - 헤럴드경제",
+      "https://biz.heraldcorp.com/article/10790943"
+    ],
+    [
+      "3",
+      "CU, '패트와 매트' 활용 아이스크림 '반반바' 출시 - 전자신문",
+      "https://www.etnews.com/20260713000036"
+    ],
+    [
+      "4",
+      "\"日 먹킷리스트 아이스크림\" 세븐일레븐, 오하요 브륄레 밀크 출시 - 뉴시스",
+      "https://www.newsis.com/view/NISX20260715_0003709662"
+    ],
+    [
+      "5",
+      "세븐일레븐 공식 X - '시다바' 신맛 챌린지 홍보",
+      "https://x.com/seveneleven_kr/status/2070371479712305250"
+    ],
+    [
+      "6",
+      "GS25 수박아이스 SNS 게시물 - Threads",
+      "https://www.threads.com/@_tripgoing/post/DaT8jRAk3WH"
+    ],
+    [
+      "7",
+      "배스킨라빈스, 8월 이달의 맛 '산딸기가 끌리는 연유' 출시 - 뉴스인사이드",
+      "https://www.newsinside.kr/news/articleView.html?idxno=4882120"
+    ],
+    [
+      "8",
+      "롯데웰푸드, 우베 활용 아이스크림·과자 신제품 출시 - 신아일보",
+      "https://www.shinailbo.co.kr/news/articleView.html?idxno=5039524"
+    ],
+    [
+      "9",
+      "롯데 공식블로그 - 7월 신제품 라인업(말차 아이스크림 포함)",
+      "https://blog.lotte.co.kr/48726"
+    ],
+    [
+      "10",
+      "폭염 길어지자 편의점 '방긋'…얼음·아이스크림 매출 쑥 - 메트로서울",
+      "https://www.metroseoul.co.kr/article/20260729500391"
+    ],
+    [
+      "11",
+      "\"이 정도로 잘 팔릴 줄은 몰랐다\"…역대급 폭염에 100만 개 불티난 '이 제품' - 다음뉴스",
+      "https://v.daum.net/v/20260713230643569"
+    ],
+    [
+      "12",
+      "[푸드투데이] 롯데웰푸드 설레임, 기안84와 '설레임런'부터 쿨리쉬까지",
+      "https://www.foodtoday.or.kr/news/article.html?no=206710"
+    ],
+    [
+      "13",
+      "CU 반반바 숏폼 - 리센느 소개 영상 - YouTube",
+      "https://www.youtube.com/shorts/f0iJG0SGHjs"
+    ],
+    [
+      "14",
+      "더쿠 - GS25 신상 태극당 파르페, 빙수 후기",
+      "https://theqoo.net/muk/3757324492"
+    ],
+    [
+      "15",
+      "폭염 특수 잡아라···유통가 아이스크림 경쟁 - 뉴스웨이",
+      "https://www.newsway.co.kr/news/view?ud=2026073110093488644"
+    ]
+  ],
+  "us": [
+    [
+      "1",
+      "Nostalgic flavors drive GoodPop's latest launch - Food Business News",
+      "https://www.foodbusinessnews.net/articles/30677-nostalgic-flavors-drive-goodpops-latest-launch"
+    ],
+    [
+      "2",
+      "French Fry Ice Creams: GoodPop Fudge n' Vanilla French Fry Pop - Trend Hunter",
+      "https://www.trendhunter.com/trends/goodpop-fudge-n-vanilla-french-fry-pop"
+    ],
+    [
+      "3",
+      "Celebrate National Ice Cream Month with new Blue Bell Chocolate Lava Cake Ice Cream",
+      "https://www.bluebell.com/news/blue-bell-announces-new-chocolate-lava-cake-ice-cream/"
+    ],
+    [
+      "4",
+      "Review: This Spicy New Jeni's Ice Cream Flavor Is The 2026 Scoop Of The Summer - Tasting Table",
+      "https://www.tastingtable.com/2209185/jenis-ice-cream-2026-summer-flavors-review/"
+    ],
+    [
+      "5",
+      "Graeter's Ice Cream Releases Five New Flavors for the Summer Season - Parade",
+      "https://parade.com/food/graeters-ice-cream-releases-five-new-flavors-for-the-summer-season"
+    ],
+    [
+      "6",
+      "Pizza ice cream from Van Leeuwen to launch at Walmart exclusively - Fox Business",
+      "https://www.foxbusiness.com/lifestyle/pizza-ice-cream-van-leeuwen-walmart-exclusive"
+    ],
+    [
+      "7",
+      "Dairy Queen's Rumored August 2026 Blizzard Of The Month Is Practically Fall In A Cup - Tasting Table",
+      "https://www.tastingtable.com/2227957/dairy-queen-august-2026-blizzard-month-caramel-apple/"
+    ],
+    [
+      "8",
+      "Baskin-Robbins Flavor of the Month List - The Impulsive Buy",
+      "https://www.theimpulsivebuy.com/wordpress/baskin-robbins-flavor-of-the-month-list/"
+    ],
+    [
+      "9",
+      "Ben & Jerry's launches new flavor to mobilize voters ahead of November midterms - WCAX",
+      "https://www.wcax.com/2026/07/16/ben-jerrys-launches-new-flavor-mobilize-voters-ahead-november-midterms/"
+    ],
+    [
+      "10",
+      "Razz Up! Ben & Jerry's New Flavor and Campaign Calls on Voters to Push Back Against Authoritarianism - PR Newswire",
+      "https://www.prnewswire.com/news-releases/razz-up-ben--jerrys-new-flavor-and-campaign-calls-on-voters-to-push-back-against-authoritarianism-302826903.html"
+    ],
+    [
+      "11",
+      "Ice cream shops see surge in business during heat wave - WOWT",
+      "https://www.wowt.com/2026/06/30/ice-cream-shops-see-surge-business-during-heat-wave/"
+    ],
+    [
+      "12",
+      "Heatwave Boosts Ice Cream Sales as Magnum Beats Earnings Forecasts - Yahoo Finance",
+      "https://finance.yahoo.com/markets/stocks/articles/heatwave-boosts-ice-cream-sales-125253237.html"
+    ],
+    [
+      "13",
+      "New Branded Ice Cream Summer 2026 | Taste Test and Review - YouTube",
+      "https://www.youtube.com/watch?v=R2mD4Ghl4e8"
+    ],
+    [
+      "14",
+      "You Can Now Find Van Leeuwen's Kraft Macaroni & Cheese Ice Cream Nationwide at Walmart Stores - Food Network",
+      "https://www.foodnetwork.com/fn-dish/news/van-leeuwen-kraft-macaroni-cheese-ice-cream-nationwide-return-walmart"
+    ],
+    [
+      "15",
+      "Trader Joe's Wildberry Cheesecake Ice Cream Is Back for Summer - Yahoo",
+      "https://www.yahoo.com/lifestyle/articles/trader-joes-wildberry-cheesecake-ice-191344951.html"
+    ]
+  ],
+  "jp": [
+    [
+      "1",
+      "【2026年7月28日】セブン-イレブン・ファミリーマート・ローソン最新ひんやりアイス特集",
+      "https://entabe.jp/61042/2026-jul-icecream-sevenlawsonfamilymart-natsu-hinyari-tokushu"
+    ],
+    [
+      "2",
+      "セブンイレブンから「ティラミス氷」「プリン氷」が新登場",
+      "https://shingekifood.com/entry/2026/07/28/080344"
+    ],
+    [
+      "3",
+      "6年ぶりに復活！「セブンプレミアム まるですいか」",
+      "https://prtimes.jp/main/html/rd/p/000000966.000155396.html"
+    ],
+    [
+      "4",
+      "【ファミマ】チョコミントフレーバーのアイス･菓子･チルド飲料など全8種を新発売",
+      "https://www.ssnp.co.jp/distribution/684489/"
+    ],
+    [
+      "5",
+      "爽快感とパリパリ・ゴリゴリ食感のチョコミントアイス2品が登場",
+      "https://prtimes.jp/main/html/rd/p/000000937.000155396.html"
+    ],
+    [
+      "6",
+      "【2026年5月26日発売】ローソンの夏アイス・氷菓14品を一挙紹介",
+      "https://entabe.jp/60439/2026-jun-lawson-summer-ice-cream-news"
+    ],
+    [
+      "7",
+      "2026年 ニュースリリース ハーゲンダッツ ジャパン",
+      "https://www.haagen-dazs.co.jp/company/newsrelease/2026/"
+    ],
+    [
+      "8",
+      "明治 エッセル スーパーカップ カフェオレ＆クッキー 7月6日新発売",
+      "https://www.meiji.co.jp/corporate/pressrelease/2026/07_02/index.html"
+    ],
+    [
+      "9",
+      "新商品情報｜赤城乳業株式会社",
+      "https://www.akagi.com/products/new.html"
+    ],
+    [
+      "10",
+      "PARM ジェラート トロピカルミックス＆ヨーグルト味 森永乳業",
+      "https://www.morinagamilk.co.jp/release/newsentry-4702.html"
+    ],
+    [
+      "11",
+      "並ばず専門店級の味わい！「やわもちアイス いちご練乳氷」 井村屋",
+      "https://prtimes.jp/main/html/rd/p/000000314.000038645.html"
+    ],
+    [
+      "12",
+      "サーティワンのダイキュリーアイスが草の根活動の結果、期間限定で復活",
+      "https://togetter.com/li/2716249"
+    ],
+    [
+      "13",
+      "かまいたちが最新アイス2026を食べてみたら懐かしの味に遭遇！",
+      "https://www.youtube.com/watch?v=nQ2wc6hqJY4"
+    ],
+    [
+      "14",
+      "アイス市場「暑ければ売れる」に変化 季節依存から通年消費へ",
+      "https://news.yahoo.co.jp/articles/94a008a4ef20fa608aae54c1b9781f992e19d371"
+    ],
+    [
+      "15",
+      "専門家3人が選んだ、酷暑を乗り切る部門別アイスランキング",
+      "https://news.livedoor.com/topics/detail/31923379/"
+    ],
+    [
+      "16",
+      "Google トレンド (JP)",
+      "https://trends.google.com/trends?geo=JP&hl=ja"
+    ],
+    [
+      "17",
+      "【新着情報】アイス・コンビニアイスの新発売・新商品一覧 - もぐナビ",
+      "https://mognavi.jp/icecream/newitem"
+    ]
+  ]
+};
+
+  var root = document.documentElement;
+
+  function renderHeroList() {
+    var order = ["kr", "us", "jp"];
+    var html = order.map(function (key) {
+      var d = countries[key];
+      var soft = key === "kr" ? "var(--korea-soft)" : key === "us" ? "var(--us-soft)" : "var(--japan-soft)";
+      var tags = d.bars.slice(0, 3).map(function (b) { return '<span class="hero-tag">' + b[0] + '</span>'; }).join("");
+      return '<div class="hero-card" style="--card-color:' + d.color + ';--card-soft:' + soft + '">' +
+        '<div class="hero-art"></div>' +
+        '<div class="hero-panel">' +
+          '<span class="hero-badge"><span class="hero-badge-icon">' + d.emoji + '</span>' + d.name + ' · ' + d.flavor.replace("이주의 시그니처 · ", "") + '</span>' +
+          '<h3 class="hero-title">' + d.headline + '</h3>' +
+          '<p class="hero-summary">' + d.summary + '</p>' +
+          '<div class="hero-tags">' + tags + '</div>' +
+          '<a class="hero-link" href="#' + key + '">자세히 보기 →</a>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+    document.getElementById("heroList").innerHTML = html;
+  }
+
+  function renderDetail(key) {
+    var d = countries[key];
+    var soft = key === "kr" ? "var(--korea-soft)" : key === "us" ? "var(--us-soft)" : "var(--japan-soft)";
+    document.getElementById("detail").style.setProperty("--card-color", d.color);
+    document.getElementById("detail").style.setProperty("--card-soft", soft);
+
+    document.getElementById("dBadge").innerHTML = d.emoji + ' ' + d.name + ' · ' + d.flavor.replace("이주의 시그니처 · ", "");
+    document.getElementById("dTitle").textContent = d.headline;
+    document.getElementById("dSummary").textContent = d.summary;
+
+    var max = d.bars[0][1];
+    document.getElementById("dChart").innerHTML = d.bars.map(function (b) {
+      var pct = Math.round((b[1] / max) * 100);
+      return '<div class="bar-row"><span class="bar-label">' + b[0] + '</span>' +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%"></span></span>' +
+        '<span class="bar-value">' + b[1] + '</span></div>';
+    }).join("") + '<p class="chart-foot">* 신제품명·리뷰 제목·광고 문구에서 집계한 단순 빈도 근사치입니다.</p>';
+
+    document.getElementById("dList").innerHTML = items[key].map(function (i) {
+      var href = i.url && i.url.length ? i.url : "#";
+      var target = i.url && i.url.length ? ' target="_blank" rel="noopener"' : ' onclick="return false;"';
+      return '<a class="row" href="' + href + '"' + target + '>' +
+        '<span><span class="row-pill">' + i.kind + '</span>' +
+        '<p class="row-title">' + i.title + '</p>' +
+        '<p class="row-desc">' + i.desc + '</p>' +
+        '<span class="row-meta">' + i.meta + '</span></span>' +
+        '<span class="row-thumb">' + i.emoji + '</span></a>';
+    }).join("");
+
+    document.getElementById("dSources").innerHTML = sources[key].map(function (s) {
+      return '<div class="source-row"><span class="source-num">' + s[0] + '</span>' +
+        '<a href="' + s[2] + '" target="_blank" rel="noopener">' + s[1] + '</a></div>';
+    }).join("");
+  }
+
+  function route() {
+    var key = location.hash.replace("#", "");
+    var landing = document.getElementById("landing");
+    var detail = document.getElementById("detail");
+    if (countries[key]) {
+      renderDetail(key);
+      landing.classList.add("hidden");
+      detail.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      landing.classList.remove("hidden");
+      detail.classList.remove("active");
+    }
+  }
+
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var cur = root.getAttribute("data-theme");
+    root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+  });
+
+  window.addEventListener("hashchange", route);
+  renderHeroList();
+  route();
+})();
+</script>
+</body>
+</html>
