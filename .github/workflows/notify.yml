@@ -1,0 +1,22 @@
+name: Notify subscribers of new report
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/index.html'
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send OneSignal push notification
+        run: |
+          curl -sS -X POST "https://onesignal.com/api/v1/notifications" \
+            -H "Authorization: Key ${{ secrets.ONESIGNAL_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "app_id": "55173a33-c793-4d29-ac5d-364360b08384",
+              "included_segments": ["Subscribed Users"],
+              "headings": {"en": "Il Dolce Scoop", "ko": "Il Dolce Scoop", "ja": "Il Dolce Scoop"},
+              "contents": {"ko": "이번 주 아이스크림 트렌드가 올라왔어요", "en": "This weeks ice cream trends are up", "ja": "今週のアイスクリームトレンドが更新されました"},
+              "url": "https://icecream-trend.vercel.app/"
+            }'

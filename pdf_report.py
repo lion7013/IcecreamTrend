@@ -24,11 +24,87 @@ pdfmetrics.registerFont(TTFont("KR-Italic", italic_path))
 kr_prop = fm.FontProperties(fname=reg_path)
 kr_bold_prop = fm.FontProperties(fname=bold_path)
 
-REPORT_DATE = "2026.08.23"
-REPORT_RANGE = "2026.08.17 - 08.23"
-OUT_PDF = "docs/reports/2026-08-23-ice-cream-trends.pdf"
-COUNTRIES = [{'key': 'kr', 'name': '한국', 'flavor': '망고', 'soft': '#FFF3DC', 'mid': '#FFC259', 'deep': '#E67E22', 'headline': '망고가 편의점·프랜차이즈 아이스크림 시장을 뒤덮은 한 주', 'summary_paragraphs': ["GS25가 TXT 연준과 다시 손잡고 낸 사워레몬요거트 바가 2,500원에 출시되며 K팝 콜라보 마케팅을 이어갔습니다. 요아정·로로멜로와 협업한 이 제품은 연준 랜덤 포토카드를 동봉해 팬덤 소비를 유도했고, 컵 제품은 4,500원에 별도 판매됩니다. 배스킨라빈스는 배우 박지훈을 앞세운 8월 이달의 맛 '산딸기가 끌리는 연유'와 직영 한정 슈가케인 빙수 2종으로 여름 시즌을 공략했습니다.", "세븐일레븐은 리얼 과일모양 '망고스틴바'와 신맛 챌린지 '시다바'로 SNS 화제성을 유지했고, 일본 오하요유업과 협업한 '오하요 브륄레 밀크'는 출시 열흘 만에 20만 개가 팔리며 폭염 특수를 톡톡히 누렸습니다. 롯데웰푸드는 죠스바·스크류바에 젤리를 채운 신제품으로 Z세대의 '얼려먹는 젤리' 트렌드에 대응했습니다.", '업계 전반에서는 망고가 딸기를 제치고 이번 여름 가장 많이 쓰이는 맛으로 떠올랐으며, 기록적인 폭염 속에 GS25·세븐일레븐 등 주요 편의점의 8월 아이스크림 매출은 전년 대비 20% 안팎 늘었습니다.'], 'flavor_bars': [['망고', 6], ['딸기', 5], ['레몬', 3], ['초콜릿', 3], ['복숭아', 2]], 'pack_bars': [['리얼 과일모양', 5], ['화이트초콜릿 코팅', 4], ['젤리 인서트', 3], ['아이돌 콜라보 굿즈', 2], ['저당·저칼로리', 2]], 'content_bars': [['프로즌소르베 SNS 화제성', 120], ['오하요 브륄레밀크 리뷰 확산', 45], ['시다바 챌린지 영상', 28], ['망고스틴바 리뷰', 15], ['초코송이파르페 리뷰', 10]], 'refs_intro': '이번 리포트는 국내 언론사 기사와 Threads·X 등 웹검색으로 확인 가능한 SNS 게시물을 기반으로 작성됐으며, 인스타그램·틱톡 전체를 실시간 크롤링한 결과는 아닙니다.', 'refs': [{'num': 1, 'title': "GS25, TXT 연준·요아정·로로멜로 협업 '사워레몬요거트' 출시", 'note': '데일리매거진 보도, 팬덤 마케팅과 연계한 아이돌 콜라보 사례.', 'kind': '신제품', 'thumb_url': None}, {'num': 2, 'title': "세븐일레븐 '오하요 브륄레 밀크', 열흘 만에 20만개 판매", 'note': '헤럴드경제, 일본 오하요유업과의 협업 성과 보도.', 'kind': '뉴스', 'thumb_url': None}, {'num': 3, 'title': "배스킨라빈스 8월 이달의 맛 '산딸기가 끌리는 연유'", 'note': '한국경제, 박지훈 광고모델 캠페인 소개.', 'kind': '광고', 'thumb_url': None}, {'num': 4, 'title': '롯데웰푸드, 젤리 넣은 죠스바·스크류바 출시', 'note': '디지틀조선일보, Z세대 트렌드 반영 신제품.', 'kind': '신제품', 'thumb_url': None}, {'num': 5, 'title': '"딸기 가고 망고 온다" 여름 디저트 시장 조기 공략', 'note': '서울파이낸스, 업계 전반의 망고 트렌드 분석.', 'kind': '뉴스', 'thumb_url': None}]}, {'key': 'us', 'name': '미국', 'flavor': '호박', 'soft': '#F3E3D8', 'mid': '#D9A26B', 'deep': '#A66A1C', 'headline': '미국은 벌써 가을 맛으로, 호박·카라멜애플이 앞장서다', 'summary_paragraphs': ['Publix rolled out five fall-limited flavors — pumpkin pie, apple cinnamon, brown sugar cinnamon streusel, eggnog and a banana-brown-sugar-rum swirl — in pints and half gallons, and Dairy Queen previewed a caramel-apple-cheesecake and brown-sugar-cookie-dough Blizzard lineup for an August 26 launch. The back-to-school season is once again pulling menus from summer toward fall flavors earlier than usual, trade press noted.', "Baskin Robbins kept its Brookie Batter and Oreo S'mores collaboration going through August alongside its 'Sundae Scaries' charity promotion, donating a portion of Sunday sundae sales to a children's foundation. Ben & Jerry's drew crowds to a free ice-cream-bar pop-up in Brooklyn, New York, part of its multi-city 'Great Summer Bar Drop' tour, while United Dairy Farmers and Grippo's launched a Cincinnati-only buttered-popcorn barbecue-caramel collaboration.", 'A viral TikTok claiming to show something resembling maggots in ice cream made with a Ninja Creami home maker spread widely this week, prompting many owners to inspect their own machines — an unplanned consumer-safety story that outpaced most branded marketing in social reach.'], 'flavor_bars': [['호박', 4], ['카라멜애플', 3], ['브라운슈가', 3], ['초콜릿·브라우니', 3], ['딸기', 2]], 'pack_bars': [['파인트', 4], ['아이스크림바', 3], ['블리자드·소프트서브 컵', 2], ['하프갤런', 1], ['쿼트', 1]], 'content_bars': [['닌자크리미 이물질 틱톡 확산', 85], ['벤앤제리스 서머바드롭 이벤트 반응', 30], ['퍼블릭스 가을맛 기사 확산', 20], ['데어리퀸 가을블리자드 예고 반응', 18], ['배스킨라빈스 브루키배터 리뷰', 12]], 'refs_intro': '이번 주 미국 시장 리서치는 현지 언론과 웹검색으로 확인 가능한 SNS 게시물을 기반으로 작성됐으며, 인스타그램·틱톡 전체 크롤링 결과는 아닙니다.', 'refs': [{'num': 1, 'title': 'Publix announces limited-edition fall ice cream flavors', 'note': 'ClickOrlando, full five-flavor lineup and pricing.', 'kind': '신제품', 'thumb_url': None}, {'num': 2, 'title': 'Viral TikTok has Ninja Creami users checking their machines', 'note': "Click2Houston, consumer-safety story driving this week's largest social reach.", 'kind': '바이럴', 'thumb_url': None}, {'num': 3, 'title': "Dairy Queen's fall 2026 menu: two new Blizzard flavors", 'note': 'Parade, caramel apple cheesecake and brown sugar cookie dough preview.', 'kind': '뉴스', 'thumb_url': None}, {'num': 4, 'title': "Ben & Jerry's Great Summer Bar Drop hits NYC", 'note': 'PRNewswire, Brooklyn pop-up giveaway details.', 'kind': '광고', 'thumb_url': None}, {'num': 5, 'title': 'Baskin Robbins turns Sunday sundaes into support for children in need', 'note': 'QSR Magazine, Sundae Scaries charity campaign.', 'kind': '광고', 'thumb_url': None}]}, {'key': 'jp', 'name': '일본', 'flavor': '초코', 'soft': '#EFDDD0', 'mid': '#C89173', 'deep': '#6B4226', 'headline': '초콜릿과 배(나시) 아이스가 일본 편의점 진열대를 양분하다', 'summary_paragraphs': ["세븐일레븐은 배 과즙 52%를 담은 2단계 식감의 '마루데 와나시'에 이어, 마스카르포네·코코아파우더·커피소스를 넣은 빙수형 디저트 '티라미스氷'로 mognavi 주간 아이스 랭킹 1위에 올랐습니다. 3년 만에 부활한 이 상품에 더해 모리나가 제조 한정판 '판초코아이스 카라멜푸딩맛', 홍차&오렌지젤리 컵디저트까지 겹치며 세븐일레븐은 이번 주 가장 활발한 브랜드로 떠올랐습니다.", "롯데는 소 사치과실 시리즈 네 번째로 샤인머스캣 쥬레를 넣은 신제품을 전국 발매했고, 모리나가유업은 '바리체 초코&민트'를 편의점 선행 판매 후 전국으로 확대했습니다. 이무라야는 얼음 식감 시리즈 4탄 '샤리리 초콜릿아이스'를, 글리코는 파피코 멀티팩에 초코커피맛을 새로 더하며 초콜릿 계열이 이번 주 가장 많이 반복된 맛으로 나타났습니다.", "아카기유업은 나리타 공항에 후지산·벚꽃 디자인 광고를 걸고 다언어 패키지 배맛 '가리가리군'으로 인바운드 관광객을 겨냥한 마케팅을 9월까지 이어가고 있으며, 롯데는 9월 상순 출시 예정인 가을 한정 유키미다이후쿠 '오츠키미' 패키지를 예고했습니다."], 'flavor_bars': [['초코', 4], ['배', 3], ['캐러멜', 2], ['샤인머스캣', 2], ['커피·티라미스', 2]], 'pack_bars': [['기간한정', 4], ['편의점 한정판', 4], ['수량한정', 2], ['컵·빙수 타입', 2], ['다언어 패키지', 1]], 'content_bars': [['티라미스氷 랭킹1위 화제', 60], ['마루데와나시 리뷰 확산', 35], ['판초코아이스 카라멜푸딩 SNS', 22], ['소 샤인머스캣 기사 확산', 15], ['가리가리군 인바운드 캠페인 반응', 10]], 'refs_intro': '이 섹션은 일본 언론·업계 매체 기사와 웹검색으로 확인 가능한 정보를 바탕으로 작성됐으며, 인스타그램·틱톡 전체 크롤링 결과는 아닙니다.', 'refs': [{'num': 1, 'title': 'ロッテ「爽 贅沢果実シャインマスカット」プレスリリース', 'note': '롯데 공식, 소 시리즈 4탄 전국 발매 소식.', 'kind': '신제품', 'thumb_url': None}, {'num': 2, 'title': '森永製菓「板チョコアイス カラメルプリン味」8/19発売', 'note': '모리나가제과 공식, 세븐일레븐 한정 상품 발매.', 'kind': '신제품', 'thumb_url': None}, {'num': 3, 'title': 'mognavi「2026年8月第4週」アイスランキング', 'note': "세븐일레븐 '티라미스氷' 주간 랭킹 1위 소식.", 'kind': '바이럴', 'thumb_url': None}, {'num': 4, 'title': 'えん食べ、セブン・ファミマ・ローソン新作スイーツまとめ', 'note': '8월 셋째 주 편의점 3사 신상품 정리.', 'kind': '뉴스', 'thumb_url': None}, {'num': 5, 'title': '赤城乳業「ガリガリ君」インバウンド向けPR施策', 'note': '아카기유업 공식, 나리타 공항 광고 캠페인.', 'kind': '광고', 'thumb_url': None}]}]
-OVERVIEW = {'highlights': [('#E67E22', '한국은 폭염 속 망고가 딸기를 제치고 최다 언급 맛으로 부상'), ('#A66A1C', '미국은 호박·카라멜애플 등 가을 맛으로 조기 전환'), ('#6B4226', '일본은 세븐일레븐이 신제품 연달아 내며 랭킹 1위 석권')], 'table_rows': [('한국', '망고', '6', '5', '망고·딸기·레몬', '#FFF3DC'), ('미국', '호박', '3', '2', '호박·카라멜애플', '#F3E3D8'), ('일본', '초코', '7', '3', '초코·배·캐러멜', '#EFDDD0')], 'analysis': '이번 주 세 시장은 각기 다른 계절 감각으로 갈렸습니다. 한국은 기록적 폭염 속에 망고·딸기 등 여름 과일 맛과 K팝·캐릭터 콜라보가 편의점 채널을 중심으로 강세를 보였고, GS25·세븐일레븐의 아이스크림 매출은 전년 대비 20% 안팎 늘었습니다. 반면 미국은 개학 시즌과 맞물려 호박·카라멜애플·브라운슈가 등 가을 맛이 예년보다 이르게 등장했고, 정작 이번 주 가장 큰 화제는 브랜드 마케팅이 아닌 닌자 크리미 이물질 논란이라는 소비자 안전 이슈였습니다. 일본은 세븐일레븐이 배·티라미스·초콜릿 신제품을 연달아 내며 주간 랭킹 1위까지 차지해 이번 주 가장 활발한 단일 브랜드로 떠올랐고, 초콜릿 계열이 여러 제조사에 걸쳐 반복 등장했습니다. 세 시장을 종합하면 편의점·프랜차이즈 채널이 신제품 발매 속도를 주도하는 흐름은 공통적이나, 소비자의 관심을 끄는 축은 한국(계절 맛·아이돌 콜라보), 미국(시즌 전환·안전 이슈), 일본(브랜드 경쟁·연속 발매)으로 각기 달랐습니다.'}
+REPORT_DATE = "2026.08.28"
+REPORT_RANGE = "2026.08.21 - 08.28"
+OUT_PDF = "docs/reports/2026-08-28-ice-cream-trends.pdf"
+COUNTRIES = [
+    {
+        'key': 'kr', 'name': '한국', 'flavor': '딸기',
+        'soft': '#FCEAF0', 'mid': '#F6A9BE', 'deep': '#C85476',
+        'headline': '기록적 폭염 속 딸기 아이스크림과 편의점 콜라보 열풍',
+        'summary_paragraphs': [
+            "기록적인 폭염이 이어지며 편의점 아이스크림 매출이 급증한 가운데, 배스킨라빈스는 '산딸기가 끌리는 연유'를 8월 이달의 맛으로 내세워 딸기 트렌드를 이끌고 있습니다. 배우 박지훈을 광고모델로 기용하고 싱글레귤러를 더블주니어로 업그레이드해주는 여름 프로모션도 함께 진행 중입니다.",
+            "GS25는 현대자동차와 손잡은 '현차는 빵빵'에 이어 TXT 연준·요아정·로로멜로와 3자 협업한 '사워레몬요거트'를 잇달아 선보이며 콜라보 마케팅 경쟁에 불을 지폈습니다. 세븐일레븐의 '오하요 브륄레 밀크'는 일본 오하요유업과 협업해 출시 열흘 만에 20만개가 팔렸고, 3단계 신맛 아이스바 '시다바'도 SNS 챌린지 콘텐츠로 확산되고 있습니다.",
+            "한국마즈는 스니커즈·트윅스를 아이스바로 국내 최초 출시해 GS25·CU·세븐일레븐에 동시 입점시켰고, CU의 저당 아이스바 '라라스윗'은 6월부터 1+1 프로모션을 이어가고 있습니다. 42.5도까지 치솟은 폭염 속에 아이스크림 관련 검색량은 일주일 새 3배 가까이 늘어난 것으로 추정됩니다.",
+        ],
+        'flavor_bars': [['딸기', 10], ['초콜릿', 7], ['크림브륄레', 5], ['신맛', 4], ['커피', 3]],
+        'pack_bars': [['과일 모양', 6], ['캐릭터 콜라보', 5], ['젤리 인클루전', 4], ['저당 헬시', 4], ['브랜드 콜라보 외형', 3]],
+        'content_bars': [['오하요 브륄레 밀크', 18], ['GS25 아이스크림 대란', 12], ['신맛질주 시다바', 9], ['산딸기 연유', 7], ['스니커즈 아이스바', 5]],
+        'refs_intro': '이번 리포트는 국내 언론사 기사와 Threads·X 등 웹검색으로 확인 가능한 SNS 게시물을 기반으로 작성됐으며, 인스타그램·틱톡 전체를 실시간 크롤링한 결과는 아닙니다.',
+        'refs': [
+            {'num': 1, 'title': "세븐일레븐, 일본 협업 '오하요 브륄레 밀크' 열흘만에 20만개", 'note': '헤럴드경제, 일본 오하요유업과의 협업 성과 보도.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 2, 'title': "GS25, 현대자동차와 '현차는 빵빵' 아이스크림 출시", 'note': '헤럴드경제, 자동차 브랜드 굿즈 결합 콜라보 소식.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 3, 'title': "배스킨라빈스 8월 이달의 맛 '산딸기가 끌리는 연유'", 'note': '한국경제, 박지훈 광고모델 캠페인 소개.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 4, 'title': "'아이스크림 대란' GS25 콘 9개 9,900원 완판 행렬", 'note': 'Threads, 편의점 아이스크림 품절 SNS 화제.', 'kind': 'SNS', 'thumb_url': None},
+            {'num': 5, 'title': '기록적 폭염에 아이스크림 검색량 일주일 새 3배 급증', 'note': 'Nate뉴스, 폭염과 편의점 매출 특수 분석.', 'kind': '뉴스', 'thumb_url': None},
+        ],
+    },
+    {
+        'key': 'us', 'name': '미국', 'flavor': '초코',
+        'soft': '#EFDDD0', 'mid': '#C89173', 'deep': '#6B4226',
+        'headline': '미국, 초콜릿과 캐러멜애플 앞세워 가을 시즌 조기 전환',
+        'summary_paragraphs': [
+            "Dairy Queen kicked off fall flavor season with the Caramel Apple Cheesecake Blizzard, running through August 30 with a buy-one-get-one deal for app members. Publix followed with a five-flavor fall grocery lineup spanning banana-brown-sugar-rum, brown sugar cinnamon streusel and apple varieties, signaling an industry-wide early pivot to autumn.",
+            "Blue Bell debuted its first new flavor of 2026, Honey Vanilla, while Cold Stone Creamery and Trader Joe's leaned into loaded, chocolate-and-peanut-butter-driven treats. Ben & Jerry's ran a free 'Great Summer Bar Drop' giveaway tour in Brooklyn, and Van Leeuwen partnered with singer Laufey on a limited fro-yo benefiting her foundation.",
+            "The week's biggest viral moment came from Costco's hyper-realistic 3D fruit-shaped ice bars from Aiko Garden, which sold out fast as 'cut-open reveal' videos spread on TikTok, alongside a separate trend of stuffing whole Magnum bars into hollowed-out croissants — the so-called 'Cragnum' hack.",
+        ],
+        'flavor_bars': [['캐러멜애플', 4], ['초콜릿', 4], ['브라운슈거', 3], ['땅콩버터', 3], ['베리', 3]],
+        'pack_bars': [['파인트', 5], ['바(스틱형)', 5], ['버라이어티팩', 3], ['한정판', 3], ['쿼트', 2]],
+        'content_bars': [['3D 과일 아이스바', 35], ['크래그넘 레시피', 28], ['콜드스톤 콜라보', 14], ['DQ 블리자드', 11], ['벤앤제리스 이벤트', 9]],
+        'refs_intro': '이번 주 미국 시장 리서치는 현지 언론과 웹검색으로 확인 가능한 SNS 게시물을 기반으로 작성됐으며, 인스타그램·틱톡 전체 크롤링 결과는 아닙니다.',
+        'refs': [
+            {'num': 1, 'title': 'Dairy Queen Kicks Off Fall With Caramel Apple Cheesecake Blizzard', 'note': 'Tasting Table, 8월 3일부터 30일까지 진행되는 신메뉴 소식.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 2, 'title': 'Blue Bell Debuts Honey Vanilla, Its First New Flavor of 2026', 'note': 'KRIS TV, 2026년 첫 신맛 출시 보도.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 3, 'title': "Costco's Hyper-Realistic 3D Fruit Ice Bars Go Viral on TikTok", 'note': 'Anka Foods, 코스트코 아이코가든 3D 아이스바 확산.', 'kind': '바이럴', 'thumb_url': None},
+            {'num': 4, 'title': "Stuffing a Whole Magnum Bar Into a Croissant Goes Viral", 'note': 'Food Republic, 크래그넘 SNS 레시피 유행.', 'kind': 'SNS', 'thumb_url': None},
+            {'num': 5, 'title': "Ben & Jerry's Great Summer Bar Drop Hits NYC", 'note': 'Dairy Foods, 브루클린 무료 증정 투어 보도.', 'kind': '광고', 'thumb_url': None},
+        ],
+    },
+    {
+        'key': 'jp', 'name': '일본', 'flavor': '호지차',
+        'soft': '#F1E4D3', 'mid': '#C9A579', 'deep': '#8B5E34',
+        'headline': '호지차·샤인머스캣 프리미엄 라인과 원신 콜라보 예약 개시',
+        'summary_paragraphs': [
+            "세븐일레븐 재팬은 누적 2.2억개 판매를 넘은 '마루데' 시리즈의 여름 신작으로 배맛에 이어 쿄호 포도맛을 8월 25일부터 순차 발매했습니다. 롯데·메이지 등도 같은 주에 독립적으로 포도·머스캣 계열 신제품을 내놓으며 카테고리 전반의 쏠림이 뚜렷했습니다.",
+            "하겐다즈 재팬은 땅콩버터와 버터캐러멜을 바삭한 웨하스로 감싼 크리스피 샌드 신제품을 선보였고, 이무라야는 우지 호지차를 사용한 3층 구조의 화과자풍 아이스 '야와모찌 호지차와라비'를 8월 31일부터 계절 한정으로 출시합니다. 호지차 계열은 프리미엄·화과자 라인에서 지속적으로 강세를 보이고 있습니다.",
+            "원신과 배스킨라빈스 재팬의 첫 콜라보 사전예약이 오늘(8월 28일) 오전 11시부터 시작되며 게임 팬덤 사이에서 큰 화제를 모으고 있고, 인기 코미디 듀오 카마이타치의 편의점 신상 아이스 리뷰 영상도 꾸준히 조회수를 쌓고 있습니다. 가리가리군은 20주년을 맞아 포도맛 신상과 축구 유니폼 증정 캠페인을 동시에 전개 중입니다.",
+        ],
+        'flavor_bars': [['샤인머스캣', 5], ['호지차', 4], ['복숭아', 3], ['멜론', 3], ['버터캐러멜', 3]],
+        'pack_bars': [['미니컵', 5], ['바/스틱형', 4], ['한입 소포장', 3], ['박스 리뉴얼', 2], ['콜라보 굿즈', 2]],
+        'content_bars': [['원신 콜라보 예약', 40], ['카마이타치 리뷰', 30], ['3D 과일 아이스', 22], ['가리가리군 캠페인', 15], ['하겐다즈 신작', 10]],
+        'refs_intro': '이 섹션은 일본 언론·업계 매체 기사와 웹검색으로 확인 가능한 정보를 바탕으로 작성됐으며, 인스타그램·틱톡 전체 크롤링 결과는 아닙니다.',
+        'refs': [
+            {'num': 1, 'title': 'セブン-イレブン、梨・巨峰の「まるで」シリーズ夏の新作を発売', 'note': 'SEJ 공식, 마루데 시리즈 여름 신작 소식.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 2, 'title': 'ハーゲンダッツ、ピーナッツバター×バターキャラメルのクリスピーサンド発売', 'note': 'entabe, 크리스피 샌드 신제품 보도.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 3, 'title': '井村屋、ほうじ茶わらび餅風アイス「やわもちアイス」発売', 'note': 'Imuraya 공식, 호지차 화과자풍 아이스 소식.', 'kind': '신제품', 'thumb_url': None},
+            {'num': 4, 'title': '原神×サーティワン、初コラボの事前予約が本日スタート', 'note': 'PR TIMES, 게임 콜라보 사전예약 개시 소식.', 'kind': '광고', 'thumb_url': None},
+            {'num': 5, 'title': 'かまいたち、2026年コンビニ新作アイスレビュー動画が話題', 'note': 'YouTube, 코미디 듀오 편의점 아이스 리뷰 영상.', 'kind': '바이럴', 'thumb_url': None},
+        ],
+    },
+]
+OVERVIEW = {
+    'highlights': [
+        ('#C85476', '한국, 폭염 특수 속 딸기 신맛 트렌드와 편의점 콜라보 경쟁 가속'),
+        ('#6B4226', '미국, 초콜릿·캐러멜애플 앞세운 가을 시즌 조기 전환'),
+        ('#8B5E34', '일본, 호지차·샤인머스캣 프리미엄 라인과 원신 콜라보 예약 개시'),
+    ],
+    'table_rows': [
+        ('한국', '딸기', '5', '2', '딸기·초콜릿', '#FCEAF0'),
+        ('미국', '초코', '2', '2', '파인트·바', '#EFDDD0'),
+        ('일본', '호지차', '4', '1', '미니컵·샤인머스캣', '#F1E4D3'),
+    ],
+    'analysis': '이번 주(8/21~8/28) 한국·미국·일본 3개 시장은 폭염과 계절 전환이라는 서로 다른 배경 속에서도 활발한 신제품·마케팅 경쟁을 이어갔습니다. 한국은 기록적 폭염 속에 배스킨라빈스가 딸기 시그니처 맛을 내세우고 GS25가 현대자동차·TXT 연준과 잇단 콜라보 신제품을 선보이며 편의점발 화제성이 두드러졌습니다. 미국은 여름에서 가을로의 전환이 본격화되며 캐러멜애플·초콜릿 계열 신제품이 동시다발적으로 쏟아졌고, 코스트코의 3D 과일모양 아이스바와 크래그넘 레시피 등 SNS발 바이럴 콘텐츠가 강세를 보였습니다. 일본은 세븐일레븐의 마루데 시리즈와 하겐다즈 신작이 프리미엄 과일·호지차 트렌드를 이끄는 가운데, 원신×배스킨라빈스 재팬 콜라보 사전예약 개시가 게임 팬덤을 중심으로 큰 화제를 모았습니다. 세 시장 공통적으로 유명 IP·셀럽과의 협업 마케팅이 신제품 화제성을 견인하는 핵심 전략으로 자리잡고 있습니다.',
+}
 
 os.makedirs(os.path.dirname(OUT_PDF), exist_ok=True)
 c = canvas.Canvas(OUT_PDF, pagesize=A4)
