@@ -164,8 +164,52 @@
   .past-reports { border-top: 1px solid var(--hairline); }
   .past-report-row { display: flex; justify-content: space-between; padding: 12px 2px; font-size: 13px; border-bottom: 1px solid var(--hairline); text-decoration: none; color: var(--ink); }
   .past-report-row:hover { color: var(--korea); }
-  .topbar { position: sticky; top: 0; z-index: 10; display: flex; justify-content: flex-end; gap: 8px; padding: 10px 14px; background: var(--bg); }
-  .theme-toggle, .lang-toggle { font-size: 11px; color: var(--ink-muted); background: var(--surface); border: 1px solid var(--hairline); border-radius: 100px; padding: 6px 10px; cursor: pointer; font-family: inherit; }
+  .topbar { position: sticky; top: 0; z-index: 10; display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg); }
+  .lang-wrap { position: relative; }
+  .lang-btn { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; font-family: inherit; color: var(--ink-muted); background: var(--pill-bg); border: 1px solid var(--hairline); border-radius: 100px; padding: 7px 12px 7px 10px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .lang-btn:hover { color: var(--ink); border-color: var(--ink-muted); }
+  .lang-btn:focus-visible, .theme-switch:focus-visible, .lang-item:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .lang-globe { width: 14px; height: 14px; flex: none; }
+  .lang-globe circle, .lang-globe ellipse, .lang-globe line { stroke: currentColor; fill: none; stroke-width: 1.3; }
+  .lang-code { min-width: 24px; text-align: left; letter-spacing: 0.02em; }
+  .lang-chevron { width: 9px; height: 9px; flex: none; transition: transform 0.25s cubic-bezier(.4,0,.2,1); }
+  .lang-wrap.open .lang-chevron { transform: rotate(180deg); }
+  .lang-wrap.open .lang-btn { color: var(--ink); border-color: var(--ink-muted); }
+  .lang-menu { position: absolute; top: calc(100% + 8px); right: 0; min-width: 124px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 14px; box-shadow: var(--shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; z-index: 20; transform-origin: top right; transform: scale(0.92) translateY(-6px); opacity: 0; visibility: hidden; transition: transform 0.18s cubic-bezier(.2,.9,.3,1.3), opacity 0.15s ease, visibility 0.18s; }
+  .lang-wrap.open .lang-menu { transform: scale(1) translateY(0); opacity: 1; visibility: visible; }
+  .lang-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; border: none; background: none; font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--ink); padding: 8px 10px; border-radius: 9px; cursor: pointer; text-align: left; transition: background 0.15s ease; }
+  .lang-item:hover { background: var(--accent-soft); }
+  .lang-item .full-name { color: var(--ink-muted); font-weight: 500; font-size: 11.5px; }
+  .lang-item .check { width: 13px; height: 13px; opacity: 0; transform: scale(0.6); transition: opacity 0.15s ease, transform 0.15s ease; }
+  .lang-item[aria-checked="true"] .check { opacity: 1; transform: scale(1); }
+  .theme-switch { position: relative; width: 50px; height: 26px; padding: 0; border-radius: 100px; border: 1px solid var(--hairline); cursor: pointer; background: var(--pill-bg); overflow: hidden; flex: none; transition: background 0.4s ease, border-color 0.4s ease; }
+  .theme-switch .track-icon { position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; color: var(--ink-muted); opacity: 0.35; transition: opacity 0.3s ease, color 0.4s ease; }
+  .theme-switch .track-icon.sun { left: 6px; opacity: 1; }
+  .theme-switch .track-icon.moon { right: 6px; }
+  .theme-switch .knob { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); box-shadow: var(--shadow); display: grid; place-items: center; color: var(--bg); transform: translateX(0); transition: transform 0.38s cubic-bezier(.5,-0.2,.2,1.3), background 0.4s ease; }
+  .theme-switch .knob svg { width: 12px; height: 12px; position: absolute; transition: opacity 0.25s ease, transform 0.35s ease; }
+  .theme-switch .knob .knob-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+  .theme-switch .knob .knob-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  @media (prefers-color-scheme: dark) {
+    .theme-switch .track-icon.sun { opacity: 0.35; }
+    .theme-switch .track-icon.moon { opacity: 1; }
+    .theme-switch .knob { transform: translateX(24px); }
+    .theme-switch .knob .knob-sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+    .theme-switch .knob .knob-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+  }
+  :root[data-theme="dark"] .theme-switch .track-icon.sun { opacity: 0.35; }
+  :root[data-theme="dark"] .theme-switch .track-icon.moon { opacity: 1; }
+  :root[data-theme="dark"] .theme-switch .knob { transform: translateX(24px); }
+  :root[data-theme="dark"] .theme-switch .knob .knob-sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+  :root[data-theme="dark"] .theme-switch .knob .knob-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+  :root[data-theme="light"] .theme-switch .track-icon.sun { opacity: 1; }
+  :root[data-theme="light"] .theme-switch .track-icon.moon { opacity: 0.35; }
+  :root[data-theme="light"] .theme-switch .knob { transform: translateX(0); }
+  :root[data-theme="light"] .theme-switch .knob .knob-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+  :root[data-theme="light"] .theme-switch .knob .knob-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  @media (prefers-reduced-motion: reduce) {
+    .theme-switch .knob, .lang-menu, .lang-chevron, .theme-switch .track-icon, .theme-switch .knob svg { transition-duration: 0.001ms !important; }
+  }
   .cookie-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 20; background: var(--surface); border: 1px solid var(--hairline); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; display: none; gap: 14px; align-items: center; flex-wrap: wrap; max-width: 640px; margin: 0 auto; }
   .cookie-banner p { font-size: 12.5px; color: var(--ink-muted); margin: 0; flex: 1; min-width: 200px; }
   .cookie-actions { display: flex; gap: 8px; }
@@ -181,8 +225,26 @@
 </style>
 
 <div class="topbar">
-  <button class="lang-toggle" id="langToggle" type="button">한국어</button>
-  <button class="theme-toggle" id="themeToggle" type="button">라이트/다크</button>
+  <div class="lang-wrap" id="langWrap">
+    <button class="lang-btn" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <svg class="lang-globe" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.3"/><ellipse cx="8" cy="8" rx="2.6" ry="6.3"/><line x1="1.7" y1="8" x2="14.3" y2="8"/><line x1="2.6" y1="4.6" x2="13.4" y2="4.6"/><line x1="2.6" y1="11.4" x2="13.4" y2="11.4"/></svg>
+      <span class="lang-code" id="langCode">KOR</span>
+      <svg class="lang-chevron" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="lang-menu" role="listbox">
+      <button class="lang-item" role="option" data-lang="ko" aria-checked="true" type="button"><span>KOR <span class="full-name">한국어</span></span><svg class="check" viewBox="0 0 14 14"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="lang-item" role="option" data-lang="en" aria-checked="false" type="button"><span>ENG <span class="full-name">English</span></span><svg class="check" viewBox="0 0 14 14"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="lang-item" role="option" data-lang="ja" aria-checked="false" type="button"><span>JPN <span class="full-name">日本語</span></span><svg class="check" viewBox="0 0 14 14"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+  <button class="theme-switch" id="themeSwitch" type="button" aria-label="라이트/다크 모드 전환" aria-pressed="false">
+    <svg class="track-icon sun" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><g stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><line x1="8" y1="0.8" x2="8" y2="2.2"/><line x1="8" y1="13.8" x2="8" y2="15.2"/><line x1="0.8" y1="8" x2="2.2" y2="8"/><line x1="13.8" y1="8" x2="15.2" y2="8"/></g></svg>
+    <svg class="track-icon moon" viewBox="0 0 16 16" fill="none"><path d="M13 9.5A5.6 5.6 0 1 1 6.5 3a4.4 4.4 0 0 0 6.5 6.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    <span class="knob">
+      <svg class="knob-sun" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.4" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="8" y1="0.6" x2="8" y2="2.4"/><line x1="8" y1="13.6" x2="8" y2="15.4"/><line x1="0.6" y1="8" x2="2.4" y2="8"/><line x1="13.6" y1="8" x2="15.4" y2="8"/><line x1="2.7" y1="2.7" x2="4" y2="4"/><line x1="12" y1="12" x2="13.3" y2="13.3"/><line x1="2.7" y1="13.3" x2="4" y2="12"/><line x1="12" y1="4" x2="13.3" y2="2.7"/></g></svg>
+      <svg class="knob-moon" viewBox="0 0 16 16" fill="none"><path d="M13.2 9.8A5.8 5.8 0 1 1 6.2 2.8a4.6 4.6 0 0 0 7 7z" fill="currentColor"/></svg>
+    </span>
+  </button>
 </div>
 
 <div class="wrap">
@@ -209,7 +271,7 @@
     <div class="past-reports" id="pastReports"></div>
     <div class="pdf-band">
       <div class="pdf-band-text"><strong id="tPdfStrong">이번 주 전체 리포트</strong><span id="tPdfSpan">차트·통계·참고자료까지 담긴 PDF로 받아보세요</span></div>
-      <a class="cta" id="tPdfCta" href="../reports/2026-08-30-ice-cream-trends.pdf">최신 PDF 받기 ↓</a>
+      <a class="cta" id="tPdfCta" href="../reports/2026-09-06-ice-cream-trends.pdf">최신 PDF 받기 ↓</a>
     </div>
     <div class="methodology">
       <h3 id="tMethodTitle">이 리포트는 어떻게 만들어지나요</h3>
@@ -260,300 +322,13 @@
 
 <script>
 (function () {
-var countries = {
-  kr: {
-    name: "한국", emoji: "🍓", flavorKo: "라즈베리",
-    headline: {ko: "폭염 속 편의점 콜라보 러시, 산딸기가 이끈다", en: "Heat Wave Fuels a Convenience-Store Ice Cream Collab Rush", ja: "猛暑でコンビニコラボ続々、野いちごが牽引"},
-    summary: {
-      ko: "배스킨라빈스가 산딸기가 끌리는 연유를 8월 이달의 맛으로 내세우며 광고 캠페인을 이어가는 가운데, GS25는 TXT 연준과 협업한 사워레몬요거트 아이스크림으로 팬덤을 공략했다. 이마트24·CU·빙그레도 신제품과 프로모션을 쏟아내며 늦더위 특수를 노리고 있다.",
-      en: "Baskin Robbins keeps its August pick, wild-berry condensed milk, front and center with an ad campaign, while GS25 courts K-pop fans with a TXT-collab sour lemon yogurt ice cream. Emart24, CU and Binggrae are also rolling out new items and promos to cash in on the lingering heat.",
-      ja: "バスキン・ロビンスは8月の月間フレーバー「野いちごの練乳がけ」を広告キャンペーンで前面に出し、GS25はTXTヨンジュンとのコラボでサワーレモンヨーグルトアイスを展開しファン層を狙う。イーマート24やCU、ビングレも新商品とプロモーションを相次いで投入し、残暑需要を取り込もうとしている。"
-    },
-    bars: [["산딸기", 9], ["바", 8], ["레몬", 6], ["컵", 4], ["커피", 3]],
-    heroSvg: "<svg viewBox=\"0 0 680 380\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" style=\"width:100%;height:100%;display:block;\">\n  <defs><linearGradient id=\"pop-kr\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n    <stop offset=\"0%\" stop-color=\"#FBE3EC\"/><stop offset=\"55%\" stop-color=\"#E97AA0\"/><stop offset=\"100%\" stop-color=\"#A8225A\"/>\n  </linearGradient></defs>\n  <rect width=\"680\" height=\"380\" fill=\"#FBE3EC\"/>\n  <polygon points=\"0,0 430,0 250,380 0,380\" fill=\"#E97AA0\"/>\n  <text x=\"60\" y=\"330\" font-family=\"Georgia, serif\" font-weight=\"700\" font-style=\"italic\" font-size=\"150\" fill=\"#A8225A\" opacity=\"0.22\" transform=\"rotate(-90 60 330)\">RASPBERRY</text>\n  <ellipse cx=\"430\" cy=\"322\" rx=\"120\" ry=\"16\" fill=\"#000\" opacity=\"0.10\"/>\n  <rect x=\"418\" y=\"120\" width=\"14\" height=\"90\" rx=\"6\" fill=\"#E4C078\" transform=\"rotate(8 425 165)\"/>\n  <path d=\"M370 150 Q425 110 480 150 L472 270 Q425 300 378 270 Z\" fill=\"url(#pop-kr)\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"405\" cy=\"190\" r=\"5\" fill=\"#A8225A\" opacity=\"0.7\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"440\" cy=\"230\" r=\"4\" fill=\"#A8225A\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"415\" cy=\"245\" r=\"3.5\" fill=\"#A8225A\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <path d=\"M470 265 q10 20 -4 34\" stroke=\"#A8225A\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n</svg>"
-  },
-  us: {
-    name: "미국", emoji: "🫐", flavorKo: "블루베리",
-    headline: {ko: "매그넘 '크래그넘' 챌린지, SNS 810만 조회 돌풍", en: "Magnum's 'Cragnum' Hack Goes Viral With 8 Million-Plus Views", ja: "マグナムの「クラグナム」ハック、SNSで810万回再生の旋風"},
-    summary: {
-      ko: "크루아상에 매그넘 바를 끼워 먹는 '크래그넘' 챌린지가 틱톡·인스타그램·유튜브에서 합산 810만 회 이상 조회되며 전 세계로 퍼졌고, 배스킨라빈스는 9월 이달의 맛으로 '비스코프 크렘 브륄레'를 예고했다. 반 리우웬은 가수 라우페이와 협업한 프로요거트를 선보이며 셀럽 마케팅에 힘을 싣고 있다.",
-      en: "The 'Cragnum' hack — stuffing a Magnum bar inside a croissant — has racked up more than 8.1 million combined views on TikTok, Instagram and YouTube, while Baskin Robbins teased Biscoff Creme Brulee as its September flavor of the month. Van Leeuwen leaned into celebrity marketing with a Laufey-collab frozen yogurt.",
-      ja: "クロワッサンにマグナムバーを挟んで食べる「クラグナム」ハックがTikTok・Instagram・YouTubeで合計810万回以上再生され話題となる中、バスキン・ロビンスは9月の月間フレーバーに「ビスコフ・クレームブリュレ」を予告した。ヴァンルーウェンは歌手ラウフェイとのコラボフローズンヨーグルトでセレブマーケティングを展開している。"
-    },
-    bars: [["블루베리", 6], ["바", 5], ["파인트", 5], ["땅콩버터", 4], ["카라멜", 4]],
-    heroSvg: "<svg viewBox=\"0 0 680 380\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" style=\"width:100%;height:100%;display:block;\">\n  <defs><linearGradient id=\"pop-us\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n    <stop offset=\"0%\" stop-color=\"#EAEBFA\"/><stop offset=\"55%\" stop-color=\"#9CA8E8\"/><stop offset=\"100%\" stop-color=\"#4B4FA0\"/>\n  </linearGradient></defs>\n  <rect width=\"680\" height=\"380\" fill=\"#EAEBFA\"/>\n  <polygon points=\"0,0 430,0 250,380 0,380\" fill=\"#9CA8E8\"/>\n  <text x=\"60\" y=\"330\" font-family=\"Georgia, serif\" font-weight=\"700\" font-style=\"italic\" font-size=\"150\" fill=\"#4B4FA0\" opacity=\"0.22\" transform=\"rotate(-90 60 330)\">BLUEBERRY</text>\n  <ellipse cx=\"430\" cy=\"322\" rx=\"120\" ry=\"16\" fill=\"#000\" opacity=\"0.10\"/>\n  <rect x=\"418\" y=\"120\" width=\"14\" height=\"90\" rx=\"6\" fill=\"#E4C078\" transform=\"rotate(8 425 165)\"/>\n  <path d=\"M370 150 Q425 110 480 150 L472 270 Q425 300 378 270 Z\" fill=\"url(#pop-us)\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"405\" cy=\"190\" r=\"5\" fill=\"#4B4FA0\" opacity=\"0.7\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"440\" cy=\"230\" r=\"4\" fill=\"#4B4FA0\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"415\" cy=\"245\" r=\"3.5\" fill=\"#4B4FA0\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <path d=\"M470 265 q10 20 -4 34\" stroke=\"#4B4FA0\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n</svg>"
-  },
-  jp: {
-    name: "일본", emoji: "🍮", flavorKo: "티라미수",
-    headline: {ko: "편의점 3사 티라미수 삼파전, 지브리 빙수도 SNS 강타", en: "Japan's Big Three Convenience Chains Wage a Tiramisu Showdown", ja: "コンビニ3社ティラミス対決、ジブリ縁の店のかき氷もSNSで話題"},
-    summary: {
-      ko: "세븐일레븐·패밀리마트·로손이 나란히 티라미수 맛 신상을 내놓으며 이번 주 편의점 디저트 경쟁이 뜨거웠고, 스튜디오 지브리 감독 미야자키 하야오의 조카가 운영하는 가게의 '토토로 빙수'는 단 6일 한정 판매에도 SNS에서 큰 화제를 모았다. 겐신임팩트와 31아이스크림의 첫 콜라보, 애니메이션 '하이큐!!'와 로손의 캠페인도 진행 중이다.",
-      en: "Seven-Eleven, FamilyMart and Lawson all rolled out tiramisu-flavored treats this week, heating up the convenience-store dessert race, while 'Totoro Shaved Ice' — sold for just six days at a shop run by Studio Ghibli director Hayao Miyazaki's nephew — drew major buzz online. Genshin Impact's first-ever collab with 31 Ice Cream and an ongoing Haikyu!! x Lawson campaign are also in play.",
-      ja: "セブン-イレブン、ファミリーマート、ローソンが今週そろってティラミス味の新商品を投入し、コンビニスイーツ競争が過熱した。スタジオジブリの宮崎駿監督の甥が営む店の「トトロかき氷」は、わずか6日間限定の販売ながらSNSで大きな話題を呼んだ。原神と31アイスクリームの初コラボ、アニメ「ハイキュー!!」とローソンのキャンペーンも進行中だ。"
-    },
-    bars: [["바", 6], ["콜라보 패키지", 4], ["티라미수", 3], ["말차", 3], ["컵", 3]],
-    heroSvg: "<svg viewBox=\"0 0 680 380\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" style=\"width:100%;height:100%;display:block;\">\n  <defs><linearGradient id=\"pop-jp\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n    <stop offset=\"0%\" stop-color=\"#F3E3D8\"/><stop offset=\"55%\" stop-color=\"#D9A26B\"/><stop offset=\"100%\" stop-color=\"#A66A1C\"/>\n  </linearGradient></defs>\n  <rect width=\"680\" height=\"380\" fill=\"#F3E3D8\"/>\n  <polygon points=\"0,0 430,0 250,380 0,380\" fill=\"#D9A26B\"/>\n  <text x=\"60\" y=\"330\" font-family=\"Georgia, serif\" font-weight=\"700\" font-style=\"italic\" font-size=\"150\" fill=\"#A66A1C\" opacity=\"0.22\" transform=\"rotate(-90 60 330)\">TIRAMISU</text>\n  <ellipse cx=\"430\" cy=\"322\" rx=\"120\" ry=\"16\" fill=\"#000\" opacity=\"0.10\"/>\n  <rect x=\"418\" y=\"120\" width=\"14\" height=\"90\" rx=\"6\" fill=\"#E4C078\" transform=\"rotate(8 425 165)\"/>\n  <path d=\"M370 150 Q425 110 480 150 L472 270 Q425 300 378 270 Z\" fill=\"url(#pop-jp)\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"405\" cy=\"190\" r=\"5\" fill=\"#A66A1C\" opacity=\"0.7\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"440\" cy=\"230\" r=\"4\" fill=\"#A66A1C\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"415\" cy=\"245\" r=\"3.5\" fill=\"#A66A1C\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <path d=\"M470 265 q10 20 -4 34\" stroke=\"#A66A1C\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n</svg>"
-  }
-};
+  var countries = {"kr": {"name": "한국", "emoji": "🍫", "flavorKo": "초코", "headline": {"ko": "도쿄바나나 콜라보와 하겐다즈 팝업, 초코·브륄레 열풍 이끌어", "en": "Tokyo Banana Collab and Haagen-Dazs Pop-Up Drive Korea's Chocolate Craze", "ja": "東京バナナのコラボとハーゲンダッツのポップアップがチョコ旋風を牽引"}, "summary": {"ko": "배스킨라빈스가 일본 도쿄바나나와 손잡고 9월 이달의 맛 '도쿄바나나 크렘브륄레'를 출시했고, 하겐다즈는 성수동에서 크루즈 콘셉트 팝업 '더 하겐 크루즈'를 열며 리뉴얼한 벨지안 초콜릿을 알렸다. 롯데웰푸드는 설레임 모델 기안84와 3,000명 규모 러닝 행사 '설레임런'을 열어 화제를 모았고, 폭염과 수출 호조에 빙그레·롯데웰푸드 주가는 나란히 52주 신고가를 찍었다.", "en": "Baskin Robbins teamed up with Tokyo Banana for its September flavor of the month, Tokyo Banana Creme Brulee, while Haagen-Dazs opened a cruise-themed pop-up, 'The Haagen-Cruise,' in Seoul's Seongsu district to showcase its renewed Belgian chocolate line. Lotte Wellfood drew crowds with a 3,000-runner event, 'Sulraeim Run,' featuring brand ambassador Gian84, as Binggrae and Lotte Wellfood shares hit 52-week highs on strong heat-wave sales and exports.", "ja": "バスキン・ロビンスは東京バナナとコラボした9月の月間フレーバー「東京バナナ クレームブリュレ」を発売し、ハーゲンダッツはソウル・聖水洞でクルーズをテーマにしたポップアップ「ザ・ハーゲンクルーズ」を開き、リニューアルしたベルギーチョコレートを披露した。ロッテウェルフードはブランドモデルのギアン84とともに3,000人規模のランニングイベント「ソルレイムラン」を開催して話題を呼び、猛暑と輸出好調でビングレとロッテウェルフードの株価はそろって52週高値を更新した。"}, "bars": [["캐릭터 콜라보", 6], ["초코", 5], ["딸기", 3], ["복숭아", 3], ["굿즈 동봉", 3]], "heroSvg": "<svg viewBox=\"0 0 680 380\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" style=\"width:100%;height:100%;display:block;\">\n  <defs><linearGradient id=\"pop-kr\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n    <stop offset=\"0%\" stop-color=\"#EFDDD0\"/><stop offset=\"55%\" stop-color=\"#C89173\"/><stop offset=\"100%\" stop-color=\"#6B4226\"/>\n  </linearGradient></defs>\n  <rect width=\"680\" height=\"380\" fill=\"#EFDDD0\"/>\n  <polygon points=\"0,0 430,0 250,380 0,380\" fill=\"#C89173\"/>\n  <text x=\"60\" y=\"330\" font-family=\"Georgia, serif\" font-weight=\"700\" font-style=\"italic\" font-size=\"150\" fill=\"#6B4226\" opacity=\"0.22\" transform=\"rotate(-90 60 330)\">CHOCOLATE</text>\n  <ellipse cx=\"430\" cy=\"322\" rx=\"120\" ry=\"16\" fill=\"#000\" opacity=\"0.10\"/>\n  <rect x=\"418\" y=\"120\" width=\"14\" height=\"90\" rx=\"6\" fill=\"#E4C078\" transform=\"rotate(8 425 165)\"/>\n  <path d=\"M370 150 Q425 110 480 150 L472 270 Q425 300 378 270 Z\" fill=\"url(#pop-kr)\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"405\" cy=\"190\" r=\"5\" fill=\"#6B4226\" opacity=\"0.7\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"440\" cy=\"230\" r=\"4\" fill=\"#6B4226\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"415\" cy=\"245\" r=\"3.5\" fill=\"#6B4226\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <path d=\"M470 265 q10 20 -4 34\" stroke=\"#6B4226\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n</svg>"}, "us": {"name": "미국", "emoji": "🌮", "flavorKo": "캐러멜", "headline": {"ko": "타코벨·솔트앤스트로 추로 타코가 이끈 초콜릿·캐러멜 열풍", "en": "Taco Bell x Salt & Straw Churro Taco Sparks a Chocolate-Caramel Wave", "ja": "タコベルとソルト&ストローのチュロタコがチョコ・キャラメル旋風を巻き起こす"}, "summary": {"ko": "타코벨이 솔트앤스트로와 손잡고 초콜릿을 입힌 '추로 아이스크림 타코'를 전국 출시했고, 매그넘은 두바이 초콜릿 바를 샘스클럽을 통해 처음 미국에 선보이며 화제를 모았다. 콜드스톤·제니스 등은 가을 신맛을 잇달아 내놓았고, 원재료 관세 인상 압박 속에서도 아직 소매가 인상 발표는 없었다.", "en": "Taco Bell nationwide-launched its chocolate-dipped Churro Ice Cream Taco with Salt & Straw, while Magnum brought its viral Dubai Chocolate bars to the US for the first time via Sam's Club. Cold Stone, Jeni's and other chains rolled out fall flavors, and while rising import tariffs are squeezing costs, no US chain has announced a retail price hike yet.", "ja": "タコベルはソルト&ストローとのコラボでチョコがけの「チュロ・アイスクリームタコ」を全米で発売し、マグナムはサムズクラブを通じてバイラルの「ドバイチョコレート」バーを米国で初めて展開し話題となった。コールドストーンやジェニーズなど各社は秋のフレーバーを相次いで投入し、輸入関税の引き上げ圧力が強まる中でも小売価格の値上げ発表はまだ出ていない。"}, "bars": [["초코", 6], ["캐러멜", 6], ["한정메뉴", 6], ["파인트", 5], ["노벨티바", 5]], "heroSvg": "<svg viewBox=\"0 0 680 380\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" style=\"width:100%;height:100%;display:block;\">\n  <defs><linearGradient id=\"pop-us\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n    <stop offset=\"0%\" stop-color=\"#F3E3D8\"/><stop offset=\"55%\" stop-color=\"#D9A26B\"/><stop offset=\"100%\" stop-color=\"#A66A1C\"/>\n  </linearGradient></defs>\n  <rect width=\"680\" height=\"380\" fill=\"#F3E3D8\"/>\n  <polygon points=\"0,0 430,0 250,380 0,380\" fill=\"#D9A26B\"/>\n  <text x=\"60\" y=\"330\" font-family=\"Georgia, serif\" font-weight=\"700\" font-style=\"italic\" font-size=\"150\" fill=\"#A66A1C\" opacity=\"0.22\" transform=\"rotate(-90 60 330)\">CARAMEL</text>\n  <ellipse cx=\"430\" cy=\"322\" rx=\"120\" ry=\"16\" fill=\"#000\" opacity=\"0.10\"/>\n  <rect x=\"418\" y=\"120\" width=\"14\" height=\"90\" rx=\"6\" fill=\"#E4C078\" transform=\"rotate(8 425 165)\"/>\n  <path d=\"M370 150 Q425 110 480 150 L472 270 Q425 300 378 270 Z\" fill=\"url(#pop-us)\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"405\" cy=\"190\" r=\"5\" fill=\"#A66A1C\" opacity=\"0.7\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"440\" cy=\"230\" r=\"4\" fill=\"#A66A1C\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"415\" cy=\"245\" r=\"3.5\" fill=\"#A66A1C\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <path d=\"M470 265 q10 20 -4 34\" stroke=\"#A66A1C\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n</svg>"}, "jp": {"name": "일본", "emoji": "🍈", "flavorKo": "멜론", "headline": {"ko": "롯데·모리나가 아이스크림 값 인상 속 이색 신제품 경쟁", "en": "Lotte, Morinaga Raise Ice Cream Prices as New-Flavor Race Heats Up", "ja": "ロッテと森永が値上げする中、新フレーバー競争が過熱"}, "summary": {"ko": "롯데가 30여 개, 모리나가가 61개 품목의 아이스크림 가격을 9월 출하분부터 인상하며 일본 아이스크림 업계에 값인상 도미노가 이어졌다. 그런 가운데도 세븐일레븐은 우지 말차 초콜릿바와 홋카이도 멜론 와플콘을, 하겐다즈는 검은깨·고구마 신맛을 잇달아 내놓았고, 이와테현의 '굴 소프트아이스크림'은 SNS에서 화제성 있는 비주얼로 입소문을 탔다.", "en": "Lotte raised prices on roughly 30 items and Morinaga on 61, marking a wave of ice cream price hikes across Japan effective with September shipments. Even so, 7-Eleven rolled out a Uji matcha chocolate bar and a Hokkaido melon waffle cone, Haagen-Dazs added black sesame and sweet potato flavors, and Iwate's oyster soft-serve went viral online for its eye-catching visuals.", "ja": "ロッテは約30品目、森永は61品目のアイスクリーム価格を9月出荷分から引き上げ、業界全体で値上げの連鎖が続いた。それでもセブン-イレブンは宇治抹茶のチョコバーと北海道メロンのワッフルコーンを、ハーゲンダッツは黒ごま・さつまいも味を相次いで発売し、岩手の「牡蠣ソフトクリーム」がインパクトのあるビジュアルでSNSで話題を呼んだ。"}, "bars": [["과일맛", 6], ["초코", 5], ["밀크", 4], ["미니컵", 3], ["콜라보 패키지", 3]], "heroSvg": "<svg viewBox=\"0 0 680 380\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid slice\" style=\"width:100%;height:100%;display:block;\">\n  <defs><linearGradient id=\"pop-jp\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n    <stop offset=\"0%\" stop-color=\"#EAF7E0\"/><stop offset=\"55%\" stop-color=\"#A9DE93\"/><stop offset=\"100%\" stop-color=\"#4FA65B\"/>\n  </linearGradient></defs>\n  <rect width=\"680\" height=\"380\" fill=\"#EAF7E0\"/>\n  <polygon points=\"0,0 430,0 250,380 0,380\" fill=\"#A9DE93\"/>\n  <text x=\"60\" y=\"330\" font-family=\"Georgia, serif\" font-weight=\"700\" font-style=\"italic\" font-size=\"150\" fill=\"#4FA65B\" opacity=\"0.22\" transform=\"rotate(-90 60 330)\">MELON</text>\n  <ellipse cx=\"430\" cy=\"322\" rx=\"120\" ry=\"16\" fill=\"#000\" opacity=\"0.10\"/>\n  <rect x=\"418\" y=\"120\" width=\"14\" height=\"90\" rx=\"6\" fill=\"#E4C078\" transform=\"rotate(8 425 165)\"/>\n  <path d=\"M370 150 Q425 110 480 150 L472 270 Q425 300 378 270 Z\" fill=\"url(#pop-jp)\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"405\" cy=\"190\" r=\"5\" fill=\"#4FA65B\" opacity=\"0.7\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"440\" cy=\"230\" r=\"4\" fill=\"#4FA65B\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <circle cx=\"415\" cy=\"245\" r=\"3.5\" fill=\"#4FA65B\" opacity=\"0.6\" transform=\"rotate(8 425 200)\"/>\n  <path d=\"M470 265 q10 20 -4 34\" stroke=\"#4FA65B\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n</svg>"}};
+  var items = {"kr": [{"kind": "신제품", "emoji": "🍨", "brand": "배스킨라빈스 · 도쿄바나나", "thumb": "", "url": "https://www.gukjenews.com/news/articleView.html?idxno=3682821", "title": {"ko": "배스킨라빈스, 9월 맛 '도쿄바나나 크렘브륄레' 출시", "en": "Baskin Robbins Launches Tokyo Banana Creme Brulee for September", "ja": "バスキン・ロビンス、9月の味「東京バナナ クレームブリュレ」発売"}, "desc": {"ko": "SPC 배스킨라빈스가 일본 도쿄바나나와 협업해 바나나 아이스크림에 프랄린 슈가와 브륄레 크런치를 더한 9월 이달의 맛을 선보였다. 시즌 케이크와 랑그드샤 쿠키 샌드도 함께 출시됐다.", "en": "SPC's Baskin Robbins teamed up with Japan's Tokyo Banana for its September flavor of the month, layering banana ice cream with praline sugar and brulee crunch. A matching seasonal cake and langue de chat sandwich cookie launched alongside it.", "ja": "SPCバスキン・ロビンスが日本の東京バナナとコラボし、バナナアイスにプラリネシュガーとブリュレクランチを重ねた9月の月間フレーバーを発売した。シーズンケーキとラング・ド・シャサンドクッキーも同時に登場した。"}, "meta": "국제뉴스 · 2026-09-02"}, {"kind": "신제품", "emoji": "🍩", "brand": "크리스피크림도넛", "thumb": "", "url": "https://www.newsis.com/view/NISX20260804_0003735210", "title": {"ko": "크리스피크림, 아이스크림 바 닮은 '도넛바' 4종 인기", "en": "Krispy Kreme's Ice-Cream-Bar-Style 'Donut Bars' Draw Buzz", "ja": "クリスピー・クリーム、アイスバー風「ドーナツバー」4種が話題"}, "desc": {"ko": "크리스피크림도넛이 여름 한정으로 내놓은 아이스크림 바 형태의 '도넛바' 4종이 9월 17일까지 전국 매장에서 판매 중이다. 냉동실에 얼려 먹으면 식감이 쫀득해진다는 팁이 SNS에서 화제를 모았다.", "en": "Krispy Kreme's summer-limited 'Donut Bar' line, four ice-cream-bar-shaped flavors, is on sale nationwide through September 17. A tip to freeze them for a chewier bite has been circulating on social media.", "ja": "クリスピー・クリームが夏季限定で発売したアイスバー風「ドーナツバー」4種が、9月17日まで全国の店舗で販売中だ。冷凍庫で凍らせて食べると食感がもちもちになるという裏技がSNSで話題になっている。"}, "meta": "뉴시스 · 9월 17일까지 판매"}, {"kind": "신제품", "emoji": "🍑", "brand": "요아정 · 리틀어피치", "thumb": "", "url": "https://www.newsis.com/view/NISX20260724_0003721633", "title": {"ko": "요아정, 카카오프렌즈 협업 저당 복숭아 요거트 아이스 출시", "en": "Yoajeong Launches Low-Sugar Peach Yogurt Ice With Kakao Friends", "ja": "ヨアジョン、カカオフレンズとコラボした低糖桃ヨーグルトアイスを発売"}, "desc": {"ko": "요아정이 카카오프렌즈 캐릭터 '리틀어피치'와 협업해 알룰로스로 당을 낮춘 복숭아 요거트 아이스크림 8종과 한정판 보냉백·파우치를 선보였다. 여름 한정 콜라보로 SNS에서 꾸준히 화제를 모으고 있다.", "en": "Yoajeong partnered with Kakao Friends' 'Little Apeach' character on eight allulose-sweetened, low-sugar peach yogurt ice cream flavors, plus limited-edition cooler bags and pouches. The summer collab keeps generating steady social buzz.", "ja": "ヨアジョンはカカオフレンズのキャラクター「リトル・アピーチ」とコラボし、アルロースで糖分を抑えた桃ヨーグルトアイス8種と数量限定の保冷バッグ・ポーチを発売した。夏限定コラボとしてSNSで話題が続いている。"}, "meta": "뉴시스"}, {"kind": "뉴스", "emoji": "📈", "brand": "빙그레 · 롯데웰푸드", "thumb": "", "url": "https://www.hankyung.com/article/202608314273i", "title": {"ko": "폭염·수출 훈풍에 빙그레·롯데웰푸드 나란히 52주 신고가", "en": "Binggrae, Lotte Wellfood Shares Hit 52-Week Highs on Heat, Exports", "ja": "猛暑と輸出好調でビングレ、ロッテウェルフードが52週高値"}, "desc": {"ko": "긴 폭염에 따른 내수 특수와 아이스크림 수출 증가가 겹치며 8월 31일 롯데웰푸드와 빙그레 주가가 나란히 52주 신고가를 기록했다. 8월 한 달 주가 상승률은 롯데웰푸드 50.48%, 빙그레 33.82%에 달했다.", "en": "A strong domestic heat-wave season and rising ice cream exports combined to push Lotte Wellfood and Binggrae shares to 52-week highs on August 31. Both stocks gained sharply in August, up 50.48% and 33.82% respectively.", "ja": "猛暑による内需特需とアイス輸出の増加が重なり、8月31日にロッテウェルフードとビングレの株価がそろって52週高値を記録した。8月の月間上昇率はロッテウェルフードが50.48%、ビングレが33.82%に達した。"}, "meta": "한국경제 · 2026-08-31"}, {"kind": "뉴스", "emoji": "🍫", "brand": "하겐다즈", "thumb": "", "url": "https://www.etoday.co.kr/news/view/2622131", "title": {"ko": "하겐다즈, 카카오값 폭등에도 초콜릿 함량 오히려 높여", "en": "Haagen-Dazs Raises Chocolate Content Despite Soaring Cocoa Prices", "ja": "ハーゲンダッツ、カカオ高騰でもチョコ含有量をむしろ増量"}, "desc": {"ko": "코코아 원료 가격이 급등하는 가운데 하겐다즈는 벨지안 초콜릿 등 대표 제품의 함량을 오히려 높이는 프리미엄 전략으로 대응하고 있다. 한국은 하겐다즈가 세계에서 두 번째로 많이 소비되는 핵심 시장으로 신제품 테스트베드 역할도 하고 있다.", "en": "As cocoa costs surge, Haagen-Dazs is doubling down on its premium strategy, actually increasing the chocolate content of flagship items like its Belgian Chocolate line. Korea, its second-largest market worldwide, also serves as a testbed for new products.", "ja": "カカオ原料価格が高騰する中、ハーゲンダッツはベルジャンチョコレートなど看板商品の含有量をむしろ増やすプレミアム戦略で対応している。韓国は世界で2番目に消費量の多い主要市場であり、新商品のテストベッドの役割も担う。"}, "meta": "이투데이"}, {"kind": "광고", "emoji": "🚢", "brand": "하겐다즈", "thumb": "", "url": "https://www.hankyung.com/article/202609044831g", "title": {"ko": "하겐다즈, 성수동에 크루즈 콘셉트 팝업 '더 하겐 크루즈' 오픈", "en": "Haagen-Dazs Opens Cruise-Themed Pop-Up 'The Haagen-Cruise' in Seongsu", "ja": "ハーゲンダッツ、聖水洞にクルーズ風ポップアップ「ザ・ハーゲンクルーズ」オープン"}, "desc": {"ko": "하겐다즈가 9월 5일부터 13일까지 서울 성수동에서 크루즈 콘셉트 팝업스토어 '더 하겐 크루즈'를 운영한다. 새 글로벌 캠페인 슬로건 'Deliberately rich'를 슬로우 럭셔리 경험으로 풀어내며 리뉴얼한 벨지안 초콜릿을 체험할 수 있다.", "en": "Haagen-Dazs is running a cruise-themed pop-up, 'The Haagen-Cruise,' in Seoul's Seongsu district from September 5 to 13. It translates the brand's new 'Deliberately Rich' global slogan into a slow-luxury experience, letting visitors sample its renewed Belgian Chocolate line.", "ja": "ハーゲンダッツは9月5日から13日まで、ソウル・聖水洞でクルーズをテーマにしたポップアップストア「ザ・ハーゲンクルーズ」を運営する。新グローバルスローガン「Deliberately rich」をスローラグジュアリー体験として表現し、リニューアルしたベルジャンチョコレートを試せる。"}, "meta": "한국경제 · 2026-09-04 (팝업 9/5~9/13)"}, {"kind": "광고", "emoji": "🏃", "brand": "롯데웰푸드 · 설레임 · 기안84", "thumb": "", "url": "https://www.hankyung.com/article/202607021201g", "title": {"ko": "롯데웰푸드, 기안84와 3,000명 규모 '설레임런' 개최", "en": "Lotte Wellfood Holds 3,000-Runner 'Sulraeim Run' With Gian84", "ja": "ロッテウェルフード、ギアン84と3,000人規模の「ソルレイムラン」開催"}, "desc": {"ko": "롯데웰푸드가 설레임 브랜드 모델 기안84와 함께 9월 5일 경기 하남에서 3,000명 규모의 10km 러닝대회 '설레임런'을 열었다. 참가자들은 달리며 설레임을 먹는 체험을 즐겼고, 티켓은 오픈 2시간 만에 매진됐다.", "en": "Lotte Wellfood, joined by Sulraeim brand ambassador Gian84, held a 3,000-runner, 10km race called 'Sulraeim Run' in Hanam, Gyeonggi Province, on September 5. Participants ate Sulraeim ice cream mid-run, and tickets sold out within two hours of release.", "ja": "ロッテウェルフードはソルレイムのブランドモデル、ギアン84とともに9月5日、京畿道河南で3,000人規模の10kmランニング大会「ソルレイムラン」を開催した。参加者は走りながらソルレイムを食べる体験を楽しみ、チケットは発売2時間で完売した。"}, "meta": "한국경제 · 행사 2026-09-05"}, {"kind": "SNS", "emoji": "📱", "brand": "", "thumb": "", "url": "https://www.threads.com/@joonmattang/post/DXOMfAcDHqQ", "title": {"ko": "편의점 신상 아이스크림 5종 비교 먹방 화제", "en": "Video Comparing Five New Convenience-Store Ice Creams Draws Buzz", "ja": "コンビニ新作アイス5種食べ比べ動画が話題"}, "desc": {"ko": "신상 편의점 아이스크림 5종을 한 번에 비교 시식하는 영상 콘텐츠가 '편의점신상' 해시태그와 함께 Threads에서 공유되며 화제를 모았다.", "en": "A video comparing five new convenience-store ice creams side by side has been circulating on Threads under a 'new convenience store item' hashtag.", "ja": "コンビニ新作アイス5種を一度に食べ比べる動画コンテンツが、「コンビニ新商品」ハッシュタグとともにThreadsで共有され話題になった。"}, "meta": "Threads · @joonmattang"}, {"kind": "바이럴", "emoji": "📹", "brand": "", "thumb": "https://img.youtube.com/vi/IBQVCMnlwLU/hqdefault.jpg", "url": "https://www.youtube.com/shorts/IBQVCMnlwLU", "title": {"ko": "유튜브 쇼츠 '이색 편의점 신상 아이스크림 3가지' 화제", "en": "YouTube Shorts Spotlighting 3 Unusual New Ice Creams Goes Viral", "ja": "YouTubeショート「変わり種コンビニ新作アイス3選」が話題"}, "desc": {"ko": "편의점에서 파는 이색 신상 아이스크림 3종을 소개하는 쇼츠 영상이 편의점 신상 리뷰 콘텐츠 장르를 대표하며 반복적으로 검색에 노출되고 있다.", "en": "A YouTube Shorts clip introducing three unusual new convenience-store ice creams keeps resurfacing in searches as a representative example of the genre.", "ja": "コンビニで売られる変わり種の新作アイス3種を紹介するショート動画が、コンビニ新商品レビュー系コンテンツの代表例として検索に繰り返し表示されている。"}, "meta": "YouTube Shorts"}], "us": [{"kind": "신제품", "emoji": "🌮", "brand": "Taco Bell · Salt & Straw", "thumb": "", "url": "https://www.tacobell.com/newsroom/salt-and-straw", "title": {"ko": "타코벨, 솔트앤스트로와 '추로 아이스크림 타코' 전국 재출시", "en": "Taco Bell Relaunches Salt & Straw Churro Ice Cream Taco Nationwide", "ja": "タコベル、ソルト&ストローの「チュロ・アイスクリームタコ」を全米で再発売"}, "desc": {"ko": "타코벨이 9월 1일 솔트앤스트로와의 협업 아이스크림을 초콜릿을 입힌 와플콘 타코 형태로 전국 재출시했다. 가격은 3.99달러이며, 단종된 '초코 타코'의 정신적 후속작으로 평가받는다.", "en": "Taco Bell brought back its Salt & Straw collaboration nationwide on September 1: churro-spiced ice cream in a chocolate-dipped waffle cone taco shell for $3.99. Press has widely framed it as a spiritual successor to the discontinued Choco Taco.", "ja": "タコベルは9月1日、ソルト&ストローとのコラボアイスをチョコがけワッフルコーンのタコ型で全米再発売した。価格は3.99ドルで、廃盤になった「チョコタコ」の精神的後継と評されている。"}, "meta": "Taco Bell Newsroom · 2026-09-01"}, {"kind": "바이럴", "emoji": "📹", "brand": "Taco Bell · Salt & Straw", "thumb": "https://img.youtube.com/vi/TdevsPI8sQY/hqdefault.jpg", "url": "https://www.youtube.com/watch?v=TdevsPI8sQY", "title": {"ko": "타코벨x솔트앤스트로 신메뉴 유튜브 리뷰 영상 확산", "en": "YouTube Review of Taco Bell x Salt & Straw Item Spreads", "ja": "タコベル×ソルト&ストロー新商品のYouTubeレビュー動画が拡散"}, "desc": {"ko": "전국 출시에 맞춰 올라온 타코벨x솔트앤스트로 신메뉴 시식 리뷰 영상이 유튜브에서 확산되고 있다. 정확한 조회수는 페이지 접근 제한으로 확인하지 못했다.", "en": "A taste-test review video of the new Taco Bell x Salt & Straw item, posted around the nationwide launch, has been circulating on YouTube. An exact view count could not be verified.", "ja": "全米発売に合わせて公開されたタコベル×ソルト&ストロー新商品の試食レビュー動画がYouTubeで拡散している。正確な再生回数は確認できなかった。"}, "meta": "YouTube · 조회수 확인 불가"}, {"kind": "광고", "emoji": "🗳", "brand": "Ben & Jerry's", "thumb": "", "url": "https://www.prnewswire.com/news-releases/sundaes-just-got-sweeter---ben--jerrys-drops-three-new-sundaes-flavors-for-2026-302683094.html", "title": {"ko": "벤앤제리스, 투표 독려 캠페인 연계 한정판 '라즈 업!' 출시", "en": "Ben & Jerry's Ties Limited 'Razz Up!' Flavor to Voter Campaign", "ja": "ベン&ジェリーズ、投票呼びかけキャンペーンと連動した限定「ラズアップ!」発売"}, "desc": {"ko": "벤앤제리스가 검은 라즈베리 아이스크림에 라즈베리 스월과 퍼지 청크를 더한 한정판 '라즈 업!'을 출시했다. 2026년 중간선거 투표 참여를 독려하는 전국 캠페인과 연계된 브랜드 특유의 행동주의 마케팅이다.", "en": "Ben & Jerry's released a limited-batch flavor, Razz Up!, black raspberry ice cream with raspberry swirls and crackling fudge chunks, tied to a nationwide campaign encouraging turnout in the 2026 midterm elections — a continuation of the brand's activism-linked marketing.", "ja": "ベン&ジェリーズは、ブラックラズベリーアイスにラズベリースワールとファッジチャンクを加えた限定フレーバー「ラズアップ!」を発売した。2026年中間選挙の投票参加を呼びかける全米キャンペーンと連動した、同ブランド特有のアクティビズム型マーケティングだ。"}, "meta": "PR Newswire"}, {"kind": "신제품", "emoji": "🍨", "brand": "Ben & Jerry's", "thumb": "", "url": "https://sporked.com/article/new-ben-and-jerrys-ice-cream-bars-2026-news/", "title": {"ko": "벤앤제리스, 파인트 인기맛을 담은 아이스크림 바 라인 출시", "en": "Ben & Jerry's Extends Lineup With New Ice Cream Bars", "ja": "ベン&ジェリーズ、人気パイント味をバー化した新ラインを発売"}, "desc": {"ko": "벤앤제리스가 쿠키도우·초콜릿퍼지브라우니·딸기치즈케이크 등 인기 파인트 맛을 낱개 아이스크림 바로 옮기고, 땅콩버터프레첼·카라멜블론디 등 바 전용 신맛 2종도 함께 선보이며 편의점 소비자를 겨냥했다.", "en": "Ben & Jerry's is translating popular pint flavors — Cookie Dough, Chocolate Fudge Brownie, Strawberry Cheesecake — into individually sold ice cream bars, adding two bar-exclusive flavors, PB Pretzel and Caramel Blondie, aimed at convenience-store shoppers.", "ja": "ベン&ジェリーズは人気パイント味「クッキードウ」「チョコレートファッジブラウニー」「ストロベリーチーズケーキ」を単品アイスバー化し、バー専用の新フレーバー「PBプレッツェル」「キャラメルブロンディ」も加え、コンビニ層を狙う。"}, "meta": "Sporked"}, {"kind": "신제품", "emoji": "🧊", "brand": "Cold Stone Creamery", "thumb": "", "url": "https://hauntedattractionnetwork.com/cold-stone-fall-flavors-2026/", "title": {"ko": "콜드스톤, 호박맛 대신 가을 '코지 컬렉션' 2종 공개", "en": "Cold Stone Skips Pumpkin, Unveils Fall 'Cozy Collection'", "ja": "コールドストーン、パンプキン抜きで秋の「コージー・コレクション」2種発表"}, "desc": {"ko": "콜드스톤 크리머리가 호박맛 대신 그레이엄크래커 아이스크림에 쿠키도우·쿠키버터를 더한 신메뉴 '크럼 앤 겟 잇'과 바나나크림 푸딩 아이스크림 '고잉 바나나스'를 11월 17일까지 전국에서 판매한다.", "en": "Cold Stone Creamery's fall lineup skips pumpkin spice in favor of two comfort flavors: new 'Crumb and Get It,' a graham-cracker ice cream with cookie dough and cookie butter, and returning banana-cream-pudding flavor 'Going Bananas,' both available nationwide through November 17.", "ja": "コールドストーン・クリーマリーはパンプキンスパイスの代わりに、グラハムクラッカーアイスにクッキードウとクッキーバターを加えた新作「クラム・アンド・ゲット・イット」と、バナナクリームプディング味の「ゴーイング・バナナズ」を11月17日まで全米で販売する。"}, "meta": "Haunted Attraction Network"}, {"kind": "신제품", "emoji": "🥐", "brand": "Jeni's Splendid Ice Creams", "thumb": "", "url": "https://yovenice.com/2026/09/03/jenis-fall-ice-cream-collection-arrives-in-los-angeles-sept-3/", "title": {"ko": "제니스, 9월 3일 가을 신맛 컬렉션 출시", "en": "Jeni's Splendid Ice Creams Launches Fall Collection on Sept. 3", "ja": "ジェニーズ、9月3日に秋のフレーバーコレクションを発売"}, "desc": {"ko": "제니스 스플렌디드 아이스크림이 헤이즐넛 스트라치아텔라, 미소 버터스카치 브라우니, 브라운슈거 블론디를 곁들인 펌킨 등 가을 컬렉션을 9월 3일 출시했다. 매장 한정 페어 프란지파네도 함께 선보였다.", "en": "Jeni's Splendid Ice Creams rolled out its fall flavor collection on September 3, including Hazelnut Stracciatella, Miso Butterscotch Brownie, and Pumpkin with Brown Sugar Blondies, plus an in-shop-exclusive Pear Frangipane.", "ja": "ジェニーズ・スプレンディッド・アイスクリームは9月3日、ヘーゼルナッツ・ストラッチャテッラ、味噌バタースコッチブラウニー、ブラウンシュガーブロンディ入りパンプキンなど秋のコレクションを発売した。店舗限定のペア・フランジパーヌも同時に登場した。"}, "meta": "Yo! Venice · 2026-09-03"}, {"kind": "신제품", "emoji": "🍫", "brand": "Magnum · Sam's Club", "thumb": "", "url": "https://parade.com/food/magnum-dubai-chocolate-ice-cream-bar-flavor-us-release", "title": {"ko": "매그넘 '두바이 초콜릿' 바, 샘스클럽 통해 미국 정식 출시", "en": "Magnum's Viral 'Dubai Chocolate' Bars Debut in US via Sam's Club", "ja": "マグナムのバイラル「ドバイチョコレート」バー、サムズクラブ経由で米国初上陸"}, "desc": {"ko": "아랍에미리트·튀르키예·싱가포르 등에서 화제였던 매그넘의 '두바이 초콜릿' 바(피스타치오 아이스크림+밀크초콜릿+바삭한 카다이프)가 샘스클럽 대용량 팩으로 미국에 정식 출시됐다. 1년 넘게 SNS를 달군 두바이 초콜릿 트렌드가 실제 매대 제품으로 이어진 사례다.", "en": "Magnum's viral 'Dubai Chocolate' bars — pistachio ice cream, milk chocolate, and crispy kadayif — previously sold in the UAE, Turkey and Singapore, officially launched in the US in bulk packs at Sam's Club, turning over a year of social-media buzz into an actual shelf product.", "ja": "アラブ首長国連邦やトルコ、シンガポールで話題だったマグナムの「ドバイチョコレート」バー(ピスタチオアイス+ミルクチョコ+サクサクのカダイフ)が、サムズクラブの大容量パックとして米国で正式発売された。1年以上SNSを賑わせたドバイチョコレートのトレンドが実店舗の商品として実を結んだ形だ。"}, "meta": "Parade"}, {"kind": "신제품", "emoji": "🍇", "brand": "Van Leeuwen · Dr. Seuss · Kroger", "thumb": "", "url": "https://parade.com/food/van-leeuwens-dr-seuss-ice-cream", "title": {"ko": "반 리우웬, 닥터수스와 협업한 크로거 단독 신맛 3종 완판 행진", "en": "Van Leeuwen x Dr. Seuss Kroger-Exclusive Flavors Reportedly Sell Out", "ja": "ヴァンルーウェン、ドクター・スース協業のクローガー限定3味が完売続出"}, "desc": {"ko": "반 리우웬이 닥터수스와 협업해 블루베리·허니콘브레드, 딸기화이트초콜릿, 라즈베리스월 등 한정판 3종을 크로거 매장 단독으로 출시했다. 매장에서 빠르게 품절되고 있다고 보도됐다.", "en": "Van Leeuwen partnered with Dr. Seuss on three limited-edition flavors — blueberry with honey cornbread, strawberry-white chocolate, and raspberry swirl with fudgy brownie — sold exclusively at select Kroger stores, and reported to be selling out.", "ja": "ヴァンルーウェンはドクター・スースとコラボし、ブルーベリー&ハニーコーンブレッド、ストロベリー&ホワイトチョコ、ラズベリースワールの限定3種をクローガー限定で発売した。店舗では急速に完売しているという。"}, "meta": "Parade"}, {"kind": "SNS", "emoji": "💬", "brand": "Aldi", "thumb": "", "url": "https://www.yahoo.com/lifestyle/articles/aldi-ice-cream-flavor-reddit-173900593.html", "title": {"ko": "알디 '카라멜 콘' 아이스크림, 벤앤제리스 듀프로 레딧서 화제", "en": "Aldi's Caramel Cone Ice Cream Goes Viral as a Ben & Jerry's Dupe", "ja": "アルディの「キャラメルコーン」アイス、ベン&ジェリーズの代替品としてRedditで話題"}, "desc": {"ko": "한 쇼핑객이 알디의 프리미엄 '스페셜리 셀렉티드 카라멜 콘' 아이스크림 9통을 한 번에 구매한 후기를 레딧에 올리며, 벤앤제리스 '아메리콘 드림'과 똑같다는 반응이 퍼졌다. 이후 야후 등 라이프스타일 매체가 '그로서리 듀프' 트렌드로 다뤘다.", "en": "A Reddit post from a shopper who bought nine tubs of Aldi's premium 'Specially Selected Caramel Cone' ice cream at once sparked a wave of comments calling it a dead ringer for Ben & Jerry's AmeriCone Dream, later picked up by lifestyle outlets as part of the 'grocery dupe' trend.", "ja": "アルディの高級ライン「スペシャリー・セレクテッド キャラメルコーン」アイスを一度に9個買ったというRedditの投稿が反響を呼び、ベン&ジェリーズの「アメリコーンドリーム」そっくりだとの声が広がった。その後Yahooなどのライフスタイルメディアが「食料品の代替品」トレンドとして取り上げた。"}, "meta": "Reddit via Yahoo Lifestyle"}, {"kind": "뉴스", "emoji": "💰", "brand": "Chapman's", "thumb": "", "url": "https://www.cbc.ca/news/canada/london/chapman-s-ice-cream-ontario-shifting-from-u-s-suppliers-9.7322487", "title": {"ko": "캐나다 채프먼스, 美 관세 대비해 미국산 원료 공급망 축소", "en": "Canada's Chapman's Shifts Supply Chain to Dodge US Tariff Hikes", "ja": "カナダのチャップマンズ、米関税を避けサプライチェーンを転換"}, "desc": {"ko": "캐나다 아이스크림 제조사 채프먼스가 2027년 중반까지 미국산 원료 비중을 70% 이상 낮추겠다고 밝히며, 미국 관세 압박을 이유로 2028년 3월까지 가격을 올리지 않겠다고 약속했다.", "en": "Canadian ice cream maker Chapman's said it will replace more than 70% of its American ingredient sourcing by mid-2027 and pledged not to raise prices until March 2028, citing US tariff pressure.", "ja": "カナダのアイスクリームメーカー、チャップマンズは2027年半ばまでに米国産原料の調達比率を70%以上引き下げると発表し、米国の関税圧力を理由に2028年3月まで値上げしないと約束した。"}, "meta": "CBC News"}, {"kind": "뉴스", "emoji": "📊", "brand": "", "thumb": "", "url": "https://finance.yahoo.com/economy/articles/why-ice-cream-expensive-now-113000075.html", "title": {"ko": "美 아이스크림 관세, 25%에서 34%로 인상 예고", "en": "US Ice Cream Import Tariffs Set to Climb From 25% to 34%", "ja": "米国のアイス関税、25%から34%へ引き上げへ"}, "desc": {"ko": "미국 아이스크림 평균 수입 관세가 25%에서 34%로 오를 것으로 전해지며, 이미 오른 유제품·코코아·계란·인건비·에너지 비용에 추가 부담이 겹치고 있다. 스쿱숍 콘 가격은 2019년 대비 35% 이상 올랐고, 그로서리 하프갤런 가격은 6달러를 웃돈다.", "en": "Average US ice cream import tariffs are reportedly set to climb to 34% from 25%, compounding already-elevated dairy, cocoa, egg, labor and energy costs. Scoop-shop cone prices are up more than 35% since 2019, with a grocery half-gallon now averaging just over $6.", "ja": "米国のアイスクリーム平均輸入関税が25%から34%へ引き上げられる見通しで、すでに高騰している乳製品・カカオ・卵・人件費・エネルギーコストにさらなる負担が重なっている。スクープショップのコーン価格は2019年比で35%以上上昇し、食料品店のハーフガロンは6ドルを超えている。"}, "meta": "Yahoo Finance"}], "jp": [{"kind": "신제품", "emoji": "🍵", "brand": "세븐일레븐", "thumb": "", "url": "https://news.mynavi.jp/article/20260831-4895273/", "title": {"ko": "세븐일레븐, 우지 말차 넣은 '초콜릿 바 말차' 출시", "en": "7-Eleven Japan Launches 'Chocolate Bar Matcha' With Uji Matcha", "ja": "セブン-イレブン、宇治抹茶を使った「チョコレートバー抹茶」を発売"}, "desc": {"ko": "세븐일레븐 재팬이 우지 말차를 아이스와 초콜릿 코팅, 크런치 조각까지 전체에 사용한 신상 초콜릿바를 9월 2일부터 지역별로 순차 출시했다. 가격은 267엔.", "en": "7-Eleven Japan is rolling out a new chocolate ice bar using Uji matcha throughout — in the ice, the chocolate coating, and crunch pieces — starting September 2 in select regions, priced at 267 yen.", "ja": "セブン-イレブンは、アイス・チョコレートコーティング・クランチのすべてに宇治抹茶を使った新作チョコバーを9月2日から地域ごとに順次発売した。価格は267円。"}, "meta": "マイナビニュース · 2026-09-02 발매"}, {"kind": "신제품", "emoji": "🍈", "brand": "세븐일레븐", "thumb": "", "url": "https://news.mynavi.jp/article/20260831-4895273/", "title": {"ko": "세븐일레븐, 홋카이도 멜론즙 담은 와플콘 아이스 선보여", "en": "7-Eleven Japan Debuts Waffle Cone With Hokkaido Melon Juice", "ja": "セブン-イレブン、北海道メロン果汁のワッフルコーンを発売"}, "desc": {"ko": "세븐일레븐 재팬이 홋카이도 멜론즙을 사용한 와플콘 아이스크림을 9월 스위츠 라인업의 일환으로 출시했다. 상큼한 멜론 본연의 맛을 살린 것이 특징이다.", "en": "7-Eleven Japan added a waffle cone ice cream made with Hokkaido melon juice to its September sweets lineup, aiming for a fresh, true-to-fruit melon flavor.", "ja": "セブン-イレブンは北海道メロン果汁を使ったワッフルコーンアイスを、9月のスイーツラインナップの一環として発売した。メロン本来の爽やかな味わいが特徴だ。"}, "meta": "マイナビニュース · 2026-08-31 掲載"}, {"kind": "신제품", "emoji": "🥤", "brand": "훼미리마트", "thumb": "", "url": "https://news.mynavi.jp/article/20260831-4892095/", "title": {"ko": "훼미리마트, 사이다맛에 망고 타피오카 더한 아이스컵 출시", "en": "FamilyMart Launches Cider-Flavor Ice Cup With Mango Tapioca Pearls", "ja": "ファミリーマート、サイダー味にマンゴータピオカを加えたアイスカップを発売"}, "desc": {"ko": "훼미리마트가 사이다 맛 아이스크림에 쫄깃한 망고맛 곤약 타피오카 펄을 더한 아이스컵을 9월 전국(홋카이도~오키나와)에 출시했다. 가격은 198엔.", "en": "FamilyMart launched a cider-flavored ice cream cup combined with chewy mango-flavor konjac tapioca pearls, on sale nationwide (Hokkaido to Okinawa) this September for 198 yen.", "ja": "ファミリーマートは、サイダー味のアイスにマンゴー風味のもちもちマンナンタピオカを加えたアイスカップを、9月に全国(北海道〜沖縄)で発売した。価格は198円。"}, "meta": "マイナビニュース · 2026-08-31 掲載"}, {"kind": "신제품", "emoji": "🌌", "brand": "하겐다즈", "thumb": "", "url": "https://topics.smt.docomo.ne.jp/amp/article/cocotte/trend/cocotte-622248", "title": {"ko": "하겐다즈, 식물성 '그린크래프트' 신맛 '검은깨&콩가루' 출시", "en": "Haagen-Dazs Adds Black Sesame & Kinako to Plant-Based Green Craft Line", "ja": "ハーゲンダッツ、植物性「グリーンクラフト」新フレーバー「黒ごま＆きなこ」発売"}, "desc": {"ko": "하겐다즈가 두유 베이스의 검은깨 아이스 위에 검은깨 소스와 홋카이도산 콩가루(키나코)를 얹은 미니컵을 9월 1일 전국 출시했다. 식물성 미니컵 라인 '그린크래프트'의 신맛이다.", "en": "Haagen-Dazs nationally launched a soy-milk-based black sesame ice topped with black sesame sauce and Hokkaido soybean kinako powder on September 1, the newest flavor in its plant-based 'Green Craft' mini-cup line.", "ja": "ハーゲンダッツは9月1日、豆乳ベースの黒ごまアイスに黒ごまソースと北海道産きなこをのせたミニカップを全国発売した。植物性ミニカップライン「グリーンクラフト」の新フレーバーだ。"}, "meta": "dメニューニュース · 2026-09-01 발매"}, {"kind": "신제품", "emoji": "🍠", "brand": "하겐다즈", "thumb": "", "url": "https://news.livedoor.com/topics/detail/32056149/", "title": {"ko": "하겐다즈, 베니하루카 고구마 미니컵·캐러멜 어소트박스 9월 출시", "en": "Haagen-Dazs Adds Sweet Potato Mini Cup, Caramel Assortment for Fall", "ja": "ハーゲンダッツ、紅はるかミニカップとキャラメルアソートボックスを9月発売"}, "desc": {"ko": "하겐다즈가 베니하루카·안노이모 고구마 페이스트를 층층이 넣은 가을 미니컵 '농밀 이모'와 캐러멜 테마 어소트박스 '캐러멜 파티'를 9월 15일 전국 출시한다. 8월 13일 발표됐다.", "en": "Haagen-Dazs announced on August 13 an autumn mini cup, 'Nomitsu Imo,' layered with Beni-Haruka and Anno-imo sweet potato paste, plus a caramel-themed assortment box, 'Caramel Party,' both launching nationwide September 15.", "ja": "ハーゲンダッツは8月13日、紅はるかとあんのいものさつまいもペーストを重ねた秋のミニカップ「濃蜜いも」と、キャラメルテーマのアソートボックス「キャラメルパーティー」を発表し、9月15日に全国発売する。"}, "meta": "ライブドアニュース · 발매 2026-09-15"}, {"kind": "신제품", "emoji": "🐟", "brand": "이무라야", "thumb": "", "url": "https://mag.japaaan.com/archives/286510", "title": {"ko": "이무라야, 8년 만에 '타이야키 아이스' 리뉴얼 (40주년)", "en": "Imuraya Renews 'Taiyaki Ice' for First Time in 8 Years", "ja": "井村屋、8年ぶりに「たい焼アイス」をリニューアル(40周年)"}, "desc": {"ko": "이무라야가 붕어빵 모양 아이스크림 '타이야키 아이스'와 '박스 타이야키 아이스'를 40주년 맞아 8년 만에 리뉴얼했다. 홋카이도 생크림을 더하고 모나카 외피에 꿀을 넣어 더 고소하게, 팥소는 아즈키 껍질가루로 풍미를 강화했다. 8월 31일부터 전국 판매.", "en": "Imuraya renewed its taiyaki-shaped ice cream, 'Taiyaki Ice' and 'Box Taiyaki Ice,' for the first time in 8 years to mark the line's 40th anniversary — adding Hokkaido fresh cream, honey in the wafer shell for a more toasted aroma, and azuki-skin powder for a stronger red-bean flavor. Nationwide from August 31.", "ja": "井村屋は、たい焼き形のアイス「たい焼アイス」「BOXたい焼アイス」を40周年を記念して8年ぶりにリニューアルした。北海道生クリームを加え、もなか生地には蜂蜜を加えてより香ばしく、つぶあんはあずき皮粉末で風味を強化した。8月31日から全国で販売。"}, "meta": "Japaaan · 2026-08-31 발매"}, {"kind": "신제품", "emoji": "🧊", "brand": "아카기 뉴교", "thumb": "", "url": "https://gourmetpress.net/1477992/", "title": {"ko": "아카기 뉴교, 가리가리군 딸기·밀크 2종 가을 리뉴얼", "en": "Akagi Renews Garigari-Kun Strawberry, Rich Milk for Fall", "ja": "赤城乳業、ガリガリ君いちご・ミルク2種を秋冬向けにリニューアル"}, "desc": {"ko": "아카기 뉴교가 6개입 '어른의 가리가리군 딸기'와 '가리가리군 진한 밀크밀크'를 더 진한 딸기·밀크 맛으로 리뉴얼해 9월 7일 전국 출시한다.", "en": "Akagi Nyugyo is renewing two six-pack Garigari-Kun items — a juicier 'Grown-Up Garigari-Kun Strawberry' and a richer 'Garigari-Kun Rich Milk Milk' — launching nationwide September 7.", "ja": "赤城乳業は6本入りの「大人のガリガリ君いちご」と「ガリガリ君濃厚ミルクミルク」を、より濃いいちご・ミルク味にリニューアルし、9月7日に全国発売する。"}, "meta": "グルメプレス · 발매 2026-09-07"}, {"kind": "신제품", "emoji": "🐶", "brand": "모리나가 · 파우 패트롤", "thumb": "", "url": "https://prtimes.jp/main/html/rd/p/000001511.000021580.html", "title": {"ko": "모리나가 '피노', 첫 '파우 패트롤' 협업 에디션 9월 21일 출시", "en": "Morinaga's Pino Teams Up With PAW Patrol for the First Time", "ja": "森永「ピノ」、初の「パウ・パトロール」コラボを9月21日発売"}, "desc": {"ko": "피노 50주년(10월)을 앞두고 모리나가유업이 어린이 애니메이션 '파우 패트롤'과 처음으로 손잡아 강아지 캐릭터를 담은 한정판 어소트 2종을 9월 21일 수량 한정으로 전국 출시한다.", "en": "Ahead of Pino's 50th anniversary in October, Morinaga Milk Industry is collaborating with kids' animation PAW Patrol for the first time, releasing two limited-edition assorted Pino packages featuring the puppy characters nationwide on September 21.", "ja": "ピノ50周年(10月)を前に、森永乳業は子供向けアニメ「パウ・パトロール」と初コラボし、犬のキャラクターをあしらった数量限定アソート2種を9月21日に全国発売する。"}, "meta": "PR TIMES · 발매예정 2026-09-21"}, {"kind": "바이럴", "emoji": "🦪", "brand": "", "thumb": "", "url": "https://news.livedoor.com/topics/detail/32098023/", "title": {"ko": "이와테 '굴 소프트아이스크림', Threads서 62만 조회 화제", "en": "Iwate's 'Oyster Soft-Serve' Racks Up 620K Threads Views", "ja": "岩手の「牡蠣ソフトクリーム」、Threadsで62万回表示と話題"}, "desc": {"ko": "이와테현 도로변 휴게소 '미치노에키 야마다'가 삶은 굴 3개와 간장을 곁들인 우유 소프트아이스크림을 600엔에 선보였고, 이를 소개한 Threads 게시물이 약 62만 회 조회·5,200개 좋아요를 기록하며 전국에서 방문객을 끌어모았다.", "en": "A roadside station in Iwate, 'Michi-no-Eki Yamada,' is selling a milk soft-serve topped with three whole boiled oysters and a side of soy sauce for 600 yen. A Threads post about it reportedly drew about 620,000 views and 5,200 likes, pulling in visitors from across Japan.", "ja": "岩手県の道の駅「道の駅やまだ」が、茹でた牡蠣3個と醤油を添えたミルクソフトクリームを600円で販売し、これを紹介したThreadsの投稿は約62万回表示・5,200いいねを記録、全国から来訪者を集めた。"}, "meta": "ライブドアニュース · 2026-08-18"}, {"kind": "광고", "emoji": "👕", "brand": "나노유니버스 · BIG BABY ICE CREAM", "thumb": "", "url": "https://prtimes.jp/main/html/rd/p/000001522.000009786.html", "title": {"ko": "나노유니버스, 인기 아이스크림 가게와 의류·한정맛 협업", "en": "nano・universe Collabs With Popular Ice Cream Shop on Apparel, Flavor", "ja": "nano・universe、人気アイス店とアパレル・限定フレーバーでコラボ"}, "desc": {"ko": "패션 브랜드 나노유니버스가 가나가와 신마루코의 인기 아이스크림 가게 'BIG BABY ICE CREAM'과 협업해 의류 라인과 매장 단독 한정판 '블랙&화이트 초콜릿' 아이스크림을 선보였다.", "en": "Fashion brand nano・universe partnered with popular Kanagawa ice cream diner 'BIG BABY ICE CREAM' on an apparel line plus a store-exclusive limited 'black & white chocolate' ice cream flavor.", "ja": "アパレルブランドnano・universeは、神奈川・新丸子の人気アイス店「BIG BABY ICE CREAM」とコラボし、アパレルラインと店舗限定の「ブラック&ホワイトチョコレート」アイスを発売した。"}, "meta": "PR TIMES"}, {"kind": "뉴스", "emoji": "💪", "brand": "", "thumb": "", "url": "https://gourmetpress.net/1469914/", "title": {"ko": "'젤라토 프로틴', 발매 5시간 만에 완판 재입고", "en": "'Gelato Protein' Sells Out in 5 Hours, Gets Restocked", "ja": "「ジェラートプロテイン」、発売5時間で完売し再入荷"}, "desc": {"ko": "단백질을 강화한 젤라토 제품 '젤라토 프로틴'이 발매 5시간 만에 완판되는 이변을 일으켰고, 8월 17일 아마존을 통해 재입고됐다.", "en": "A protein-fortified gelato product, 'Gelato Protein,' unexpectedly sold out within five hours of release, with a restock announced for August 17 via Amazon.", "ja": "たんぱく質を強化したジェラート商品「ジェラートプロテイン」が発売からわずか5時間で完売する異例の展開となり、8月17日にAmazonで再入荷した。"}, "meta": "グルメプレス"}, {"kind": "뉴스", "emoji": "💴", "brand": "롯데", "thumb": "", "url": "https://www.fukuishimbun.co.jp/articles/-/2630458", "title": {"ko": "롯데, 9월 출하분부터 아이스크림 30여 종 가격 인상", "en": "Lotte Raises Prices on Some 30 Ice Cream Items From September", "ja": "ロッテ、9月出荷分からアイス30品目超の価格を引き上げ"}, "desc": {"ko": "롯데가 쿨리시·나다 초코&쿠키샌드·아즈키 아이스 등 약 30개 품목의 출하가를 9월 1일 출하분부터 5.1~16.0% 인상했다. 인건비·물류비·원재료비 상승이 이유다. 7월·10월 출하분까지 포함하면 총 35개 품목이 인상 대상이다.", "en": "Lotte raised shipping prices by 5.1% to 16.0% on roughly 30 items — including Coolish variants, Ghana Choco & Cookie Sandwich, and Azuki Ice — effective with September 1 shipments, citing rising labor, logistics and raw-material costs. Counting July and October shipments, 35 items total are affected.", "ja": "ロッテはクーリッシュ各種、ガーナチョコ&クッキーサンド、あずきアイスなど約30品目の出荷価格を、9月1日出荷分から5.1〜16.0%引き上げた。人件費・物流費・原材料費の上昇が理由。7月・10月出荷分を含めると対象は計35品目に上る。"}, "meta": "福井新聞ONLINE"}, {"kind": "뉴스", "emoji": "💴", "brand": "모리나가", "thumb": "", "url": "https://www.nikkei.com/article/DGXZQOUC302BW0Q6A730C2000000/", "title": {"ko": "모리나가유업, '피노'·'파르므' 등 61개 품목 가격 인상", "en": "Morinaga Raises Prices on 61 Products Including Pino, PARM", "ja": "森永乳業、「ピノ」「パルム」など61品目を値上げ"}, "desc": {"ko": "모리나가유업이 9월 출하분부터 아이스크림·유제품 등 61개 품목의 가격을 인상한다. '피노'와 '파르므 초콜릿'(1개입)은 10엔 올라 190엔이 되고, '파르므 초콜릿' 6개입은 610엔에서 630엔으로 오른다.", "en": "Morinaga Milk Industry is raising prices on 61 products, including ice cream and dairy items, starting with September shipments. 'Pino' and 'PARM Chocolate' (single) rise 10 yen to 190 yen, while the PARM Chocolate 6-pack goes from 610 to 630 yen.", "ja": "森永乳業は9月出荷分から、アイスクリームや乳製品など61品目の価格を引き上げる。「ピノ」と「パルム チョコレート」(1個入り)は10円上がり190円に、「パルム チョコレート」6個入りは610円から630円になる。"}, "meta": "日本経済新聞"}]};
+  var sources = {"kr": [[1, "배스킨라빈스, 9월 맛 '도쿄바나나 크렘브륄레' 출시", "https://www.gukjenews.com/news/articleView.html?idxno=3682821"], [2, "크리스피크림, 아이스크림 바 닮은 '도넛바' 4종 인기", "https://www.newsis.com/view/NISX20260804_0003735210"], [3, "요아정, 카카오프렌즈 협업 저당 복숭아 요거트 아이스 출시", "https://www.newsis.com/view/NISX20260724_0003721633"], [4, "폭염·수출 훈풍에 빙그레·롯데웰푸드 나란히 52주 신고가", "https://www.hankyung.com/article/202608314273i"], [5, "하겐다즈, 카카오값 폭등에도 초콜릿 함량 오히려 높여", "https://www.etoday.co.kr/news/view/2622131"], [6, "하겐다즈, 성수동에 크루즈 콘셉트 팝업 '더 하겐 크루즈' 오픈", "https://www.hankyung.com/article/202609044831g"], [7, "롯데웰푸드, 기안84와 3,000명 규모 '설레임런' 개최", "https://www.hankyung.com/article/202607021201g"], [8, "편의점 신상 아이스크림 5종 비교 먹방 화제", "https://www.threads.com/@joonmattang/post/DXOMfAcDHqQ"], [9, "유튜브 쇼츠 '이색 편의점 신상 아이스크림 3가지' 화제", "https://www.youtube.com/shorts/IBQVCMnlwLU"]], "us": [[1, "타코벨, 솔트앤스트로와 '추로 아이스크림 타코' 전국 재출시", "https://www.tacobell.com/newsroom/salt-and-straw"], [2, "타코벨x솔트앤스트로 신메뉴 유튜브 리뷰 영상 확산", "https://www.youtube.com/watch?v=TdevsPI8sQY"], [3, "벤앤제리스, 투표 독려 캠페인 연계 한정판 '라즈 업!' 출시", "https://www.prnewswire.com/news-releases/sundaes-just-got-sweeter---ben--jerrys-drops-three-new-sundaes-flavors-for-2026-302683094.html"], [4, "벤앤제리스, 파인트 인기맛을 담은 아이스크림 바 라인 출시", "https://sporked.com/article/new-ben-and-jerrys-ice-cream-bars-2026-news/"], [5, "콜드스톤, 호박맛 대신 가을 '코지 컬렉션' 2종 공개", "https://hauntedattractionnetwork.com/cold-stone-fall-flavors-2026/"], [6, "제니스, 9월 3일 가을 신맛 컬렉션 출시", "https://yovenice.com/2026/09/03/jenis-fall-ice-cream-collection-arrives-in-los-angeles-sept-3/"], [7, "매그넘 '두바이 초콜릿' 바, 샘스클럽 통해 미국 정식 출시", "https://parade.com/food/magnum-dubai-chocolate-ice-cream-bar-flavor-us-release"], [8, "반 리우웬, 닥터수스와 협업한 크로거 단독 신맛 3종 완판 행진", "https://parade.com/food/van-leeuwens-dr-seuss-ice-cream"], [9, "알디 '카라멜 콘' 아이스크림, 벤앤제리스 듀프로 레딧서 화제", "https://www.yahoo.com/lifestyle/articles/aldi-ice-cream-flavor-reddit-173900593.html"], [10, "캐나다 채프먼스, 美 관세 대비해 미국산 원료 공급망 축소", "https://www.cbc.ca/news/canada/london/chapman-s-ice-cream-ontario-shifting-from-u-s-suppliers-9.7322487"], [11, "美 아이스크림 관세, 25%에서 34%로 인상 예고", "https://finance.yahoo.com/economy/articles/why-ice-cream-expensive-now-113000075.html"]], "jp": [[1, "세븐일레븐, 우지 말차 넣은 '초콜릿 바 말차' 출시", "https://news.mynavi.jp/article/20260831-4895273/"], [2, "훼미리마트, 사이다맛에 망고 타피오카 더한 아이스컵 출시", "https://news.mynavi.jp/article/20260831-4892095/"], [3, "하겐다즈, 식물성 '그린크래프트' 신맛 '검은깨&콩가루' 출시", "https://topics.smt.docomo.ne.jp/amp/article/cocotte/trend/cocotte-622248"], [4, "하겐다즈, 베니하루카 고구마 미니컵·캐러멜 어소트박스 9월 출시", "https://news.livedoor.com/topics/detail/32056149/"], [5, "이무라야, 8년 만에 '타이야키 아이스' 리뉴얼 (40주년)", "https://mag.japaaan.com/archives/286510"], [6, "아카기 뉴교, 가리가리군 딸기·밀크 2종 가을 리뉴얼", "https://gourmetpress.net/1477992/"], [7, "모리나가 '피노', 첫 '파우 패트롤' 협업 에디션 9월 21일 출시", "https://prtimes.jp/main/html/rd/p/000001511.000021580.html"], [8, "이와테 '굴 소프트아이스크림', Threads서 62만 조회 화제", "https://news.livedoor.com/topics/detail/32098023/"], [9, "나노유니버스, 인기 아이스크림 가게와 의류·한정맛 협업", "https://prtimes.jp/main/html/rd/p/000001522.000009786.html"], [10, "'젤라토 프로틴', 발매 5시간 만에 완판 재입고", "https://gourmetpress.net/1469914/"], [11, "롯데, 9월 출하분부터 아이스크림 30여 종 가격 인상", "https://www.fukuishimbun.co.jp/articles/-/2630458"], [12, "모리나가유업, '피노'·'파르므' 등 61개 품목 가격 인상", "https://www.nikkei.com/article/DGXZQOUC302BW0Q6A730C2000000/"]]};
+  var pastReports = [{"date": "2026-08-30", "label": "2026.08.30"}, {"date": "2026-08-28", "label": "2026.08.28"}, {"date": "2026-08-23", "label": "2026.08.23"}, {"date": "2026-08-16", "label": "2026.08.16"}, {"date": "2026-08-10", "label": "2026.08.10"}, {"date": "2026-08-09", "label": "2026.08.09"}, {"date": "2026-08-04", "label": "2026.08.04"}];
+  var brands = {"배스킨라빈스": {"count": 1, "newCount": 1, "timeline": [{"date": "2026-09-02", "title": {"ko": "배스킨라빈스, 9월 맛 '도쿄바나나 크렘브륄레' 출시", "en": "Baskin Robbins Launches Tokyo Banana Creme Brulee for September", "ja": "バスキン・ロビンス、9月の味「東京バナナ クレームブリュレ」発売"}, "desc": {"ko": "SPC 배스킨라빈스가 일본 도쿄바나나와 협업해 바나나 아이스크림에 프랄린 슈가와 브륄레 크런치를 더한 9월 이달의 맛을 선보였다. 시즌 케이크와 랑그드샤 쿠키 샌드도 함께 출시됐다.", "en": "SPC's Baskin Robbins teamed up with Japan's Tokyo Banana for its September flavor of the month, layering banana ice cream with praline sugar and brulee crunch. A matching seasonal cake and langue de chat sandwich cookie launched alongside it.", "ja": "SPCバスキン・ロビンスが日本の東京バナナとコラボし、バナナアイスにプラリネシュガーとブリュレクランチを重ねた9月の月間フレーバーを発売した。シーズンケーキとラング・ド・シャサンドクッキーも同時に登場した。"}}], "priceLog": [], "news": [], "trend": {"kind": "down", "text": "▼ 1"}}, "빙그레": {"count": 1, "newCount": 0, "timeline": [], "priceLog": [], "news": [{"title": {"ko": "폭염·수출 훈풍에 빙그레·롯데웰푸드 나란히 52주 신고가", "en": "Binggrae, Lotte Wellfood Shares Hit 52-Week Highs on Heat, Exports", "ja": "猛暑と輸出好調でビングレ、ロッテウェルフードが52週高値"}, "meta": "한국경제 · 2026-08-31"}], "trend": {"kind": "down", "text": "▼ 2"}}, "세븐일레븐": {"count": 2, "newCount": 2, "timeline": [{"date": "2026-09-02", "title": {"ko": "세븐일레븐, 우지 말차 넣은 '초콜릿 바 말차' 출시", "en": "7-Eleven Japan Launches 'Chocolate Bar Matcha' With Uji Matcha", "ja": "セブン-イレブン、宇治抹茶を使った「チョコレートバー抹茶」を発売"}, "desc": {"ko": "세븐일레븐 재팬이 우지 말차를 아이스와 초콜릿 코팅, 크런치 조각까지 전체에 사용한 신상 초콜릿바를 9월 2일부터 지역별로 순차 출시했다. 가격은 267엔.", "en": "7-Eleven Japan is rolling out a new chocolate ice bar using Uji matcha throughout — in the ice, the chocolate coating, and crunch pieces — starting September 2 in select regions, priced at 267 yen.", "ja": "セブン-イレブンは、アイス・チョコレートコーティング・クランチのすべてに宇治抹茶を使った新作チョコバーを9月2日から地域ごとに順次発売した。価格は267円。"}}, {"date": "2026-09-02", "title": {"ko": "세븐일레븐, 홋카이도 멜론즙 담은 와플콘 아이스 선보여", "en": "7-Eleven Japan Debuts Waffle Cone With Hokkaido Melon Juice", "ja": "セブン-イレブン、北海道メロン果汁のワッフルコーンを発売"}, "desc": {"ko": "세븐일레븐 재팬이 홋카이도 멜론즙을 사용한 와플콘 아이스크림을 9월 스위츠 라인업의 일환으로 출시했다. 상큼한 멜론 본연의 맛을 살린 것이 특징이다.", "en": "7-Eleven Japan added a waffle cone ice cream made with Hokkaido melon juice to its September sweets lineup, aiming for a fresh, true-to-fruit melon flavor.", "ja": "セブン-イレブンは北海道メロン果汁を使ったワッフルコーンアイスを、9月のスイーツラインナップの一環として発売した。メロン本来の爽やかな味わいが特徴だ。"}}], "priceLog": [], "news": [], "trend": {"kind": "new", "text": "NEW"}}};
+  var brandLogos = {"세븐일레븐": "assets/brand-logos/7-eleven.svg", "배스킨라빈스": "assets/brand-logos/baskin-robbins.svg", "빙그레": "assets/brand-logos/binggrae.png", "롯데웰푸드": "assets/brand-logos/lotte-wellfood.jpg", "하겐다즈": "assets/brand-logos/haagen-dazs.svg", "Taco Bell": "assets/brand-logos/taco-bell.svg", "Aldi": "assets/brand-logos/aldi.svg", "훼미리마트": "assets/brand-logos/familymart.svg", "이무라야": "assets/brand-logos/imuraya.svg"};
 
-var items = {
-  kr: [
-    {
-      kind: "신제품", emoji: "🍨", brand: "배스킨라빈스", thumb: "",
-      title: {ko: "배스킨라빈스, 8월 맛 '산딸기 끌리는 연유' 광고 이어가", en: "Baskin Robbins Pushes August Pick 'Wild Berry Condensed Milk'", ja: "バスキン・ロビンス、8月の味「野いちご練乳」広告を継続"},
-      desc: {ko: "붉은 산딸기 소르베와 흰 연유 아이스크림을 함께 담은 여름 시즌 플레이버로, 배우 박지훈을 광고 모델로 기용해 SNS 캠페인을 이어가고 있다.", en: "This summer flavor pairs red wild-berry sorbet with white condensed-milk ice cream, backed by an ongoing social campaign starring actor Park Ji-hoon.", ja: "赤い野いちごシャーベットと白い練乳アイスを組み合わせた夏季フレーバーで、俳優パク・ジフンを起用したSNSキャンペーンを継続中だ。"},
-      meta: "한경 · 2026.07.31"
-    },
-    {
-      kind: "광고", emoji: "📣", brand: "배스킨라빈스", thumb: "https://img.youtube.com/vi/_kQBUXPl_VA/hqdefault.jpg",
-      title: {ko: "박지훈, 배스킨라빈스 여름 광고모델로 발탁", en: "Park Ji-hoon Named Baskin Robbins' Summer Ad Face", ja: "パク・ジフン、バスキン・ロビンス夏の広告モデルに"},
-      desc: {ko: "박지훈을 내세운 광고 영상이 유튜브 쇼츠 등을 통해 노출되며 이달의 맛 캠페인 화제성을 이어가고 있다.", en: "An ad short featuring Park Ji-hoon is circulating on YouTube Shorts, extending buzz around the brand's flavor-of-the-month push.", ja: "パク・ジフンを起用した広告映像がYouTubeショートなどで拡散し、月間フレーバーキャンペーンの話題性を後押ししている。"},
-      meta: "YouTube Shorts · 배스킨라빈스 공식"
-    },
-    {
-      kind: "신제품", emoji: "🍋", brand: "GS25 · TXT", thumb: "",
-      title: {ko: "GS25, TXT 연준과 협업한 사워레몬요거트 아이스크림 출시", en: "GS25 Launches Sour Lemon Yogurt Ice Cream With TXT's Yeonjun", ja: "GS25、TXTヨンジュンとコラボしたサワーレモンヨーグルトアイスを発売"},
-      desc: {ko: "요아정·로로멜로와 3자 협업한 컵·바 2종으로, 구매 시 연준 포토카드와 랜덤 스티커를 증정해 K팝 팬덤 사이에서 화제다.", en: "A three-way collab with Yoajeong and Loromelo comes in cup and bar formats, bundling a Yeonjun photocard and random stickers that are drawing K-pop fans.", ja: "ヨーグルトアイス「ヨアジョン」やロロメロとの3社コラボで、カップとバーの2種展開。購入特典のヨンジュンのフォトカードとランダムステッカーがK-POPファンの間で話題に。"},
-      meta: "News1 · 2026.07.16"
-    },
-    {
-      kind: "신제품", emoji: "🥪", brand: "이마트24 · 브레드이발소", thumb: "",
-      title: {ko: "이마트24, '브레드이발소' 콜라보 신상 6종과 할인 프로모션 진행", en: "Emart24 Rolls Out 'Bread Barbershop' Collab Items With Discount Promo", ja: "イーマート24、「ブレッドイバルソ」コラボ新商品6種と割引プロモを展開"},
-      desc: {ko: "인기 애니메이션 브레드이발소와 손잡고 샌드위치·베이커리·디저트·음료 6종을 선보였으며, 간편결제 시 아이스크림·음료를 최대 60% 할인해준다.", en: "Teaming up with the popular animation Bread Barbershop, the chain launched six sandwich, bakery, dessert and drink items, offering up to 60% off ice cream and drinks via mobile pay.", ja: "人気アニメ「ブレッドイバルソ」とタッグを組み、サンドイッチやベーカリー、デザート、飲料など6種を発売。簡易決済利用でアイスや飲料を最大60%割引する。"},
-      meta: "디지털데일리 · 2026.08.05, 프로모션 8/31까지"
-    },
-    {
-      kind: "신제품", emoji: "🍑", brand: "CU", thumb: "",
-      title: {ko: "CU, 저당 과즙 아이스바 '라라스윗 듬뿍바' 3종 여름 내내 인기", en: "CU's Low-Sugar 'Lalasweet' Fruit Bars Stay Popular All Summer", ja: "CU、低糖果肉アイス「ララスイート たっぷりバー」3種が夏の人気商品に"},
-      desc: {ko: "과육을 15%까지 담고 당 4g 수준으로 낮춘 딸기·골드키위파인애플·피치망고 3종으로, 여름 내내 1+1 행사가 이어지고 있다.", en: "Containing up to 15% real fruit and just 4g of sugar, the strawberry, gold-kiwi-pineapple and peach-mango trio has stayed on a buy-one-get-one deal all summer.", ja: "果肉を15%まで含み糖分4gに抑えたいちご・ゴールドキウイパイナップル・ピーチマンゴーの3種で、夏の間ずっと1+1セールが続いている。"},
-      meta: "아시아경제 · 2026.05.14, 프로모션 지속"
-    },
-    {
-      kind: "신제품", emoji: "🍫", brand: "빙그레", thumb: "",
-      title: {ko: "빙그레, 저당 아이스밀크바 '딥앤로우' 2종 출시", en: "Binggrae Launches Two Low-Sugar Ice Milk Bars Under 'Deep&Low'", ja: "ビングレ、低糖アイスミルクバー「ディープ&ロウ」2種を発売"},
-      desc: {ko: "당 2.4g 수준의 크런치초코바(153kcal)와 크런치커피바(159kcal)로, 당류를 줄이면서도 식감을 살린 저당 라인을 강화했다.", en: "The crunch-choco (153kcal) and crunch-coffee (159kcal) bars keep sugar at about 2.4g, expanding the brand's low-sugar, textured-bite lineup.", ja: "糖分約2.4gのクランチチョコバー(153kcal)とクランチコーヒーバー(159kcal)で、糖分を抑えつつ食感にこだわった低糖ラインを強化した。"},
-      meta: "빙그레 · 2026"
-    },
-    {
-      kind: "신제품", emoji: "☕", brand: "빙그레", thumb: "",
-      title: {ko: "빙그레, '까페오레' 아이스크림 풍미 담은 컵커피 아카페라 출시", en: "Binggrae Reimagines Its 'Cafe au Lait' Ice Cream as an Acapella Cup Coffee", ja: "ビングレ、「カフェオレ」アイスの風味を活かしたカップコーヒー「アカペラ」を発売"},
-      desc: {ko: "인기 커피맛 아이스크림 까페오레의 풍미를 음료로 재해석한 컵커피로, 아이스크림과 음료를 넘나드는 브랜드 확장을 보여준다.", en: "The cup coffee translates the flavor of its popular Cafe au Lait ice cream into a drink, showing the brand extending across ice cream and beverages.", ja: "人気のコーヒー味アイス「カフェオレ」の風味を飲料として再解釈したカップコーヒーで、アイスと飲料を横断するブランド展開を示している。"},
-      meta: "빙그레 · 2026"
-    },
-    {
-      kind: "뉴스", emoji: "📰", brand: "롯데웰푸드 · 빙그레", thumb: "",
-      title: {ko: "역대급 폭염에 롯데웰푸드·빙그레, 여름 마케팅 총력전", en: "Record Heat Wave Spurs Lotte Wellfood and Binggrae Marketing Blitz", ja: "記録的猛暑でロッテウェルフードとビングレが夏のマーケティング攻勢"},
-      desc: {ko: "롯데웰푸드는 한일 합작 '설레임 쿨리쉬'를 전면 배치하고 출시 3개월 만에 650만개가 팔린 '돼지바빵'을 앞세웠으며, 빙그레는 2030세대를 겨냥해 저당·제로 라인을 확대하고 있다.", en: "Lotte Wellfood is spotlighting its Korea-Japan joint 'Sulleim Coolish' and 'Dwaejiba Bread' — which has sold 6.5 million units in three months — while Binggrae expands low-sugar and zero-sugar lines aimed at consumers in their 20s and 30s.", ja: "ロッテウェルフードは日韓合弁の「ソルレイム クーリッシュ」と、発売3カ月で650万個を売った「トェジバパン」を前面に押し出し、ビングレは20~30代をターゲットに低糖・ゼロ糖ラインを拡大している。"},
-      meta: "이데일리 · 2026 여름"
-    },
-    {
-      kind: "뉴스", emoji: "📈", brand: "", thumb: "",
-      title: {ko: "늦더위에 앱 내 '아이스크림' 검색량 전주 대비 3배 급증", en: "In-App Searches for 'Ice Cream' Triple Week-on-Week Amid Lingering Heat", ja: "残暑で「アイスクリーム」アプリ内検索が前週比3倍に急増"},
-      desc: {ko: "신세계라이브쇼핑에 따르면 모바일 앱 내 아이스크림 검색량이 전주 대비 약 3배, 과자 170%, 빵 47% 늘어 폭염발 간식 소비 변화를 보여준다.", en: "Shinsegae Live Shopping reports in-app searches for ice cream roughly tripled week-on-week, with snacks up 170% and bread up 47%, reflecting a heat-driven shift in snacking.", ja: "シンセゲライブショッピングによると、アプリ内の「アイスクリーム」検索が前週比約3倍、菓子が170%、パンが47%増加し、猛暑による間食消費の変化を示した。"},
-      meta: "네이트뉴스 · 2026.08.10"
-    }
-  ],
-  us: [
-    {
-      kind: "바이럴", emoji: "🥐", brand: "Magnum", thumb: "https://img.youtube.com/vi/vwcqXKnFLx4/hqdefault.jpg",
-      title: {ko: "크루아상+매그넘 '크래그넘' 챌린지, 810만 조회 돌풍", en: "Croissant-Stuffed 'Cragnum' Hack Racks Up 8.1M Views", ja: "クロワッサン+マグナムの「クラグナム」ハック、810万回再生の話題"},
-      desc: {ko: "크루아상 속을 파내 매그넘 바를 끼운 뒤 막대를 빼고 눌러 먹는 방식으로, 매그넘 영국법인 인스타그램 게시물에서 시작돼 틱톡·유튜브로 확산했다.", en: "The hack hollows out a croissant, inserts a Magnum bar, then pulls the stick and squeezes — it started with a Magnum UK&I Instagram post and spread across TikTok and YouTube.", ja: "クロワッサンの中身をくり抜いてマグナムバーを差し込み、棒を抜いて押し出して食べる方法で、マグナム英国法人のInstagram投稿から始まりTikTokやYouTubeに広がった。"},
-      meta: "The Grocer · 810만+ 조회(합산)"
-    },
-    {
-      kind: "신제품", emoji: "🍪", brand: "Baskin Robbins", thumb: "",
-      title: {ko: "배스킨라빈스, 9월 맛으로 '비스코프 크렘 브륄레' 예고", en: "Baskin Robbins Names Biscoff Creme Brulee Its September Flavor", ja: "バスキン・ロビンス、9月の味に「ビスコフ・クレームブリュレ」を予告"},
-      desc: {ko: "프렌치 커스터드 아이스크림에 비스코프 쿠키 조각과 캐러멜 스월을 더한 맛으로, 9월 이달의 맛으로 공식 선정됐다.", en: "The French custard ice cream is studded with Biscoff cookie pieces and a caramelized-sugar swirl, officially named the brand's flavor of the month for September.", ja: "フレンチカスタードアイスにビスコフクッキーとキャラメルスワールを加えた味で、9月の月間フレーバーに正式に選ばれた。"},
-      meta: "Fast Food Club · 공식 발표"
-    },
-    {
-      kind: "신제품", emoji: "🫐", brand: "Van Leeuwen · Laufey", thumb: "",
-      title: {ko: "반 리우웬, 가수 라우페이와 협업한 프로요거트 출시", en: "Van Leeuwen Launches Fro-Yo Collab With Singer Laufey", ja: "ヴァンルーウェン、歌手ラウフェイとのコラボフローズンヨーグルトを発売"},
-      desc: {ko: "블루베리와 모찌를 올린 새콤한 프로요거트로, 라우페이의 글로벌 팬 행사 'A Very Laufey Day'에 맞춰 원플러스원 프로모션도 함께 진행됐다.", en: "A tart frozen yogurt topped with blueberries and mochi, timed to Laufey's global fan celebration 'A Very Laufey Day,' with a buy-one-get-one promo.", ja: "ブルーベリーと餅をトッピングした酸味のあるフローズンヨーグルトで、ラウフェイのファンイベント「A Very Laufey Day」に合わせ、1つ買うともう1つ無料のプロモも実施された。"},
-      meta: "Sporked · 2026.08.23"
-    },
-    {
-      kind: "신제품", emoji: "🍿", brand: "United Dairy Farmers · Grippo Foods", thumb: "",
-      title: {ko: "UDF·그리포, 팝콘·프레첼 조합 '펀 푸드 크런치' 아이스크림 출시", en: "UDF and Grippo Foods Launch 'Fun Food Crunch' Ice Cream", ja: "UDF・グリッポ、ポップコーン×プレッツェルの「ファン・フード・クランチ」アイスを発売"},
-      desc: {ko: "버터 팝콘 아이스크림에 바비큐 캐러멜 스월과 초콜릿 프레첼 조각을 더한 한정판으로, 두 브랜드의 홈메이드 라인 협업 제품이다.", en: "A limited-edition Homemade Brand collab pairing buttered-popcorn ice cream with a BBQ-caramel swirl and chocolate pretzel pieces.", ja: "バターポップコーンアイスにBBQキャラメルスワールとチョコレートプレッツェルを加えた限定コラボ商品で、両社のホームメイドブランドから発売された。"},
-      meta: "Dairy Foods"
-    },
-    {
-      kind: "신제품", emoji: "🎓", brand: "Homestead Creamery", thumb: "",
-      title: {ko: "리버티대학교 전용 맛 '스파키스 베리 블라스트' 캠퍼스 데뷔", en: "Liberty University's Exclusive 'Sparky's Berry Blast' Debuts on Campus", ja: "リバティ大学専用フレーバー「スパーキーズ・ベリー・ブラスト」がキャンパスでデビュー"},
-      desc: {ko: "홈스테드 크리머리가 만든 믹스베리 맛으로, 캠퍼스 론칭 행사에서 무료 시식 행사와 함께 첫선을 보였다.", en: "A mixed-berry flavor made by Homestead Creamery, introduced with free samples at a campus launch event.", ja: "ホームステッド・クリーマリーが手がけたミックスベリー味で、キャンパスでの発売イベントにて無料試食とともに初お披露目された。"},
-      meta: "Liberty University · 2026.08.25"
-    },
-    {
-      kind: "뉴스", emoji: "🍫", brand: "", thumb: "",
-      title: {ko: "컨슈머리포트, 초콜릿 아이스크림 블라인드 테이스트 순위 공개", en: "Consumer Reports Ranks Best Chocolate Ice Creams in Blind Taste Test", ja: "コンシューマーレポート、チョコレートアイスのブラインドテスト結果を公開"},
-      desc: {ko: "11개 브랜드를 맛·식감·가성비 기준으로 비교한 블라인드 테스트 결과를 방송·기사로 공개해 소비자들의 관심을 모았다.", en: "The outlet compared 11 brands on flavor, texture and value in a blind taste test, drawing consumer attention via TV and article coverage.", ja: "11ブランドを味・食感・コストパフォーマンスで比較したブラインドテストの結果をテレビと記事で公開し、消費者の関心を集めた。"},
-      meta: "WAFB · 2026.08.24"
-    },
-    {
-      kind: "신제품", emoji: "🎃", brand: "Publix", thumb: "",
-      title: {ko: "퍼블릭스, 가을 한정판 아이스크림 6종 라인업 공개", en: "Publix Unveils Six Limited-Edition Fall Ice Cream Flavors", ja: "パブリックス、秋限定アイス6種のラインナップを発表"},
-      desc: {ko: "펌킨파이·애플파이·시나몬 스트루젤 등 가을 테마 6종을 선보였으며, 인기 땅콩버터 프레첼 맛은 하프갤런 용량으로 키웠다.", en: "The fall-themed lineup includes Pumpkin Pie, Apple Pie and Cinnamon Streusel, while the popular Peanut Butter Pretzel flavor was upsized to a half-gallon.", ja: "パンプキンパイ、アップルパイ、シナモンストロイゼルなど秋テーマの6種を発表し、人気のピーナッツバター・プレッツェル味はハーフガロンサイズに拡大した。"},
-      meta: "Publix Newsroom"
-    },
-    {
-      kind: "바이럴", emoji: "🐕", brand: "Dr. Bombay", thumb: "",
-      title: {ko: "스눕독의 '닥터 봄베이', 월급 1000만원대 시식가 채용 공고 화제", en: "Snoop Dogg's Dr. Bombay Sparks Buzz With $10K/Month Taste-Tester Job Posting", ja: "スヌープ・ドッグの「Dr. Bombay」、月給1万ドルの試食係求人が話題に"},
-      desc: {ko: "스눕독이 만든 아이스크림 브랜드가 '국제 아이스크림 시식가'를 월 1만 달러에 채용한다고 밝히며 화제를 모았다.", en: "Snoop Dogg's ice cream brand announced it's hiring an 'international ice cream taste tester' for $10,000 a month, generating buzz across entertainment media.", ja: "スヌープ・ドッグが手がけるアイスブランドが「国際アイスクリーム試食係」を月給1万ドルで募集すると発表し、話題を呼んだ。"},
-      meta: "Billboard · 2026.08.27"
-    }
-  ],
-  jp: [
-    {
-      kind: "신제품", emoji: "🍫", brand: "세븐일레븐 재팬", thumb: "",
-      title: {ko: "세븐일레븐 재팬, '카릿토 피스타치오 초코바' 출시", en: "7-Eleven Japan Launches 'Crispy Pistachio Choco Bar'", ja: "セブン-イレブン、「カリッと ピスタチオチョコバー」を発売"},
-      desc: {ko: "피스타치오 향을 입힌 초콜릿 코팅 바로, 278엔에 전국 판매를 시작했다.", en: "A chocolate-coated bar flavored with pistachio, launched nationwide at 278 yen.", ja: "ピスタチオ風味のチョコレートコーティングバーで、278円で全国発売を開始した。"},
-      meta: "entabe.jp · 2026.08.25"
-    },
-    {
-      kind: "신제품", emoji: "🍇", brand: "세븐일레븐 재팬", thumb: "",
-      title: {ko: "세븐일레븐 재팬, 과즙 재현 아이스바 '마루데 쿄호' 신상", en: "7-Eleven Japan Adds 'Just Like Kyoho Grape' to Fruit-Ice Line", ja: "セブン-イレブン、果実氷シリーズ新作「まるで巨峰」を発売"},
-      desc: {ko: "실제 포도를 먹는 듯한 맛을 재현한 '마루데' 시리즈 신작으로, 지난달 '마루데 화니시' 이후 이어지는 프루츠 아이스 라인이다.", en: "The latest in the 'Marude' fruit-ice line designed to taste like real fruit, following last month's Japanese-pear entry.", ja: "本物の果物を食べているような味を再現する「まるで」シリーズの新作で、先月の「まるで和梨」に続くフルーツ氷ラインだ。"},
-      meta: "tokubai.co.jp · 2026.08.26"
-    },
-    {
-      kind: "신제품", emoji: "☕", brand: "패밀리마트 · 아카기유업", thumb: "",
-      title: {ko: "패밀리마트, 아카기유업과 '타베루 보쿠조 카페모카' 파르페 출시", en: "FamilyMart x Akagi Nyugyo Launch 'Taberu Bokujo Cafe Mocha' Parfait", ja: "ファミマ、赤城乳業と「たべる牧場 パフェ カフェモカ」を発売"},
-      desc: {ko: "밀크 아이스크림과 카페모카 아이스를 층층이 담은 컵 디저트로, 전문 디저트 평가자의 시식 후기와 함께 소개됐다.", en: "A layered cup dessert combining milk ice cream and café-mocha ice, introduced alongside a professional taster's review.", ja: "ミルクアイスとカフェモカアイスを層にしたカップデザートで、専門家による試食レビューとともに紹介された。"},
-      meta: "entabe.jp / Yahoo!ニュース · 2026.08.25"
-    },
-    {
-      kind: "신제품", emoji: "🍰", brand: "로손", thumb: "",
-      title: {ko: "로손, '하얀 티라미수 크레페'·티라미수 파르페 동시 출시", en: "Lawson Adds White Tiramisu Crepe and Tiramisu Parfait Together", ja: "ローソン、「白いティラミスクレープ」とティラミスパフェを同時発売"},
-      desc: {ko: "우치카페 디저트 케이스에 티라미수 메뉴 2종을 나란히 추가하며, 세븐일레븐·패밀리마트와 함께 이번 주 티라미수 삼파전을 이뤘다.", en: "The two new tiramisu items joined Lawson's Uchi Café case, rounding out this week's three-way tiramisu showdown alongside 7-Eleven and FamilyMart.", ja: "ウチカフェのデザートケースにティラミス系メニューを2種同時追加し、セブン-イレブン、ファミリーマートと並ぶ今週のティラミス三つ巴を形成した。"},
-      meta: "tokubai.co.jp · 2026.08.26"
-    },
-    {
-      kind: "뉴스", emoji: "🍠", brand: "하겐다즈 재팬", thumb: "",
-      title: {ko: "하겐다즈 재팬, 고구마·흑임자 가을 신제품 예고", en: "Häagen-Dazs Japan Previews Sweet Potato and Black Sesame Fall Items", ja: "ハーゲンダッツ、さつまいも・黒ごまの秋新作を予告"},
-      desc: {ko: "자색고구마 퓌레에 별도 꿀 소스를 곁들인 '노미츠이모'는 9월 15일, 두유 베이스 미니컵 '흑임자&콩가루'는 9월 1일 출시 예정이라고 밝혔다.", en: "The purple-sweet-potato 'Noumitsu Imo' with a separate honey sauce launches September 15, and a soy-milk-based black sesame & kinako mini cup arrives September 1, the brand announced.", ja: "紫芋ピューレに別添えの蜜ソースを合わせた「濃蜜いも」は9月15日、豆乳ベースのミニカップ「黒ごま&きなこ」は9月1日に発売予定と発表された。"},
-      meta: "entabe.jp / fashion-press.net · 발표"
-    },
-    {
-      kind: "광고", emoji: "🎮", brand: "겐신임팩트 · 31아이스크림", thumb: "",
-      title: {ko: "겐신임팩트, 31아이스크림과 첫 콜라보 '스위트 아이스크림타임'", en: "Genshin Impact Teams With 31 Ice Cream for First-Ever Collab", ja: "原神、31アイスクリームと初コラボ「スイート・アイスクリームタイム」"},
-      desc: {ko: "모바일오더 전용으로 캐릭터 4종 테마 세트를 판매하며 아크릴 스탠드와 게임 내 재화 코드를 함께 제공, 8월 28일부터 사전주문을 받았다.", en: "Sold exclusively via mobile order, the character-themed sets include acrylic stands and in-game currency codes, with pre-orders opening August 28.", ja: "モバイルオーダー限定でキャラクターテーマのセットを販売し、アクリルスタンドやゲーム内通貨コードが付属。8月28日から事前注文を受け付けた。"},
-      meta: "denfaminicogamer.jp · 2026.08.28"
-    },
-    {
-      kind: "광고", emoji: "🏐", brand: "하이큐!! · 로손", thumb: "",
-      title: {ko: "'하이큐!!'와 로손, '다 함께 쑥쑥' 캠페인 진행 중", en: "Haikyu!! x Lawson 'Grow Together' Campaign Rolls On", ja: "「ハイキュー!!」×ローソン「みんなでぐんぐん」キャンペーン展開中"},
-      desc: {ko: "아이스크림 2개 구매 시 오리지널 코스터(8종 중 1개)를 증정하는 캠페인으로, 8월 15일부터 이치방쿠지 연계 상품도 함께 전개되고 있다.", en: "Buying two qualifying ice creams earns one of eight original coasters, with a tie-in Ichiban Kuji lottery running alongside since August 15.", ja: "対象アイスを2個購入すると全8種のオリジナルコースターがもらえるキャンペーンで、8月15日からは一番くじとの連動企画も展開している。"},
-      meta: "lawson.co.jp · 캠페인 진행중"
-    },
-    {
-      kind: "바이럴", emoji: "🍧", brand: "시로히게 크림퍼프 팩토리", thumb: "",
-      title: {ko: "지브리 감독 조카의 가게, '토토로 빙수' 6일 한정 판매로 SNS 강타", en: "Ghibli Director's Nephew Sells 'Totoro Shaved Ice' for Just 6 Days", ja: "ジブリ監督の甥の店、「トトロかき氷」6日間限定販売がSNSで話題"},
-      desc: {ko: "미야자키 하야오 감독의 조카가 운영하는 시모키타자와 인근 가게에서 눈사람 모양 토토로 빙수를 1인분 2000엔에 딸기·복숭아·말차 3종으로 선보였으며, 매장 앞에 긴 줄이 이어졌다.", en: "At a shop near Shimokitazawa run by Hayao Miyazaki's nephew, a snowman-shaped Totoro shaved ice sold for 2,000 yen in strawberry, peach and matcha, drawing long lines.", ja: "宮崎駿監督の甥が下北沢近くで営む店で、雪だるま形の「トトロかき氷」がいちご・桃・抹茶の3種、1人前2,000円で販売され、長い行列ができた。"},
-      meta: "SoraNews24 · 2026.08.21-23, 08.28-30 한정"
-    },
-    {
-      kind: "뉴스", emoji: "🍠", brand: "모리나가", thumb: "",
-      title: {ko: "모리나가 '파르므 안노이모', 재출시 후 주간 랭킹 상위권 유지", en: "Morinaga's PARM Annou Sweet Potato Stays Atop Weekly Rankings", ja: "森永「パルム 安納芋」、再発売後も週間ランキング上位を維持"},
-      desc: {ko: "2022년 첫 선을 보인 뒤 다시 돌아온 한정 수량 맛으로, 8월 말 아이스크림 주간 랭킹에서도 여전히 높은 순위를 지키고 있다.", en: "The limited-quantity flavor, first introduced in 2022, has returned and remains high on late-August weekly ice cream rankings.", ja: "2022年に初登場した数量限定フレーバーが復活し、8月末の週間アイスランキングでも上位をキープしている。"},
-      meta: "morinagamilk.co.jp / mognavi.jp"
-    }
-  ]
-};
-
-var sources = {
-  kr: [
-    [1, "배스킨라빈스 8월 이달의 맛 '산딸기가 끌리는 연유' 출시", "https://www.hankyung.com/article/202607317611P"],
-    [2, "배스킨라빈스 박지훈 광고 유튜브 쇼츠", "https://www.youtube.com/shorts/_kQBUXPl_VA"],
-    [3, "GS25, TXT 연준과 사워레몬요거트 협업 출시", "https://www.news1.kr/industry/distribution/6225237"],
-    [4, "이마트24, 브레드이발소 콜라보 신상 6종 출시", "https://www.ddaily.co.kr/page/view/2026080514420644010"],
-    [5, "CU, 저당 아이스바 '라라스윗 듬뿍바' 출시", "https://view.asiae.co.kr/article/2026051411085647822"],
-    [6, "빙그레 '딥앤로우' 브랜드 소개", "https://www.bing.co.kr/news/news_announced_view?anno_idx=261"],
-    [7, "빙그레 '아카페라 까페오레' 브랜드 소개", "https://www.bing.co.kr/news/news_announced_view?anno_idx=340"],
-    [8, "폭염 속 롯데웰푸드·빙그레 여름 마케팅 총력전", "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=04526406645512552"],
-    [9, "앱 내 아이스크림 검색량 전주 대비 3배 급증", "https://news.nate.com/view/20260810n11606"]
-  ],
-  us: [
-    [1, "Magnum's ice cream-croissant hack goes viral", "https://www.thegrocer.co.uk/news/magnums-ice-cream-croissant-hack-goes-viral/722941.article"],
-    [2, "Baskin Robbins September Flavor of the Month", "https://fastfoodclub.com/p/scoop-up-the-fun-with-baskin-robbins-september-flavor-of-the-month/"],
-    [3, "Van Leeuwen announces collab with Laufey", "https://sporked.com/article/one-of-our-favorite-ice-cream-brands-just-announced-a-collab-with-laufey/"],
-    [4, "United Dairy Farmers and Grippo Foods team for new ice cream flavor", "https://www.dairyfoods.com/articles/99321-united-dairy-farmers-and-grippo-foods-team-for-new-ice-cream-flavor"],
-    [5, "Liberty-inspired ice cream flavor debuts this fall", "https://www.liberty.edu/news/2026/08/17/berry-sweet-treat-liberty-inspired-ice-cream-flavor-debuts-this-fall/"],
-    [6, "Consumer Reports ranks best chocolate ice cream brands", "https://www.wafb.com/video/2026/08/24/consumer-reports-ranks-best-chocolate-ice-cream-brands-blind-taste-test/"],
-    [7, "Publix fall limited-edition ice cream flavors", "https://corporate.publix.com/newsroom/news-stories/08142026---fall-into-these-limited-edition-ice-cream-flavors-at-publix"],
-    [8, "Snoop Dogg's Dr. Bombay ice cream taste tester job", "https://www.billboard.com/music/rb-hip-hop/snoop-dogg-ice-cream-taste-tester-dr-bombay-1236326881/"]
-  ],
-  jp: [
-    [1, "コンビニ新作アイス(8/25) セブン-イレブン ピスタチオチョコバー", "https://entabe.jp/61296/summary-convenience-store-august-25th-new-ice"],
-    [2, "セブン-イレブンスイーツ「まるで巨峰」ほか", "https://tokubai.co.jp/news/articles/6628"],
-    [3, "ファミマ新作(8/25) 赤城たべる牧場パフェカフェモカ", "https://entabe.jp/61306/summary-familymart-august-25th-new-sweets-ice"],
-    [4, "ローソンスイーツ 白いティラミスクレープほか", "https://tokubai.co.jp/news/articles/4200"],
-    [5, "ハーゲンダッツ 濃蜜いも・黒ごま&きなこ発表", "https://entabe.jp/61278/2026-aug-week3-ice-tsukimi-crispy-sandwich-autumn-news"],
-    [6, "原神×31アイスクリーム初コラボ", "https://news.denfaminicogamer.jp/news/260820r"],
-    [7, "ハイキュー!!×ローソン みんなでぐんぐんキャンペーン", "https://www.lawson.co.jp/lab/entertainment/art/20260804_kujihaikyu.html"],
-    [8, "白ひげのシュークリーム工房 トトロかき氷", "https://soranews24.com/2026/08/25/nephew-of-studio-ghibli-director-hayao-miyazaki-serves-up-totoro-shaved-ice-in-tokyo/"],
-    [9, "森永 パルム 安納芋 発売", "https://www.morinagamilk.co.jp/release/newsentry-4575.html"]
-  ]
-};
-
-var pastReports = [
-  {date: "2026-08-28", label: "2026.08.28"},
-  {date: "2026-08-23", label: "2026.08.23"},
-  {date: "2026-08-16", label: "2026.08.16"},
-  {date: "2026-08-10", label: "2026.08.10"},
-  {date: "2026-08-09", label: "2026.08.09"},
-  {date: "2026-08-04", label: "2026.08.04"}
-];
-
-var brands = {
-  "배스킨라빈스": {
-    count: 2, newCount: 1,
-    trend: {kind: "flat", text: "–"},
-    timeline: [
-      {date: "2026-07-31", title: {ko: "배스킨라빈스, 8월 맛 '산딸기 끌리는 연유' 광고 이어가", en: "Baskin Robbins Pushes August Pick 'Wild Berry Condensed Milk'", ja: "バスキン・ロビンス、8月の味「野いちご練乳」広告を継続"}, desc: {ko: "붉은 산딸기 소르베와 흰 연유 아이스크림을 함께 담은 여름 시즌 플레이버로, 배우 박지훈을 광고 모델로 기용해 SNS 캠페인을 이어가고 있다.", en: "This summer flavor pairs red wild-berry sorbet with white condensed-milk ice cream, backed by an ongoing social campaign starring actor Park Ji-hoon.", ja: "赤い野いちごシャーベットと白い練乳アイスを組み合わせた夏季フレーバーで、俳優パク・ジフンを起用したSNSキャンペーンを継続中だ。"}}
-    ],
-    priceLog: [],
-    news: [
-      {title: {ko: "박지훈, 배스킨라빈스 여름 광고모델로 발탁", en: "Park Ji-hoon Named Baskin Robbins' Summer Ad Face", ja: "パク・ジフン、バスキン・ロビンス夏の広告モデルに"}, meta: "YouTube Shorts · 배스킨라빈스 공식"}
-    ]
-  },
-  "GS25": {
-    count: 1, newCount: 1,
-    trend: {kind: "down", text: "▼ 2"},
-    timeline: [
-      {date: "2026-07-16", title: {ko: "GS25, TXT 연준과 협업한 사워레몬요거트 아이스크림 출시", en: "GS25 Launches Sour Lemon Yogurt Ice Cream With TXT's Yeonjun", ja: "GS25、TXTヨンジュンとコラボしたサワーレモンヨーグルトアイスを発売"}, desc: {ko: "요아정·로로멜로와 3자 협업한 컵·바 2종으로, 구매 시 연준 포토카드와 랜덤 스티커를 증정해 K팝 팬덤 사이에서 화제다.", en: "A three-way collab with Yoajeong and Loromelo comes in cup and bar formats, bundling a Yeonjun photocard and random stickers that are drawing K-pop fans.", ja: "ヨーグルトアイス「ヨアジョン」やロロメロとの3社コラボで、カップとバーの2種展開。購入特典のヨンジュンのフォトカードとランダムステッカーがK-POPファンの間で話題に。"}}
-    ],
-    priceLog: [
-      {date: "2026-07-16", note: {ko: "사워레몬요거트 아이스크림은 컵 4,500원에 판매되며, 바 형태도 함께 나온다.", en: "The sour lemon yogurt ice cream sells for 4,500 won in cup form, with a bar version also available.", ja: "サワーレモンヨーグルトアイスはカップ4,500ウォンで販売され、バータイプも用意されている。"}, tag: "note"}
-    ],
-    news: []
-  },
-  "빙그레": {
-    count: 3, newCount: 2,
-    trend: {kind: "up", text: "▲ +2"},
-    timeline: [
-      {date: "2026-08", title: {ko: "빙그레, 저당 아이스밀크바 '딥앤로우' 2종 출시", en: "Binggrae Launches Two Low-Sugar Ice Milk Bars Under 'Deep&Low'", ja: "ビングレ、低糖アイスミルクバー「ディープ&ロウ」2種を発売"}, desc: {ko: "당 2.4g 수준의 크런치초코바(153kcal)와 크런치커피바(159kcal)로, 당류를 줄이면서도 식감을 살린 저당 라인을 강화했다.", en: "The crunch-choco (153kcal) and crunch-coffee (159kcal) bars keep sugar at about 2.4g, expanding the brand's low-sugar, textured-bite lineup.", ja: "糖分約2.4gのクランチチョコバー(153kcal)とクランチコーヒーバー(159kcal)で、糖分を抑えつつ食感にこだわった低糖ラインを強化した。"}},
-      {date: "2026-08", title: {ko: "빙그레, '까페오레' 아이스크림 풍미 담은 컵커피 아카페라 출시", en: "Binggrae Reimagines Its 'Cafe au Lait' Ice Cream as an Acapella Cup Coffee", ja: "ビングレ、「カフェオレ」アイスの風味を活かしたカップコーヒー「アカペラ」を発売"}, desc: {ko: "인기 커피맛 아이스크림 까페오레의 풍미를 음료로 재해석한 컵커피로, 아이스크림과 음료를 넘나드는 브랜드 확장을 보여준다.", en: "The cup coffee translates the flavor of its popular Cafe au Lait ice cream into a drink, showing the brand extending across ice cream and beverages.", ja: "人気のコーヒー味アイス「カフェオレ」の風味を飲料として再解釈したカップコーヒーで、アイスと飲料を横断するブランド展開を示している。"}}
-    ],
-    priceLog: [],
-    news: [
-      {title: {ko: "역대급 폭염에 롯데웰푸드·빙그레, 여름 마케팅 총력전", en: "Record Heat Wave Spurs Lotte Wellfood and Binggrae Marketing Blitz", ja: "記録的猛暑でロッテウェルフードとビングレが夏のマーケティング攻勢"}, meta: "이데일리 · 2026 여름"}
-    ]
-  }
-};
-
-var brandLogos = {
-  "세븐일레븐": "assets/brand-logos/7-eleven.svg",
-  "GS25": "assets/brand-logos/gs25.svg",
-  "배스킨라빈스": "assets/brand-logos/baskin-robbins.svg",
-  "빙그레": "assets/brand-logos/binggrae.png",
-  "롯데웰푸드": "assets/brand-logos/lotte-wellfood.jpg",
-  "CU": "assets/brand-logos/cu.png",
-  "패밀리마트": "assets/brand-logos/familymart.svg",
-  "하겐다즈 재팬": "assets/brand-logos/haagen-dazs.svg",
-  "세븐일레븐 재팬": "assets/brand-logos/7-eleven.svg",
-  "Baskin Robbins": "assets/brand-logos/baskin-robbins.svg"
-};
   var root = document.documentElement;
 
   var UI = {
@@ -561,6 +336,7 @@ var brandLogos = {
     en: { headline: "This Week in Ice Cream", blurb: "New products, viral content, and flavor/packaging stats across Korea, the US, and Japan —<br>updated every Monday at 8am KST.", searchPlaceholder: "Search flavors, brands, past reports", trendLabel: "This Week's Trends", brandLabel: "Brand Monitoring", brandSub: "Most-mentioned brands this week", brandSubEmpty: "No whitelist brand mentions this week.", pastLabel: "Past Reports", noPastReports: "No past reports yet.", pastReportLink: " View report →", pdfStrong: "Full Report This Week", pdfSpan: "Get charts, stats, and references in one PDF", pdfCta: "Get Latest PDF ↓", methodTitle: "How this report is made", methodP1: "Every Monday at 8am KST, we automatically survey ice-cream-related local news, YouTube, and web-searchable social posts across Korea, the US, and Japan to summarize new products, trending flavors, viral content, and brand activity.", methodP2: "Full real-time crawling of Instagram or TikTok isn't possible — only posts surfaced by web search are reflected. Flavor/packaging frequency, brand mention counts, and price-mention logs are all approximate counts from article and post text, not real-time quantitative data.", methodP3: "Brand logos are sourced from each brand's official website. They only indicate that a brand was mentioned this week — not that the brand sponsors or produced this report.", backToThree: "← Back to all three markets", backToMain: "← Back to main", archiveBack: "← Latest report", seeMore: "See more →", share: "🔗 Share", sharePage: "🔗 Share this page", shareBrand: "🔗 Share this brand", chartLabel: "Top 5 Flavors & Packaging", chartFoot: "* Approximate frequency counted from product names, review titles, and ad copy.", newsLabel: "This Week's News", refLabel: "References", timelineLabel: "New Product Timeline", priceLogLabel: "Price Mention Log", priceCaveat: "* Price mentions parsed from news text; may differ from real-time prices. An approximate log, not automated crawling.", relatedLabel: "Related News", noNewProduct: "No new-product mentions this week.", noPriceLog: "No price mentions this week.", priceHeadDate: "Date", priceHeadNote: "Note", priceHeadTag: "Type", priceTagUp: "Est. increase", priceTagNote: "Price mention", cookieText: "This site uses cookies to collect visitor analytics.", cookieDecline: "Decline", cookieAccept: "Accept", themeToggle: "Light/Dark", filterAll: "All", langName: "English", notifyLabel: "🔔 Get notified of new reports", notifySubscribed: "🔔 Notifications on", mentionStat: function (c, n) { return c + " mentions · " + n + " new product" + (n === 1 ? "" : "s"); }, mentionStatWeek: function (c, n) { return "This week: " + c + " mentions · " + n + " new product" + (n === 1 ? "" : "s"); } },
     ja: { headline: "今週のアイスクリームトレンド", blurb: "韓国・米国・日本3市場の新製品、バイラルコンテンツ、フレーバー・パッケージ統計を<br>毎週月曜午前8時に更新します。", searchPlaceholder: "フレーバー・ブランド・過去のレポートを検索", trendLabel: "今週のトレンド", brandLabel: "ブランドモニタリング", brandSub: "今週言及頻度の高いブランド", brandSubEmpty: "今週はホワイトリストブランドの言及がありません。", pastLabel: "過去のレポート", noPastReports: "過去のレポートはまだありません。", pastReportLink: " レポートを見る →", pdfStrong: "今週の全体レポート", pdfSpan: "チャート・統計・参考資料まで入ったPDFで見る", pdfCta: "最新PDFを見る ↓", methodTitle: "このレポートの作り方", methodP1: "毎週月曜午前8時、韓国・米国・日本3市場のアイスクリーム関連のローカルニュース、YouTube、Web検索で確認できるSNS投稿を自動調査し、新製品・話題のフレーバー・バイラルコンテンツ・ブランド動向をまとめています。", methodP2: "インスタグラム・TikTok全体をリアルタイムでクロールすることはできず、Web検索で表示される範囲の投稿のみを反映しています。フレーバー・パッケージの頻度、ブランド言及数、価格言及ログはすべて記事・投稿テキストから集計した近似値であり、リアルタイムの定量データではありません。", methodP3: "ブランドロゴは各ブランドの公式サイトから取得しており、そのブランドがこのレポートをスポンサーしたり作成したりしたことを意味するものではなく、今週言及されたことを示す目的でのみ使用されます。", backToThree: "← 3市場の一覧に戻る", backToMain: "← メインに戻る", archiveBack: "← 最新レポートへ", seeMore: "詳しく見る →", share: "🔗 共有", sharePage: "🔗 このページを共有", shareBrand: "🔗 このブランドを共有", chartLabel: "フレーバー・パッケージ Top 5", chartFoot: "* 新製品名・レビュータイトル・広告文から集計した単純頻度の近似値です。", newsLabel: "今週のニュース", refLabel: "参考資料", timelineLabel: "新製品タイムライン", priceLogLabel: "価格言及ログ", priceCaveat: "* ニュース記事テキストから抽出した価格言及であり、リアルタイム価格とは異なる場合があります。自動クロールではなく近似ログです。", relatedLabel: "関連ニュース", noNewProduct: "今週は新製品の言及がありません。", noPriceLog: "今週は価格の言及がありません。", priceHeadDate: "日付", priceHeadNote: "内容", priceHeadTag: "区分", priceTagUp: "値上げ推定", priceTagNote: "価格言及", cookieText: "このサイトは訪問者分析のためにクッキーを使用します。", cookieDecline: "拒否", cookieAccept: "同意", themeToggle: "ライト/ダーク", filterAll: "すべて", langName: "日本語", notifyLabel: "🔔 新着通知を受け取る", notifySubscribed: "🔔 通知オン", mentionStat: function (c, n) { return "言及 " + c + "回 · 新製品 " + n + "件"; }, mentionStatWeek: function (c, n) { return "今週の言及 " + c + "回 · 新製品 " + n + "件"; } }
   };
+  var LANG_CODE = { ko: "KOR", en: "ENG", ja: "JPN" };
   var KIND_LABELS = {
     "신제품": { ko: "신제품", en: "New", ja: "新製品" },
     "뉴스": { ko: "뉴스", en: "News", ja: "ニュース" },
@@ -654,10 +430,13 @@ var brandLogos = {
     document.getElementById("tCookieText").textContent = u.cookieText;
     document.getElementById("cookieDecline").textContent = u.cookieDecline;
     document.getElementById("cookieAccept").textContent = u.cookieAccept;
-    document.getElementById("themeToggle").textContent = u.themeToggle;
+    document.getElementById("themeSwitch").setAttribute("aria-label", u.themeToggle);
     document.getElementById("dShare").textContent = u.sharePage;
     document.getElementById("bdShare").textContent = u.shareBrand;
-    document.getElementById("langToggle").textContent = u.langName;
+    document.getElementById("langCode").textContent = LANG_CODE[lang];
+    document.querySelectorAll(".lang-item").forEach(function (el) {
+      el.setAttribute("aria-checked", el.getAttribute("data-lang") === lang ? "true" : "false");
+    });
     updateNotifyBtn();
   }
 
@@ -810,7 +589,8 @@ var brandLogos = {
     document.getElementById("dList").innerHTML = items[key].map(function (i) {
       var brandAvatar = i.brand ? brandAvatarHTML(i.brand) : '';
       var brandPill = i.brand ? '<span class="row-pill row-pill-brand">' + brandPillText(i.brand) + '</span>' : '';
-      return '<a class="row" data-kind="' + i.kind + '" href="#" onclick="return false;"><span><span class="pill-row">' + brandAvatar + '<span class="row-pill">' + kindLabel(i.kind) + '</span>' + brandPill + '</span><p class="row-title">' + t(i.title) + '</p><p class="row-desc">' + t(i.desc) + '</p><span class="row-meta">' + i.meta + '</span></span><span class="row-thumb">' + thumbHTML(i) + '</span></a>';
+      var linkAttrs = i.url ? ('href="' + i.url + '" target="_blank" rel="noopener"') : 'href="#" onclick="return false;"';
+      return '<a class="row" data-kind="' + i.kind + '" ' + linkAttrs + '><span><span class="pill-row">' + brandAvatar + '<span class="row-pill">' + kindLabel(i.kind) + '</span>' + brandPill + '</span><p class="row-title">' + t(i.title) + '</p><p class="row-desc">' + t(i.desc) + '</p><span class="row-meta">' + i.meta + '</span></span><span class="row-thumb">' + thumbHTML(i) + '</span></a>';
     }).join("");
     var kinds = [];
     items[key].forEach(function (i) { if (kinds.indexOf(i.kind) === -1) kinds.push(i.kind); });
@@ -842,9 +622,11 @@ var brandLogos = {
     }
   }
 
-  document.getElementById("themeToggle").addEventListener("click", function () {
+  document.getElementById("themeSwitch").addEventListener("click", function () {
     var cur = root.getAttribute("data-theme");
-    root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+    var next = cur === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    document.getElementById("themeSwitch").setAttribute("aria-pressed", String(next === "dark"));
   });
 
   window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -861,16 +643,28 @@ var brandLogos = {
     });
   });
 
-  document.getElementById("langToggle").addEventListener("click", function () {
-    var order = ["ko", "en", "ja"];
-    lang = order[(order.indexOf(lang) + 1) % order.length];
-    localStorage.setItem("site_lang", lang);
-    applyStaticI18n();
-    renderHeroList();
-    renderBrandGrid();
-    renderPastReports();
-    route();
+  var langWrap = document.getElementById("langWrap");
+  var langBtn = document.getElementById("langBtn");
+  function closeLangMenu() { langWrap.classList.remove("open"); langBtn.setAttribute("aria-expanded", "false"); }
+  langBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = langWrap.classList.toggle("open");
+    langBtn.setAttribute("aria-expanded", open ? "true" : "false");
   });
+  document.querySelectorAll(".lang-item").forEach(function (el) {
+    el.addEventListener("click", function () {
+      lang = el.getAttribute("data-lang");
+      localStorage.setItem("site_lang", lang);
+      closeLangMenu();
+      applyStaticI18n();
+      renderHeroList();
+      renderBrandGrid();
+      renderPastReports();
+      route();
+    });
+  });
+  document.addEventListener("click", function (e) { if (!langWrap.contains(e.target)) closeLangMenu(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLangMenu(); });
 
   function loadAnalytics() {
     var s = document.createElement("script");
